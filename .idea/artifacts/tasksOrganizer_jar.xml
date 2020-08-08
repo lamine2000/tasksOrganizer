@@ -1,0 +1,38 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="tasksOrganizer:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/tasksOrganizer_jar</output-path>
+    <root id="archive" name="tasksOrganizer.jar">
+      <element id="module-output" name="tasksOrganizer" />
+      <element id="extracted-dir" path="/usr/java/javafx-sdk-14.0.1/lib/javafx-swt.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="/usr/java/javafx-sdk-14.0.1/lib/javafx.base.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="/usr/java/javafx-sdk-14.0.1/lib/javafx.controls.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="/usr/java/javafx-sdk-14.0.1/lib/javafx.fxml.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="/usr/java/javafx-sdk-14.0.1/lib/javafx.graphics.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="/usr/java/javafx-sdk-14.0.1/lib/javafx.media.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="/usr/java/javafx-sdk-14.0.1/lib/javafx.swing.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="/usr/java/javafx-sdk-14.0.1/lib/javafx.web.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="/usr/share/java/mysql-connector-java-8.0.21.jar" path-in-jar="/" />
+      <element id="file-copy" path="/usr/java/javafx-sdk-14.0.1/lib/libavplugin-54.so" />
+      <element id="file-copy" path="/usr/java/javafx-sdk-14.0.1/lib/libavplugin-56.so" />
+      <element id="file-copy" path="/usr/java/javafx-sdk-14.0.1/lib/libavplugin-57.so" />
+      <element id="file-copy" path="/usr/java/javafx-sdk-14.0.1/lib/libavplugin-ffmpeg-56.so" />
+      <element id="file-copy" path="/usr/java/javafx-sdk-14.0.1/lib/libavplugin-ffmpeg-57.so" />
+      <element id="file-copy" path="/usr/java/javafx-sdk-14.0.1/lib/libavplugin-ffmpeg-58.so" />
+      <element id="file-copy" path="/usr/java/javafx-sdk-14.0.1/lib/libdecora_sse.so" />
+      <element id="file-copy" path="/usr/java/javafx-sdk-14.0.1/lib/libfxplugins.so" />
+      <element id="file-copy" path="/usr/java/javafx-sdk-14.0.1/lib/libglass.so" />
+      <element id="file-copy" path="/usr/java/javafx-sdk-14.0.1/lib/libglassgtk2.so" />
+      <element id="file-copy" path="/usr/java/javafx-sdk-14.0.1/lib/libglassgtk3.so" />
+      <element id="file-copy" path="/usr/java/javafx-sdk-14.0.1/lib/libgstreamer-lite.so" />
+      <element id="file-copy" path="/usr/java/javafx-sdk-14.0.1/lib/libjavafx_font.so" />
+      <element id="file-copy" path="/usr/java/javafx-sdk-14.0.1/lib/libjavafx_font_freetype.so" />
+      <element id="file-copy" path="/usr/java/javafx-sdk-14.0.1/lib/libjavafx_font_pango.so" />
+      <element id="file-copy" path="/usr/java/javafx-sdk-14.0.1/lib/libjavafx_iio.so" />
+      <element id="file-copy" path="/usr/java/javafx-sdk-14.0.1/lib/libjfxmedia.so" />
+      <element id="file-copy" path="/usr/java/javafx-sdk-14.0.1/lib/libjfxwebkit.so" />
+      <element id="file-copy" path="/usr/java/javafx-sdk-14.0.1/lib/libprism_common.so" />
+      <element id="file-copy" path="/usr/java/javafx-sdk-14.0.1/lib/libprism_es2.so" />
+      <element id="file-copy" path="/usr/java/javafx-sdk-14.0.1/lib/libprism_sw.so" />
+    </root>
+  </artifact>
+</component>

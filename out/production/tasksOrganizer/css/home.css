@@ -1,0 +1,22 @@
+#header .button{
+    -fx-background-color: transparent;
+}
+
+#header{
+    -fx-spacing: 15px;
+}
+
+#home{
+    -fx-background-image: url("../images/13.jpg");
+    -fx-background-position: center;
+    -fx-background-size: cover;
+}
+
+.button:hover{
+    -fx-cursor: hand;
+    -fx-effect: dropshadow( gaussian , rgba(0.0,0.0,0.0,0.8) , 15.0,0.0,0.0,1.0 );
+}
+
+.button:pressed{
+    -fx-effect: innershadow( gaussian , rgba(0.0,0.0,0.0,0.8) , 5.0,0.0,0.0,0.0 );
+}
