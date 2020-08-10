@@ -4,12 +4,10 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -43,11 +41,11 @@ public class HomeController implements Initializable {
     }
 
     @FXML
-    protected void handleAddTaskButtonAction(ActionEvent event) throws IOException {
+    protected void handleAddTaskButtonAction() throws IOException {
         if(finAnimation){
             finAnimation = false;
             Parent root = FXMLLoader.load(getClass().getResource("/fxml/createTask.fxml"));
-            Scene scene = new Scene(root);
+            //Scene scene = new Scene(root);
             root.getStylesheets().add(getClass().getResource("/css/createTask.css").toString());
 
             root.translateYProperty().set(600);
@@ -69,7 +67,7 @@ public class HomeController implements Initializable {
     }
 
     @FXML
-    protected void handleParametersButtonAction(ActionEvent event) throws IOException{
+    protected void handleParametersButtonAction(){
         System.out.println("parametres");
     }
 
