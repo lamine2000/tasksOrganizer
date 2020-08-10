@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="createScene" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tasksOrganizer.gui.CreateTaskController">
+<AnchorPane id="createScene" fx:id="container" prefHeight="600.0" prefWidth="830.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tasksOrganizer.gui.CreateTaskController">
    <children>
       <Text layoutX="66.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="titre" text="Difficulté" />
       <HBox layoutX="64.0" layoutY="116.0" onMouseExited="#difficultyStarsExitedAction" prefHeight="38.0" prefWidth="280.0">
@@ -34,17 +34,17 @@
       <Text layoutX="64.0" layoutY="304.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="titre" text="Echeance" />
       <DatePicker id="calandar1" fx:id="eDatePicker" layoutX="66.0" layoutY="314.0" />
       <Text layoutX="66.0" layoutY="390.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="titre" text="Temps Supposé" />
-      <HBox id="hbox" layoutX="540.0" layoutY="493.0" prefHeight="79.0" prefWidth="233.0">
+      <HBox id="actions" layoutX="586.0" layoutY="507.0" prefHeight="79.0" prefWidth="233.0">
          <children>
-            <Button id="clearButton" fx:id="clearButton" mnemonicParsing="false" onAction="#handleEffacerButtonAction" prefHeight="50.0" prefWidth="127.0" text="Effacer" />
-            <Button id="okButton" fx:id="okButton" mnemonicParsing="false" onAction="#handleValiderButtonAction" prefHeight="50.0" prefWidth="120.0" text="Valider" />
+            <Button id="clearButton" fx:id="clearButton" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#handleEffacerButtonAction" text="Effacer" />
+            <Button id="okButton" fx:id="okButton" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#handleValiderButtonAction" text="Valider" />
          </children>
       </HBox>
       <TextArea fx:id="descriptionArea" layoutX="586.0" layoutY="227.0" prefHeight="200.0" prefWidth="200.0" promptText="Description de la tâche" wrapText="true" />
       <DatePicker id="calandar2" fx:id="tsDatePicker" layoutX="66.0" layoutY="401.0" />
       <HBox prefHeight="79.0" prefWidth="861.0" AnchorPane.bottomAnchor="521.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Button id="back" fx:id="backButton" mnemonicParsing="false" />
+            <Button id="back" fx:id="backButton" mnemonicParsing="false" onAction="#handleBackButtonAction" />
          </children>
       </HBox>
       <Text layoutX="586.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="titre" text="Nom" />

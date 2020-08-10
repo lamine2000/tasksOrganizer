@@ -1,6 +1,13 @@
 package com.tasksOrganizer.gui;
 
+import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import com.gluonhq.charm.glisten.control.TextField;
@@ -10,8 +17,12 @@ import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Alert;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Window;
+import javafx.util.Duration;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
@@ -28,6 +39,10 @@ public class CreateTaskController implements Initializable {
 
     private static int difficulte, importance;
     private static String nom, descripiton, echeance, tsuppose;
+    private boolean finAnimation = true;
+
+    @FXML
+    private AnchorPane container;
 
     @FXML
     private Button backButton;
@@ -337,6 +352,34 @@ public class CreateTaskController implements Initializable {
             else /*if(source.equals(d5))*/
                 difficulte = 5;
         }
+    }
+
+    @FXML
+    void handleBackButtonAction(ActionEvent event) throws IOException {
+
+        if(finAnimation){
+            finAnimation = false;
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/home.fxml"));
+            Scene scene = backButton.getScene();
+            root.getStylesheets().add(getClass().getResource("/css/home.css").toString());
+
+            root.translateXProperty().set(scene.getWidth());
+            StackPane parentContainer = (StackPane)scene.getRoot();
+            parentContainer.getChildren().add(root);
+
+            Timeline timeLine = new Timeline();
+            KeyValue kv = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
+            KeyFrame kf = new KeyFrame(Duration.seconds(0.6), kv);
+            timeLine.getKeyFrames().add(kf);
+
+            timeLine.setOnFinished(event1 -> {
+                parentContainer.getChildren().remove(container);
+                finAnimation = true;
+            });
+
+            timeLine.play();
+        }
+
     }
 
     private LocalDate today(){
