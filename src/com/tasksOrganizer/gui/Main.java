@@ -13,7 +13,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/home.fxml"));
         root.getStylesheets().add(getClass().getResource("/css/home.css").toString());
         primaryStage.setTitle("tasksOrganizer");
-        primaryStage.setScene(new Scene(root, 900, 650));
+        primaryStage.setScene(new Scene(root, 830, 600));
         primaryStage.setResizable(false);
         primaryStage.show();
     }
