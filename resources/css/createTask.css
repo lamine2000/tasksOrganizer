@@ -9,11 +9,7 @@
 }
 
 #back:hover{
-    -fx-effect: dropshadow( gaussian , rgba(0.0,0.0,0.0,0.8) , 15.0,0.0,0.0,1.0 );
-}
-
-#back:pressed{
-    -fx-effect: innershadow( gaussian , rgba(0.0,0.0,0.0,0.8) , 5.0,0.0,0.0,0.0 );
+    -fx-effect: dropshadow( gaussian , rgba(0.0,0.0,0.0,0.8) , 20.0,0.0,0.0,1.0 );
 }
 
 .button:hover{
@@ -98,8 +94,7 @@
     //-fx-font-family: 'Pacifico';
 }
 
-#clearButton,
-#okButton{
+#actions .button{
     -fx-background-color: grey;
     -fx-text-fill: black;
     -fx-font-weight: bold;
@@ -107,6 +102,16 @@
     -fx-font-size: 1.07em;
 }
 
-#hbox{
-    -fx-spacing: 5px;
+#actions{
+    -fx-spacing: 10px;
+}
+
+#actions .button:hover{
+    -fx-background-color:orange;
+    -fx-effect: dropshadow( gaussian , rgba(0.0,0.0,0.0,0.8) , 15.0,0.0,0.0,1.0 );
+}
+
+#actions .button:pressed,
+#back:pressed{
+    -fx-effect: innershadow( gaussian , rgba(0.0,0.0,0.0,0.8) , 5.0,0.0,0.0,0.0 );
 }
