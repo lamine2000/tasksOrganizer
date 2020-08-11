@@ -33,6 +33,7 @@
       <element id="file-copy" path="/usr/java/javafx-sdk-14.0.1/lib/libprism_common.so" />
       <element id="file-copy" path="/usr/java/javafx-sdk-14.0.1/lib/libprism_es2.so" />
       <element id="file-copy" path="/usr/java/javafx-sdk-14.0.1/lib/libprism_sw.so" />
+      <element id="extracted-dir" path="/usr/java/charm/charm-glisten-6.0.5.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

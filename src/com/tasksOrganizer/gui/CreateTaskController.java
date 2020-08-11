@@ -237,14 +237,7 @@ public class CreateTaskController implements Initializable {
 
     @FXML
     protected void handleEffacerButtonAction(ActionEvent event) {
-        nameField.setText("");
-        descriptionArea.clear();
-        starDClicked = false;
-        starIClicked = false;
-        setGraphics('d', 0);
-        setGraphics('i', 0);
-        eDatePicker.setValue(null);
-        tsDatePicker.setValue(null);
+        setZero();
     }
 
     @FXML
@@ -307,6 +300,8 @@ public class CreateTaskController implements Initializable {
 
         DBFonctions.saveTask(nom, descripiton, difficulte, importance, echeance, tsuppose);
             AlertHelper.showAlert(Alert.AlertType.INFORMATION, owner, "Enregistrement réussi !", "La tâche \"" + nom + "\" a été enregistrée avec succès !");
+
+        setZero();
 
     }
 
@@ -392,6 +387,17 @@ public class CreateTaskController implements Initializable {
 
     private LocalDate today(){
         return LocalDate.now();
+    }
+
+    private void setZero(){
+        nameField.setText("");
+        descriptionArea.clear();
+        starDClicked = false;
+        starIClicked = false;
+        setGraphics('d', 0);
+        setGraphics('i', 0);
+        eDatePicker.setValue(null);
+        tsDatePicker.setValue(null);
     }
 
     }
