@@ -27,6 +27,8 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
+import com.tasksOrganizer.db.DBFonctions;
+
 public class CreateTaskController implements Initializable {
     private static ImageView d1Image0, d2Image0, d3Image0, d4Image0, d5Image0;
     private static ImageView d1Image1, d2Image1, d3Image1, d4Image1, d5Image1;
@@ -38,7 +40,6 @@ public class CreateTaskController implements Initializable {
     private static boolean starIClicked = false;
 
     private static int difficulte, importance;
-    private static String nom, descripiton, echeance, tsuppose;
     private boolean finAnimation = true;
 
     @FXML
@@ -211,18 +212,17 @@ public class CreateTaskController implements Initializable {
         ImageView[] images0 = new ImageView[5];
         ImageView[] images1 = new ImageView[5];
 
-        switch (c){
-            case 'd':
+        switch (c) {
+            case 'd' -> {
                 tab = tabD;
                 images0 = dImages0;
                 images1 = dImages1;
-                break;
-
-            case 'i':
+            }
+            case 'i' -> {
                 tab = tabI;
                 images0 = iImages0;
                 images1 = iImages1;
-                break;
+            }
         }
 
         for(int count = 1; count <= 5; count++){
@@ -291,14 +291,22 @@ public class CreateTaskController implements Initializable {
             return;
         }
 
-        //[i] Verifier que le nom de la tache n existe pas dans la base de donnees [i]
+        String nom = nameField.getText().toLowerCase();
 
-        nom = nameField.getText();
-        descripiton = descriptionArea.getText();
-        echeance = eDatePicker.getValue().getDayOfMonth()+"/"+eDatePicker.getValue().getMonthValue()+"/"+eDatePicker.getValue().getYear();
-        tsuppose = tsDatePicker.getValue().getDayOfMonth()+"/"+tsDatePicker.getValue().getMonthValue()+"/"+tsDatePicker.getValue().getYear();
+        if(DBFonctions.isTask(nom)){
+            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Erreur!", "La tâche \"" + nom + "\" existe déjà dans la base de données !\nVeuillez renommer la nouvelle tâche.");
+            nameField.setText("");
+            return;
+        }
 
-        // [i] enregistrer la nouvelle tache dans la db [i]
+        String descripiton = descriptionArea.getText();
+        LocalDate echeance = eDatePicker.getValue();
+        LocalDate tsuppose = tsDatePicker.getValue();
+
+
+
+        DBFonctions.saveTask(nom, descripiton, difficulte, importance, echeance, tsuppose);
+            AlertHelper.showAlert(Alert.AlertType.INFORMATION, owner, "Enregistrement réussi !", "La tâche \"" + nom + "\" a été enregistrée avec succès !");
 
     }
 
