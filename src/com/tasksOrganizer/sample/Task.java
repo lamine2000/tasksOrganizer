@@ -2,19 +2,20 @@ package com.tasksOrganizer.sample;
 
 import com.tasksOrganizer.db.DBFonctions;
 
+import java.time.LocalDate;
+
 public class Task {
     private String nom;
-    private int echeance;
-    private int tsupp;
-    private short difficulte;
-    private short importance;
+    private LocalDate echeance;
+    private LocalDate tsupp;
+    private int difficulte;
+    private int importance;
     private String description = "";
     private boolean ok = false;
-    private short rang;
 
     public Task() {}
 
-    public Task(String nom, int echeance, int tsupp, short difficulte, short importance, String description, boolean ok, short rang) {
+    public Task(String nom, String description, int importance, int difficulte, LocalDate echeance, LocalDate tsupp, boolean ok) {
         this.nom = nom;
         this.echeance = echeance;
         this.tsupp = tsupp;
@@ -22,20 +23,8 @@ public class Task {
         this.importance = importance;
         this.description = description;
         this.ok = ok;
-        this.rang = rang;
     }
 
-    /*public static Task[] extractTasks(){
-        return DBExtractTasks();
-    }
-
-    public static void removeTask(String nom){
-        DBRemoveTask(nom);
-    }
-
-    public static void modifyTask(int nom, int echeance, int tsupp, int difficulte, int importance, String description){
-        DBModifyTask(nom, echeance, tsupp, difficulte, importance, description);
-    }
 
     public String getNom() {
         return nom;
@@ -45,35 +34,35 @@ public class Task {
         this.nom = nom;
     }
 
-    public int getEcheance() {
+    public LocalDate getEcheance() {
         return echeance;
     }
 
-    public void setEcheance(int echeance) {
+    public void setEcheance(LocalDate echeance) {
         this.echeance = echeance;
     }
 
-    public int getTsupp() {
+    public LocalDate getTsupp() {
         return tsupp;
     }
 
-    public void setTsupp(int tsupp) {
+    public void setTsupp(LocalDate tsupp) {
         this.tsupp = tsupp;
     }
 
-    public short getDifficulte() {
+    public int getDifficulte() {
         return difficulte;
     }
 
-    public void setDifficulte(short difficulte) {
+    public void setDifficulte(int difficulte) {
         this.difficulte = difficulte;
     }
 
-    public short getImportance() {
+    public int getImportance() {
         return importance;
     }
 
-    public void setImportance(short importance) {
+    public void setImportance(int importance) {
         this.importance = importance;
     }
 
@@ -93,11 +82,11 @@ public class Task {
         this.ok = ok;
     }
 
-    public short getRang() {
-        return rang;
+    public static Task[] extractTasks(){
+        return DBFonctions.DBExtractTasks();
     }
 
-    public void setRang(short rang) {
-        this.rang = rang;
-    }*/
+    public static void removeTask(String nom){
+        DBFonctions.DBRemoveTask(nom);
+    }
 }
