@@ -1,5 +1,6 @@
 package com.tasksOrganizer.gui;
 
+import com.tasksOrganizer.sample.Task;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -296,9 +297,8 @@ public class CreateTaskController implements Initializable {
         LocalDate echeance = eDatePicker.getValue();
         LocalDate tsuppose = tsDatePicker.getValue();
 
-
-
-        DBFonctions.saveTask(nom, descripiton, difficulte, importance, echeance, tsuppose);
+        Task task = new Task(nom, descripiton, importance, difficulte, echeance, tsuppose, false);
+        DBFonctions.saveTask(task);
             AlertHelper.showAlert(Alert.AlertType.INFORMATION, owner, "Enregistrement réussi !", "La tâche \"" + nom + "\" a été enregistrée avec succès !");
 
         emptyAll();
