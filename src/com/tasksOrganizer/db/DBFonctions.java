@@ -85,19 +85,18 @@ public class DBFonctions {
         }
 
         try {
-            result = state.executeQuery("select id from Task");
+            result = state.executeQuery("select id from Task where ok = "+ false);
 
             while(result.next())
                 taille++;
 
             tasks = new Task[taille];
-            result.relative(-1 * taille - 1);
+            result.relative(-1 * taille -1);
             for(int i = 0; i < taille; i++){
                 result.next();
                 id = Integer.parseInt(result.getObject(1).toString());
-                for(int j = 0; j < paramList.length; j++){
+                for(int j = 0; j < paramList.length; j++)
                     tab[j] = DBgetParam(paramList[j], "id", id);
-                }
 
                 tasks[i] = new Task(tab[0].toString(), tab[1].toString(), Integer.parseInt(tab[2].toString()), Integer.parseInt(tab[3].toString()), LocalDate.parse(tab[4].toString()), LocalDate.parse(tab[5].toString()), (Boolean)tab[6]);
             }
@@ -165,13 +164,41 @@ public class DBFonctions {
         }
 
         try {
-            state.executeUpdate("Delete from Task where nom = '"+nom+"'");
+            state.executeUpdate("Delete from Task where nom = '"+nom.toLowerCase()+"'");
 
             state.close();
         } catch (Exception e) {
             System.out.println("Echec de communication avec la base de donnees");
             //e.printStackTrace();
         }
+
+    }
+
+
+
+
+
+
+    public static void taskDone(String taskName){
+        Statement state = null;
+
+        Connection conn = DBConnect.getInstance().getConn();
+
+        try {
+            state = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        } catch (Exception e) {
+            System.out.println("Erreur de creation du Statement");
+        }
+
+        try {
+            state.executeUpdate("Update Task set ok = "+ true +" where nom = '"+ taskName +"'");
+
+            state.close();
+        } catch (Exception e) {
+            System.out.println("Echec de communication avec la base de donnees");
+            //e.printStackTrace();
+        }
+
 
     }
 
