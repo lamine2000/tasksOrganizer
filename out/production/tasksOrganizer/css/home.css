@@ -1,5 +1,13 @@
-#header .button{
+.button{
     -fx-background-color: transparent;
+}
+
+.check-box:hover{
+    -fx-cursor: hand;
+}
+
+.table-view .button{
+    -fx-padding: 0px;
 }
 
 #header{
@@ -7,7 +15,8 @@
 }
 
 #home{
-    -fx-background-image: url("../images/13.jpg");
+    //-fx-background-image: url("../images/13.jpg");
+    -fx-background-color: #2B2B2B;
     -fx-background-position: center;
     -fx-background-size: cover;
 }
@@ -19,4 +28,45 @@
 
 .button:pressed{
     -fx-effect: innershadow( gaussian , rgba(0.0,0.0,0.0,0.8) , 5.0,0.0,0.0,0.0 );
+}
+
+.column-header-background{
+    visibility: hidden;
+    -fx-padding: -1em;
+}
+
+.table-view{
+    -fx-background-color: transparent;
+    -fx-fixed-cell-size: 45px;
+    -fx-border-style: hidden;
+}
+
+.table-column{
+    -fx-border-color: #2B2B2B;
+    -fx-alignment: center-left;
+}
+
+#col_days{
+    -fx-alignment: center;
+}
+
+.col, #title{
+   // -fx-background-color: linear-gradient(#AC7168, whitesmoke);
+
+    -fx-background-color: #2B2B2B;
+    -fx-font-size: 1.2em;
+    -fx-font-weight: bold;
+    -fx-font-style: italic;
+    -fx-font-family: "serif", "cursive", "Fira Code";
+    -fx-text-fill: white;
+}
+
+#title{
+    -fx-fill: orange;
+    -fx-text-alignment: center;
+    -fx-font-size: 1.5em;
+}
+
+#col_cb, #col_info, #col_del, #col_modif{
+    -fx-alignment: center;
 }
