@@ -7,25 +7,24 @@ import javafx.scene.control.CheckBox;
 
 public class HomeTableViewModel {
     private final SimpleStringProperty name;
-    private final SimpleIntegerProperty days;
-    private final Button info, modif, delete;
-    private final CheckBox  checkbox;
+    private final SimpleStringProperty days;
+    private final Button info, modif, delete, ok;
 
-    public HomeTableViewModel(String nom, int days, Button info, Button modif, Button delete, CheckBox checkbox) {
+    public HomeTableViewModel(String nom, String days, Button info, Button modif, Button delete, Button ok) {
 
         this.name = new SimpleStringProperty(nom);
-        this.days = new SimpleIntegerProperty(days);
+        this.days = new SimpleStringProperty(days);
         this.info = info;
         this.modif = modif;
         this.delete = delete;
-        this.checkbox = checkbox;
+        this.ok = ok;
     }
 
     public String getName() {
         return name.get();
     }
 
-    public int getDays() {
+    public String getDays() {
         return days.get();
     }
 
@@ -41,7 +40,9 @@ public class HomeTableViewModel {
         return delete;
     }
 
-    public CheckBox getCheckbox() {
-        return checkbox;
+    public Button getOk() {
+        return ok;
     }
+
+
 }
