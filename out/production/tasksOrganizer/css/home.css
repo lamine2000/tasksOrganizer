@@ -30,6 +30,10 @@
     -fx-effect: innershadow( gaussian , rgba(0.0,0.0,0.0,0.8) , 5.0,0.0,0.0,0.0 );
 }
 
+#header .button:hover{
+    -fx-effect: dropshadow( gaussian , rgba(255.0,255.0,255.0,0.8) , 15.0,0.0,0.0,1.0 );
+}
+
 .column-header-background{
     visibility: hidden;
     -fx-padding: -1em;
@@ -39,6 +43,7 @@
     -fx-background-color: transparent;
     -fx-fixed-cell-size: 45px;
     -fx-border-style: hidden;
+    -fx-border-color: #2B2B2B;
 }
 
 .table-column{
@@ -67,6 +72,26 @@
     -fx-font-size: 1.5em;
 }
 
-#col_cb, #col_info, #col_del, #col_modif{
+#col_ok, #col_info, #col_del, #col_modif{
     -fx-alignment: center;
+}
+
+.doneButton{
+    -fx-background-color: orange;
+    -fx-pref-width: 64px;
+    -fx-pref-height: 25px;
+}
+
+.doneButton:hover{
+    -fx-background-color: green;
+    -fx-pref-width: 75px;
+    -fx-pref-height: 45px;
+}
+
+#col_info .button:hover, #col_del .button:hover, #col_modif .button:hover{
+    -fx-background-color: #595B5D;
+}
+
+#header .button:pressed{
+    -fx-effect: innershadow( gaussian , rgba(0.0,0.0,0.0,0.8) , 5.0,0.0,0.0,0.0 );
 }
