@@ -2,10 +2,6 @@
     -fx-background-color: transparent;
 }
 
-.check-box:hover{
-    -fx-cursor: hand;
-}
-
 .table-view .button{
     -fx-padding: 0px;
 }
