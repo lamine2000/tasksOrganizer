@@ -1,9 +1,7 @@
 package com.tasksOrganizer.gui;
 
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 
 public class HomeTableViewModel {
     private final SimpleStringProperty name;
