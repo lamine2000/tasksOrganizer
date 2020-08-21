@@ -20,7 +20,7 @@ public class DBFonctions {
 
         try {
             if(!isTask(task.getNom()))
-                state.executeUpdate("insert into Task(nom, description, importance, difficulte, echeance, tsupp) values ('" + task.getNom() + "','" + task.getDescription() + "'," + task.getImportance() + "," + task.getDifficulte() + ",'" + task.getEcheance() + "','" + task.getTsupp() + "')");
+                state.executeUpdate("insert into Task(nom, description, importance, difficulte, echeance, tsupp, dateCreation) values ('" + task.getNom() + "','" + task.getDescription() + "'," + task.getImportance() + "," + task.getDifficulte() + ",'" + task.getEcheance() + "','" + task.getTsupp() + "', '"+ LocalDate.now() +"')");
 
             else
                 state.executeUpdate("update Task set nom = '"+ task.getNom() +"', description = '"+ task.getDescription() +"' , importance = "+ task.getImportance() + ", difficulte = " + task.getDifficulte() + ", echeance = '" + task.getEcheance() + "', tsupp = '" + task.getTsupp() + "' where nom = '"+ task.getNom() +"'");
@@ -72,7 +72,7 @@ public class DBFonctions {
         ResultSet result = null;
         int id;
         Task[] tasks = new Task[0];
-        String[] paramList = {"nom", "description", "importance", "difficulte", "echeance", "tsupp", "ok"};
+        String[] paramList = {"nom", "description", "importance", "difficulte", "echeance", "tsupp", "ok", "dateCreation"};
         Object[] tab = new Object[paramList.length];
         int taille = 0;
 
@@ -98,7 +98,7 @@ public class DBFonctions {
                 for(int j = 0; j < paramList.length; j++)
                     tab[j] = DBgetParam(paramList[j], "id", id);
 
-                tasks[i] = new Task(tab[0].toString(), tab[1].toString(), Integer.parseInt(tab[2].toString()), Integer.parseInt(tab[3].toString()), LocalDate.parse(tab[4].toString()), LocalDate.parse(tab[5].toString()), (Boolean)tab[6]);
+                tasks[i] = new Task(tab[0].toString(), tab[1].toString(), Integer.parseInt(tab[2].toString()), Integer.parseInt(tab[3].toString()), LocalDate.parse(tab[4].toString()), LocalDate.parse(tab[5].toString()), (Boolean)tab[6], LocalDate.parse(tab[7].toString()));
             }
 
             result.close();
@@ -199,7 +199,76 @@ public class DBFonctions {
             //e.printStackTrace();
         }
 
+    }
 
+
+
+
+
+
+    public static Task DBExtractTask(String taskName){
+        Statement state = null;
+        Task task = new Task();
+        String[] paramList = {"nom", "description", "importance", "difficulte", "echeance", "tsupp", "ok", "dateCreation"};
+        Object[] tab = new Object[paramList.length];
+
+        Connection conn = DBConnect.getInstance().getConn();
+
+        try {
+            state = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        } catch (Exception e) {
+            System.out.println("Erreur de creation du Statement");
+        }
+
+        try {
+                for(int j = 0; j < paramList.length; j++)
+                    tab[j] = DBgetParam2(paramList[j], "nom", taskName);
+
+                task = new Task(tab[0].toString(), tab[1].toString(), Integer.parseInt(tab[2].toString()), Integer.parseInt(tab[3].toString()), LocalDate.parse(tab[4].toString()), LocalDate.parse(tab[5].toString()), (Boolean)tab[6], LocalDate.parse(tab[7].toString()));
+
+            state.close();
+        } catch (Exception e) {
+            //System.out.println("Echec de communication avec la base de donnees");
+            e.printStackTrace();
+        }
+
+        return task;
+
+    }
+
+
+
+
+
+
+    public static Object DBgetParam2(String nomParam, String nomIdentifiant, String valeurIdentifiant) {
+        Object param = null;
+        Statement state = null;
+        ResultSet result = null;
+        String nomTable = "Task";
+
+        Connection conn = DBConnect.getInstance().getConn();
+
+        try {
+            state = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        } catch (Exception e) {
+            System.out.println("Erreur de creation du Statement");
+        }
+
+        try {
+            result = state.executeQuery("SELECT " + nomParam + " FROM " + nomTable + " where " + nomIdentifiant + " = '"
+                    + valeurIdentifiant + "'");
+
+            if (result.next() && result.getObject(1) != null)
+                param = result.getObject(1);
+
+            state.close();
+            result.close();
+        } catch (Exception e) {
+            System.out.println("Echec de communication avec la base de donnees");
+        }
+
+        return param;
     }
 
 }
