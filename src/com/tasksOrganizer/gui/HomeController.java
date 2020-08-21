@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -21,6 +22,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -113,12 +116,15 @@ public class HomeController implements Initializable {
             String unite = interval == 1 ? " jour" : " jours";
 
             row = new HomeTableViewModel(tasks[i].getNom(), interval + unite, infoButtons[i], modifyButtons[i], deleteButtons[i], oks[i]);
-            referenceDel[i] = i;
 
             infoButtons[i].setId(row.getName());
             row.getInfo().setOnAction(event -> {
                 String name = ((Button) (event.getSource())).getId();
-                loadInfo(name);
+                try {
+                    loadInfo(name);
+                } catch (IOException e) {
+                    //e.printStackTrace();
+                }
                 //System.out.println("info "+name+" clicked");
             });
 
@@ -130,6 +136,7 @@ public class HomeController implements Initializable {
             });
 
             deleteButtons[i].setId(row.getName() + i);
+            referenceDel[i] = i;
             row.getDelete().setOnAction(event -> {
                 String name = ((Button) (event.getSource())).getId();
                 int index = Integer.parseInt(name.substring(name.length() - 1));
@@ -156,15 +163,6 @@ public class HomeController implements Initializable {
             oks[i].getStyleClass().add("doneButton");
             referenceDone[i] = i;
             row.getOk().setOnAction(event -> {
-
-                /*synchronized (list) {
-                    try {
-                        Thread.sleep(300);
-                    } catch (InterruptedException e) {
-                        //e.printStackTrace();
-                    }
-                    list.notifyAll();
-                }*/
 
                 String name = ((Button) (event.getSource())).getId();
                 int index = Integer.parseInt(name.substring(name.length() - 1));
@@ -226,8 +224,16 @@ public class HomeController implements Initializable {
         //load the parameters ui
     }
 
-    private void loadInfo(String taskName) {
+    private void loadInfo(String taskName) throws IOException {
         //opens the createTask ui already filled
+        MotherController.taskName = taskName;
+
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/infoTask.fxml"));
+        root.getStylesheets().add(getClass().getResource("/css/info.css").toExternalForm());
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
     private void loadModif(String taskName) {
