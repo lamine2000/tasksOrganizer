@@ -163,7 +163,7 @@ public class CreateTaskController implements Initializable {
     }
 
     @FXML
-    protected void difficultyStarsExitedAction(MouseEvent event){
+    protected void difficultyStarsExitedAction(){
         if(!starDClicked)
             setGraphics('d', 0);
         else
@@ -194,7 +194,7 @@ public class CreateTaskController implements Initializable {
     }
 
     @FXML
-    protected void importanceStarsExitedAction(MouseEvent event) {
+    protected void importanceStarsExitedAction() {
         if(!starIClicked)
             setGraphics('i', 0);
         else
@@ -237,12 +237,12 @@ public class CreateTaskController implements Initializable {
         }
 
     @FXML
-    protected void handleEffacerButtonAction(ActionEvent event) {
+    protected void handleEffacerButtonAction() {
         emptyAll();
     }
 
     @FXML
-    protected void handleValiderButtonAction(ActionEvent event) {
+    protected void handleValiderButtonAction() {
         Window owner = nameField.getScene().getWindow();
 
         if(nameField.getText().isEmpty()){
@@ -297,7 +297,7 @@ public class CreateTaskController implements Initializable {
         LocalDate echeance = eDatePicker.getValue();
         LocalDate tsuppose = tsDatePicker.getValue();
 
-        Task task = new Task(nom, descripiton, importance, difficulte, echeance, tsuppose, false);
+        Task task = new Task(nom, descripiton, importance, difficulte, echeance, tsuppose, false, today());
         DBFonctions.saveTask(task);
             AlertHelper.showAlert(Alert.AlertType.INFORMATION, owner, "Enregistrement réussi !", "La tâche \"" + nom + "\" a été enregistrée avec succès !");
 
@@ -358,7 +358,7 @@ public class CreateTaskController implements Initializable {
     }
 
     @FXML
-    void handleBackButtonAction(ActionEvent event) throws IOException {
+    void handleBackButtonAction() throws IOException {
 
         if(finAnimation){
             finAnimation = false;
