@@ -12,10 +12,11 @@ public class Task {
     private int importance;
     private String description = "";
     private boolean ok = false;
+    private LocalDate dateCreation;
 
     public Task() {}
 
-    public Task(String nom, String description, int importance, int difficulte, LocalDate echeance, LocalDate tsupp, boolean ok) {
+    public Task(String nom, String description, int importance,  int difficulte, LocalDate echeance, LocalDate tsupp, boolean ok, LocalDate dateCreation) {
         this.nom = nom;
         this.echeance = echeance;
         this.tsupp = tsupp;
@@ -23,8 +24,8 @@ public class Task {
         this.importance = importance;
         this.description = description;
         this.ok = ok;
+        this.dateCreation = dateCreation;
     }
-
 
     public String getNom() {
         return nom;
@@ -80,6 +81,14 @@ public class Task {
 
     public void setOk(boolean ok) {
         this.ok = ok;
+    }
+
+    public LocalDate getDateCreation() {
+        return dateCreation;
+    }
+
+    public void setDateCreation(LocalDate dateCreation) {
+        this.dateCreation = dateCreation;
     }
 
     public static Task[] extractTasks(){
