@@ -1,0 +1,49 @@
+#info{
+    -fx-background-color: #3C3F41;
+}
+
+.text{
+    -fx-fill: orange;
+    -fx-font-size: 1.2em;
+    -fx-font-style: italic;
+    -fx-font-weight: bold;
+    -fx-alignment: center-left;
+    -fx-text-alignment: center;
+    -fx-font-family: "serif", "cursive", "Fira Code";
+}
+
+#title{
+    -fx-font-size: 1.4em;
+}
+
+.hbox .button{
+    -fx-padding: 5px;
+    -fx-background-color: transparent;
+    -fx-pref-width: 20px;
+    -fx-pref-height: 20px;
+}
+
+#closeButton{
+    -fx-padding: 5px;
+    -fx-background-image: url("../images/close.png");
+    -fx-background-color: transparent;
+}
+
+#closeButton:hover{
+    -fx-background-image: url("../images/closeHover.png");
+    -fx-background-repeat: no-repeat;
+    -fx-cursor: hand;
+}
+
+#closeButton:pressed{
+    -fx-effect: innershadow( gaussian , rgba(0.0,0.0,0.0,0.8) , 7.0,0.0,0.0,0.0 );
+}
+
+#description{
+    -fx-font-size: 1.1em;
+    -fx-font-style: italic;
+    -fx-font-weight: bold;
+    -fx-alignment: center-left;
+    -fx-text-alignment: center;
+    -fx-font-family: "serif", "cursive", "Fira Code";
+}
