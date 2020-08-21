@@ -14,13 +14,12 @@ create table Task
     description varchar(255)         ,
     importance  int          not null,
     difficulte  int          not null,
-    echeance     date         not null,
+    echeance    date         not null,
     tsupp       date         not null,
+    dateCreation date        not null,
     ok          boolean      default false
 );
 
 select DATE_FORMAT (echeance, '%Y-%m-%d') from tasksOrganizer.Task;
 select DATE_FORMAT (tsupp, '%Y-%m-%d') from tasksOrganizer.Task;
-
-
-
+select DATE_FORMAT (dateCreation, '%Y-%m-%d') from tasksOrganizer.Task;
