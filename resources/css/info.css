@@ -2,7 +2,7 @@
     -fx-background-color: #3C3F41;
 }
 
-.text{
+.texte, .progressLabel{
     -fx-fill: orange;
     -fx-font-size: 1.2em;
     -fx-font-style: italic;
@@ -12,8 +12,21 @@
     -fx-font-family: "serif", "cursive", "Fira Code";
 }
 
+.progressLabel{
+    -fx-font-size: 1.1em;
+    -fx-fill: cornflowerblue;
+}
+
+
+
 #title{
     -fx-font-size: 1.4em;
+    -fx-fill: #C4E791;
+    -fx-font-style: italic;
+    -fx-font-weight: bold;
+    -fx-alignment: center-left;
+    -fx-text-alignment: center;
+    -fx-font-family: "serif", "cursive", "Fira Code";
 }
 
 .hbox .button{
@@ -25,14 +38,14 @@
 
 #closeButton{
     -fx-padding: 5px;
-    -fx-background-image: url("../images/close.png");
-    -fx-background-color: transparent;
+    -fx-background-color: cornflowerblue;
+    -fx-text-fill: white;
+
 }
 
 #closeButton:hover{
-    -fx-background-image: url("../images/closeHover.png");
-    -fx-background-repeat: no-repeat;
     -fx-cursor: hand;
+    -fx-effect: dropshadow( gaussian , rgba(255.0,255.0,255.0,0.8) , 15.0,0.0,0.0,1.0 );
 }
 
 #closeButton:pressed{
@@ -46,4 +59,8 @@
     -fx-alignment: center-left;
     -fx-text-alignment: center;
     -fx-font-family: "serif", "cursive", "Fira Code";
+}
+
+.progress-bar .bar {
+    -fx-background-insets: 0;
 }

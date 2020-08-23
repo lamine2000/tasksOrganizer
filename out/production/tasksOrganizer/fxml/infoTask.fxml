@@ -1,41 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.gluonhq.charm.glisten.control.ProgressBar?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane id="info" onMouseExited="#handleDropFocus" prefHeight="550.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tasksOrganizer.gui.InfoController">
+<StackPane fx:id="stackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tasksOrganizer.gui.InfoController">
    <children>
-      <HBox layoutY="107.0" prefHeight="47.0" prefWidth="233.0" styleClass="hbox">
+      <AnchorPane id="info" fx:id="home" onMouseExited="#handleDropFocus" prefHeight="550.0" prefWidth="500.0">
          <children>
-            <Button fx:id="d1" mnemonicParsing="false" />
-            <Button fx:id="d2" mnemonicParsing="false" />
-            <Button fx:id="d3" mnemonicParsing="false" />
-            <Button fx:id="d4" mnemonicParsing="false" />
-            <Button fx:id="d5" mnemonicParsing="false" />
+            <HBox layoutY="107.0" prefHeight="47.0" prefWidth="233.0" styleClass="hbox">
+               <children>
+                  <Button fx:id="d1" mnemonicParsing="false" />
+                  <Button fx:id="d2" mnemonicParsing="false" />
+                  <Button fx:id="d3" mnemonicParsing="false" />
+                  <Button fx:id="d4" mnemonicParsing="false" />
+                  <Button fx:id="d5" mnemonicParsing="false" />
+               </children>
+            </HBox>
+            <HBox layoutY="203.0" prefHeight="47.0" prefWidth="245.0" styleClass="hbox">
+               <children>
+                  <Button fx:id="i1" mnemonicParsing="false" />
+                  <Button fx:id="i2" mnemonicParsing="false" />
+                  <Button fx:id="i3" mnemonicParsing="false" />
+                  <Button fx:id="i4" mnemonicParsing="false" />
+                  <Button fx:id="i5" mnemonicParsing="false" />
+               </children>
+            </HBox>
+            <Text id="title" fx:id="title" layoutX="16.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="titre" wrappingWidth="468.0" AnchorPane.bottomAnchor="510.0" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="22.0" />
+            <Button id="closeButton" fx:id="closeButton" layoutX="410.0" layoutY="502.0" minWidth="30.0" mnemonicParsing="false" onAction="#handleCloseButton" prefHeight="32.0" prefWidth="76.0" text="Fermer" AnchorPane.bottomAnchor="16.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="502.0" />
+            <Text fx:id="legendpg1" layoutX="227.0" layoutY="297.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="progressLabel" text="\% , and remaining days" wrappingWidth="270.0" AnchorPane.topAnchor="284.6302089691162" />
+            <Text fx:id="createdAt" layoutX="173.0" layoutY="523.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texte" text="date de création" wrappingWidth="193.98306465148926" AnchorPane.leftAnchor="173.0" />
+            <Text layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texte" text="Difficulte" wrappingWidth="200.0" AnchorPane.leftAnchor="0.0" />
+            <Text layoutX="14.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texte" text="Importance" wrappingWidth="200.0" AnchorPane.leftAnchor="0.0" />
+            <Text fx:id="legendpg2" layoutX="227.0" layoutY="419.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="progressLabel" text="previsions (tsupp %)" wrappingWidth="270.0" AnchorPane.topAnchor="399.6" />
+            <TextFlow id="description" fx:id="description" layoutX="300.0" layoutY="85.0" prefHeight="194.0" prefWidth="200.0" />
+            <ProgressBar fx:id="progress1" layoutY="290.0" prefWidth="200.0" progress="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="290.0" />
+            <ProgressBar fx:id="progress2" layoutY="405.0" prefWidth="200.0" progress="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="405.0" />
          </children>
-      </HBox>
-      <HBox layoutY="203.0" prefHeight="47.0" prefWidth="245.0" styleClass="hbox">
-         <children>
-            <Button fx:id="i1" mnemonicParsing="false" />
-            <Button fx:id="i2" mnemonicParsing="false" />
-            <Button fx:id="i3" mnemonicParsing="false" />
-            <Button fx:id="i4" mnemonicParsing="false" />
-            <Button fx:id="i5" mnemonicParsing="false" />
-         </children>
-      </HBox>
-      <Text id="title" fx:id="title" layoutX="7.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="titre" wrappingWidth="427.14892578125" AnchorPane.bottomAnchor="484.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <Button id="closeButton" fx:id="closeButton" layoutX="448.0" layoutY="1.0" minWidth="30.0" mnemonicParsing="false" onAction="#handleCloseButton" prefHeight="32.0" prefWidth="30.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <ProgressBar fx:id="progress1" layoutX="14.0" layoutY="293.0" prefHeight="25.0" prefWidth="200.0" progress="0.5" AnchorPane.leftAnchor="0.0" />
-      <Text fx:id="legendpg1" layoutX="227.0" layoutY="311.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="\% , and remaining days" wrappingWidth="270.0" />
-      <Text fx:id="createdAt" layoutX="173.0" layoutY="523.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="date de création" wrappingWidth="193.98306465148926" AnchorPane.leftAnchor="173.0" />
-      <Text layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Difficulte" wrappingWidth="200.0" AnchorPane.leftAnchor="0.0" />
-      <Text layoutX="14.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Importance" wrappingWidth="200.0" AnchorPane.leftAnchor="0.0" />
-      <ProgressBar fx:id="progress2" layoutY="416.0" prefHeight="25.0" prefWidth="200.0" progress="0.5" />
-      <Text fx:id="legendpg2" layoutX="227.0" layoutY="434.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="previsions (tsupp %)" wrappingWidth="270.0" />
-      <TextFlow id="description" fx:id="description" layoutX="300.0" layoutY="79.0" prefHeight="214.0" prefWidth="200.0" />
+      </AnchorPane>
    </children>
-</AnchorPane>
+</StackPane>

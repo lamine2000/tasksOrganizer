@@ -226,14 +226,19 @@ public class HomeController implements Initializable {
 
     private void loadInfo(String taskName) throws IOException {
         //opens the createTask ui already filled
-        MotherController.taskName = taskName;
 
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/infoTask.fxml"));
-        root.getStylesheets().add(getClass().getResource("/css/info.css").toExternalForm());
-        Stage stage = new Stage();
-        stage.initStyle(StageStyle.UNDECORATED);
-        stage.setScene(new Scene(root));
-        stage.show();
+        if (!MotherController.infoOpened) {
+            MotherController.infoOpened = true;
+            MotherController.taskName = taskName;
+
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/infoTask.fxml"));
+            root.getStylesheets().add(getClass().getResource("/css/info.css").toExternalForm());
+            Stage stage = new Stage();
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setScene(new Scene(root));
+            stage.show();
+        }
+
     }
 
     private void loadModif(String taskName) {
