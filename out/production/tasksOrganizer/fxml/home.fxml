@@ -26,7 +26,7 @@
                   <Insets />
                </opaqueInsets>
             </HBox>
-            <TableView fx:id="table" cache="true" layoutY="86.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="19.0" AnchorPane.topAnchor="86.0">
+            <TableView fx:id="table" cache="true" layoutY="86.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="19.0" AnchorPane.topAnchor="86.0">
               <columns>
                   <TableColumn id="col_ok" fx:id="col_ok" minWidth="29.0" prefWidth="100.0" sortable="false" styleClass="col" text="ok" />
                   <TableColumn id="col_name" fx:id="col_name" editable="false" minWidth="200.0" prefWidth="538.9999923706055" sortable="false" styleClass="col" text="name" />
