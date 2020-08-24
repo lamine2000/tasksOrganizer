@@ -17,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -69,6 +70,8 @@ public class HomeController implements Initializable {
     @FXML
     Text title;
 
+    Task[] tasks;
+
     private boolean finAnimation = true;
 
     HomeTableViewModel row;
@@ -90,7 +93,7 @@ public class HomeController implements Initializable {
         col_del.setCellValueFactory(new PropertyValueFactory<>("delete"));
         col_ok.setCellValueFactory(new PropertyValueFactory<>("ok"));
 
-        Task[] tasks = Task.extractTasks();
+        tasks = Task.extractTasks();
         final int[] nb = {tasks.length};
 
         nb[0] = refreshText(nb[0], null);
@@ -100,12 +103,22 @@ public class HomeController implements Initializable {
         Button[] deleteButtons = new Button[tasks.length];
         Button[] oks = new Button[tasks.length];
 
+        Tooltip tooltipInfo = new Tooltip("Informations");
+        Tooltip tooltipModif = new Tooltip("Modifier");
+        Tooltip tooltipDelete = new Tooltip("Supprimer");
+        Tooltip tooltipOk = new Tooltip("Marquer comme terminée");
+
         for (int i = 0; i < tasks.length; i++) {
             infoButtons[i] = new Button();
             modifyButtons[i] = new Button();
             deleteButtons[i] = new Button();
             oks[i] = new Button();
             oks[i].setText("Done ?");
+
+            infoButtons[i].setTooltip(tooltipInfo);
+            modifyButtons[i].setTooltip(tooltipModif);
+            deleteButtons[i].setTooltip(tooltipDelete);
+            oks[i].setTooltip(tooltipOk);
         }
 
         int[] referenceDel = new int[tasks.length];
@@ -131,16 +144,21 @@ public class HomeController implements Initializable {
             modifyButtons[i].setId(row.getName());
             row.getModif().setOnAction(event -> {
                 String name = ((Button) (event.getSource())).getId();
-                loadModif(name);
+                try {
+                    loadModif(name);
+                } catch (IOException e) {
+                    //e.printStackTrace();
+                }
                 //System.out.println("modif "+name+" clicked");
             });
 
-            deleteButtons[i].setId(row.getName() + i);
+            deleteButtons[i].setId((i+"").length()+row.getName() + i);
             referenceDel[i] = i;
             row.getDelete().setOnAction(event -> {
-                String name = ((Button) (event.getSource())).getId();
-                int index = Integer.parseInt(name.substring(name.length() - 1));
-                name = name.substring(0, name.length() - 1);
+                String data = ((Button) (event.getSource())).getId();
+                int tailleIndex = Integer.parseInt(data.substring(0,1));
+                int index = Integer.parseInt(data.substring(data.length() - tailleIndex));
+                String name = data.substring(1/*tailleIndex.length*/, data.length() - tailleIndex);
 
                 Task.removeTask(name);
                 referenceDel[index] = -1;
@@ -154,6 +172,8 @@ public class HomeController implements Initializable {
                 list.remove(index - countDel);
 
                 table.setItems(list);
+
+                table.refresh();
 
                 nb[0] = refreshText(nb[0], event);
 
@@ -192,6 +212,9 @@ public class HomeController implements Initializable {
         }
 
         table.setItems(list);
+
+        MotherController.list = list;
+        MotherController.table = table;
     }
 
     @FXML
@@ -236,13 +259,27 @@ public class HomeController implements Initializable {
             Stage stage = new Stage();
             stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(new Scene(root));
+            stage.setAlwaysOnTop(true);
             stage.show();
         }
 
     }
 
-    private void loadModif(String taskName) {
+    private void loadModif(String taskName) throws IOException {
         //opens a small undecorated window witch contains the task's informations
+        if(!MotherController.modifOpened){
+
+            MotherController.modifOpened = true;
+            MotherController.taskName = taskName;
+
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/modifTask.fxml"));
+            root.getStylesheets().add(getClass().getResource("/css/modif.css").toExternalForm());
+            Stage stage = new Stage();
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setScene(new Scene(root));
+            stage.setAlwaysOnTop(true);
+            stage.show();
+        }
     }
 
     private int refreshText(int nb, ActionEvent event) {
@@ -255,6 +292,8 @@ public class HomeController implements Initializable {
         title.setText(text);
         if (nb == 0)
             title.setStyle("-fx-fill: green");
+
+        MotherController.homeTitle = title;
 
         return nb;
     }

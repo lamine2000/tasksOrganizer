@@ -109,34 +109,7 @@ public class CreateTaskController implements Initializable {
         ImageView clearImage = new ImageView(getClass().getResource("/images/clear.png").toExternalForm());
         clearButton.setGraphic(clearImage);
 
-
-        d1Image0 = new ImageView(getClass().getResource("/images/star0.png").toExternalForm());
-        d2Image0 = new ImageView(getClass().getResource("/images/star0.png").toExternalForm());
-        d3Image0 = new ImageView(getClass().getResource("/images/star0.png").toExternalForm());
-        d4Image0 = new ImageView(getClass().getResource("/images/star0.png").toExternalForm());
-        d5Image0 = new ImageView(getClass().getResource("/images/star0.png").toExternalForm());
-
-        d1Image1 = new ImageView(getClass().getResource("/images/star1.png").toExternalForm());
-        d2Image1 = new ImageView(getClass().getResource("/images/star1.png").toExternalForm());
-        d3Image1 = new ImageView(getClass().getResource("/images/star1.png").toExternalForm());
-        d4Image1 = new ImageView(getClass().getResource("/images/star1.png").toExternalForm());
-        d5Image1 = new ImageView(getClass().getResource("/images/star1.png").toExternalForm());
-
-        setGraphics('d', 0);
-
-        i1Image0 = new ImageView(getClass().getResource("/images/star0.png").toExternalForm());
-        i2Image0 = new ImageView(getClass().getResource("/images/star0.png").toExternalForm());
-        i3Image0 = new ImageView(getClass().getResource("/images/star0.png").toExternalForm());
-        i4Image0 = new ImageView(getClass().getResource("/images/star0.png").toExternalForm());
-        i5Image0 = new ImageView(getClass().getResource("/images/star0.png").toExternalForm());
-
-        i1Image1 = new ImageView(getClass().getResource("/images/star1.png").toExternalForm());
-        i2Image1 = new ImageView(getClass().getResource("/images/star1.png").toExternalForm());
-        i3Image1 = new ImageView(getClass().getResource("/images/star1.png").toExternalForm());
-        i4Image1 = new ImageView(getClass().getResource("/images/star1.png").toExternalForm());
-        i5Image1 = new ImageView(getClass().getResource("/images/star1.png").toExternalForm());
-
-        setGraphics('i', 0);
+        setStars();
     }
 
     @FXML
@@ -400,4 +373,34 @@ public class CreateTaskController implements Initializable {
         tsDatePicker.setValue(null);
     }
 
+    private void setStars(){
+        d1Image0 = new ImageView(getClass().getResource("/images/star0.png").toExternalForm());
+        d2Image0 = new ImageView(getClass().getResource("/images/star0.png").toExternalForm());
+        d3Image0 = new ImageView(getClass().getResource("/images/star0.png").toExternalForm());
+        d4Image0 = new ImageView(getClass().getResource("/images/star0.png").toExternalForm());
+        d5Image0 = new ImageView(getClass().getResource("/images/star0.png").toExternalForm());
+
+        d1Image1 = new ImageView(getClass().getResource("/images/star1.png").toExternalForm());
+        d2Image1 = new ImageView(getClass().getResource("/images/star1.png").toExternalForm());
+        d3Image1 = new ImageView(getClass().getResource("/images/star1.png").toExternalForm());
+        d4Image1 = new ImageView(getClass().getResource("/images/star1.png").toExternalForm());
+        d5Image1 = new ImageView(getClass().getResource("/images/star1.png").toExternalForm());
+
+        setGraphics('d', 0);
+
+        i1Image0 = new ImageView(getClass().getResource("/images/star0.png").toExternalForm());
+        i2Image0 = new ImageView(getClass().getResource("/images/star0.png").toExternalForm());
+        i3Image0 = new ImageView(getClass().getResource("/images/star0.png").toExternalForm());
+        i4Image0 = new ImageView(getClass().getResource("/images/star0.png").toExternalForm());
+        i5Image0 = new ImageView(getClass().getResource("/images/star0.png").toExternalForm());
+
+        i1Image1 = new ImageView(getClass().getResource("/images/star1.png").toExternalForm());
+        i2Image1 = new ImageView(getClass().getResource("/images/star1.png").toExternalForm());
+        i3Image1 = new ImageView(getClass().getResource("/images/star1.png").toExternalForm());
+        i4Image1 = new ImageView(getClass().getResource("/images/star1.png").toExternalForm());
+        i5Image1 = new ImageView(getClass().getResource("/images/star1.png").toExternalForm());
+
+        setGraphics('i', 0);
     }
+
+}

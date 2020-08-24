@@ -10,7 +10,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
@@ -101,7 +100,7 @@ public class InfoController extends MotherController implements Initializable {
         double p = (double)(interval2)/(double)(interval1);
 
         progress1.setProgress(p);
-        double pDisplay = 0;
+        double pDisplay;
         if((p*100+"").length() < 4){
             pDisplay = p*100;
         }
@@ -123,9 +122,8 @@ public class InfoController extends MotherController implements Initializable {
 
         progress2.setProgress(p);
 
-        if((p*100+"").length() < 4){
+        if((p*100+"").length() < 4)
             pDisplay = p*100;
-        }
         else
             pDisplay = Double.parseDouble((p*100+"").substring(0, 4));
 
@@ -180,7 +178,6 @@ public class InfoController extends MotherController implements Initializable {
         for(int count = 1; count <= 5; count++){
             if(count <= i)
                 tab[count-1].setGraphic(images1[count-1]);
-
             else
                 tab[count-1].setGraphic(images0[count-1]);
         }
@@ -196,13 +193,13 @@ public class InfoController extends MotherController implements Initializable {
         double v = p.getProgress();
         String cssProperty = "-fx-accent : ";
 
-        if(v < 0.2)
+        if(v <= 0.2)
             cssProperty+="green";
-        else if(v < 0.4)
-            cssProperty+="#A7FF00";
-        else if(v < 0.6)
-            cssProperty+="yellow";
-        else if(v < 0.8)
+        else if(v <= 0.4)
+            cssProperty+="#6D8F00";
+        else if(v <= 0.6)
+            cssProperty+="#C5C500";
+        else if(v <= 0.8)
             cssProperty+="orange";
         else
             cssProperty+="red";

@@ -38,8 +38,8 @@
             <Text layoutX="14.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texte" text="Importance" wrappingWidth="200.0" AnchorPane.leftAnchor="0.0" />
             <Text fx:id="legendpg2" layoutX="227.0" layoutY="419.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="progressLabel" text="previsions (tsupp %)" wrappingWidth="270.0" AnchorPane.topAnchor="399.6" />
             <TextFlow id="description" fx:id="description" layoutX="300.0" layoutY="85.0" prefHeight="194.0" prefWidth="200.0" />
-            <ProgressBar fx:id="progress1" layoutY="290.0" prefWidth="200.0" progress="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="290.0" />
-            <ProgressBar fx:id="progress2" layoutY="405.0" prefWidth="200.0" progress="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="405.0" />
+            <ProgressBar fx:id="progress1" layoutY="290.0" prefWidth="200.0" progress="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="290.0" />
+            <ProgressBar fx:id="progress2" layoutY="405.0" prefWidth="200.0" progress="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="405.0" />
          </children>
       </AnchorPane>
    </children>

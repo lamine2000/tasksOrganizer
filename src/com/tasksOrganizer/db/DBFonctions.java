@@ -271,4 +271,25 @@ public class DBFonctions {
         return param;
     }
 
+    public static void modifyTask(String name, Task newtask){
+        Statement state = null;
+
+        Connection conn = DBConnect.getInstance().getConn();
+
+        try {
+            state = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        } catch (Exception e) {
+            System.out.println("Erreur de creation du Statement");
+        }
+
+        try {
+            state.executeUpdate("Update Task set nom = '"+ newtask.getNom() +"', description = '"+ newtask.getDescription() +"', importance = "+newtask.getImportance()+", difficulte = "+newtask.getDifficulte()+", echeance = '"+newtask.getEcheance()+"', tsupp = '"+newtask.getTsupp()+"', ok = "+newtask.isOk()+", dateCreation = '"+newtask.getDateCreation()+"' where nom = '"+name+"'");
+
+            state.close();
+        } catch (Exception e) {
+            System.out.println("Echec de communication avec la base de donnees");
+            //e.printStackTrace();
+        }
+    }
+
 }

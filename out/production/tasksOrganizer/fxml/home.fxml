@@ -26,14 +26,14 @@
                   <Insets />
                </opaqueInsets>
             </HBox>
-            <TableView fx:id="table" cache="true" layoutY="86.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="86.0">
+            <TableView fx:id="table" cache="true" layoutY="86.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="19.0" AnchorPane.topAnchor="86.0">
               <columns>
                   <TableColumn id="col_ok" fx:id="col_ok" minWidth="29.0" prefWidth="100.0" sortable="false" styleClass="col" text="ok" />
-                  <TableColumn id="col_name" fx:id="col_name" editable="false" minWidth="200.0" prefWidth="603.9999923706055" sortable="false" styleClass="col" text="name" />
-                  <TableColumn id="col_days" fx:id="col_days" minWidth="68.0" prefWidth="107.0" sortable="false" styleClass="col" text="days" />
-                  <TableColumn id="col_info" fx:id="col_info" minWidth="29.0" prefWidth="29.0" sortable="false" styleClass="col" text="info" />
-                  <TableColumn id="col_modif" fx:id="col_modif" minWidth="29.0" prefWidth="29.0" sortable="false" styleClass="col" text="mod" />
-                  <TableColumn id="col_del" fx:id="col_del" minWidth="29.0" prefWidth="29.0" sortable="false" styleClass="col" text="del" />
+                  <TableColumn id="col_name" fx:id="col_name" editable="false" minWidth="200.0" prefWidth="538.9999923706055" sortable="false" styleClass="col" text="name" />
+                  <TableColumn id="col_days" fx:id="col_days" minWidth="68.0" prefWidth="135.0" sortable="false" styleClass="col" text="days" />
+                  <TableColumn id="col_info" fx:id="col_info" minWidth="30.0" prefWidth="35.0" sortable="false" styleClass="col" text="info" />
+                  <TableColumn id="col_modif" fx:id="col_modif" minWidth="30.0" prefWidth="35.0" sortable="false" styleClass="col" text="mod" />
+                  <TableColumn id="col_del" fx:id="col_del" minWidth="30.0" prefWidth="35.0" sortable="false" styleClass="col" text="del" />
               </columns>
                <opaqueInsets>
                   <Insets />

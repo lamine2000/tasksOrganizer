@@ -1,0 +1,99 @@
+#modif{
+    -fx-background-color: #3C3F41;
+}
+
+.titre {
+    -fx-fill: orange;
+    -fx-font-size: 1.2em;
+    -fx-font-style: italic;
+    -fx-font-weight: bold;
+    -fx-alignment: center-left;
+    -fx-text-alignment: center;
+    -fx-font-family: "serif", "cursive", "Fira Code";
+}
+
+#actions{
+    -fx-spacing: 10px;
+    -fx-alignment: center;
+}
+
+#fermerButton{
+    -fx-padding: 5px;
+    -fx-background-color: cornflowerblue;
+    -fx-text-fill: white;
+}
+
+#fermerButton:hover{
+    -fx-cursor: hand;
+    -fx-effect: dropshadow( gaussian , rgba(255.0,255.0,255.0,0.8) , 15.0,0.0,0.0,1.0 );
+}
+
+#fermerButton:pressed{
+    -fx-effect: innershadow( gaussian , rgba(0.0,0.0,0.0,0.8) , 7.0,0.0,0.0,0.0 );
+}
+
+#description{
+    -fx-font-size: 1.1em;
+    -fx-font-style: italic;
+    -fx-font-weight: bold;
+    -fx-alignment: center-left;
+    -fx-text-alignment: center;
+    -fx-font-family: "serif", "cursive", "Fira Code";
+}
+
+#actions .button:hover{
+    -fx-background-color:orange;
+    -fx-effect: dropshadow( gaussian , rgba(0.0,0.0,0.0,0.8) , 15.0,0.0,0.0,1.0 );
+}
+
+#actions .button{
+    -fx-background-color: grey;
+    -fx-text-fill: black;
+    //-fx-font-weight: bold;
+    -fx-font-style: italic;
+    -fx-font-size: 1.07em;
+}
+
+.text-area{
+    -fx-opacity: 0.4;
+    -fx-font-weight: bold;
+    -fx-font-size: 1.2em;
+    -fx-border-width: 0px;
+    -fx-prompt-text-fill: black;
+}
+
+.text-area:focused{
+    -fx-prompt-text-fill: transparent;
+}
+
+.text-field,
+.text-field:hover{
+    -fx-border-color: grey;
+    -fx-border-width: 0 0 1 0;
+    -fx-background-color: rgba(0,0,0,0.4);
+    -fx-text-fill: #ffffff;
+    -fx-prompt-text-fill: #ffffff;
+    -fx-alignment: center;
+    -fx-font-size: 1.1em;
+    -fx-effect: null;
+}
+
+.text-field:focused,
+.text-field:selected{
+    -fx-border-width: 0 0 2 0;
+    -fx-border-color: whitesmoke;
+    -fx-prompt-text-fill: transparent;
+}
+
+.button:hover{
+    -fx-cursor: hand;
+}
+
+.star:pressed{
+    -fx-effect: innershadow( gaussian , rgba(0.0,0.0,0.0,0.8) , 5.0,0.0,0.0,0.0 );
+}
+
+.star{
+    -fx-background-color: transparent;
+    -fx-padding: 8px;
+}

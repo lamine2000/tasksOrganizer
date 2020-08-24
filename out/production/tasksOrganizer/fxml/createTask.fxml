@@ -32,7 +32,7 @@
       </HBox>
       <TextField id="nom" fx:id="nameField" layoutX="574.0" layoutY="116.0" prefHeight="38.0" prefWidth="225.0" promptText="Nom de la tâche" />
       <Text layoutX="64.0" layoutY="304.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="titre" text="Echeance" />
-      <DatePicker id="calandar1" fx:id="eDatePicker" layoutX="66.0" layoutY="314.0" />
+      <DatePicker id="calandar1" fx:id="eDatePicker" editable="false" layoutX="66.0" layoutY="314.0" />
       <Text layoutX="66.0" layoutY="390.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="titre" text="Temps Supposé" />
       <HBox id="actions" layoutX="586.0" layoutY="507.0" prefHeight="79.0" prefWidth="233.0">
          <children>
