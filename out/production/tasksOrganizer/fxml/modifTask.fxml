@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.gluonhq.charm.glisten.control.TextField?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="modif" fx:id="container" prefHeight="518.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tasksOrganizer.gui.ModifController">
+   <children>
+      <Text layoutX="37.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="titre" text="Difficulté" AnchorPane.topAnchor="23.63020896911621" />
+      <HBox layoutX="38.0" layoutY="116.0" onMouseExited="#difficultyStarsExitedAction" prefHeight="38.0" prefWidth="280.0" AnchorPane.topAnchor="46.0">
+         <children>
+            <Button fx:id="d1" mnemonicParsing="false" onAction="#handleStarClickedAction" onMouseEntered="#difficultyStarHoverAction" styleClass="star" />
+            <Button fx:id="d2" mnemonicParsing="false" onAction="#handleStarClickedAction" onMouseEntered="#difficultyStarHoverAction" styleClass="star" />
+            <Button fx:id="d3" mnemonicParsing="false" onAction="#handleStarClickedAction" onMouseEntered="#difficultyStarHoverAction" styleClass="star" />
+            <Button fx:id="d4" mnemonicParsing="false" onAction="#handleStarClickedAction" onMouseEntered="#difficultyStarHoverAction" styleClass="star" />
+            <Button fx:id="d5" mnemonicParsing="false" onAction="#handleStarClickedAction" onMouseEntered="#difficultyStarHoverAction" styleClass="star" />
+         </children>
+      </HBox>
+      <Text layoutX="41.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="titre" text="Importance" AnchorPane.topAnchor="113.0" />
+      <HBox layoutX="38.0" layoutY="203.0" onMouseExited="#importanceStarsExitedAction" prefHeight="38.0" prefWidth="280.0" AnchorPane.topAnchor="133.0">
+         <children>
+            <Button fx:id="i1" mnemonicParsing="false" onAction="#handleStarClickedAction" onMouseEntered="#importanceStarHoverAction" styleClass="star" />
+            <Button fx:id="i2" mnemonicParsing="false" onAction="#handleStarClickedAction" onMouseEntered="#importanceStarHoverAction" styleClass="star" />
+            <Button fx:id="i3" mnemonicParsing="false" onAction="#handleStarClickedAction" onMouseEntered="#importanceStarHoverAction" styleClass="star" />
+            <Button fx:id="i4" mnemonicParsing="false" onAction="#handleStarClickedAction" onMouseEntered="#importanceStarHoverAction" styleClass="star" />
+            <Button fx:id="i5" mnemonicParsing="false" onAction="#handleStarClickedAction" onMouseEntered="#importanceStarHoverAction" styleClass="star" />
+         </children>
+      </HBox>
+      <TextField id="nom" fx:id="nameField" layoutX="344.0" layoutY="76.0" prefHeight="38.0" prefWidth="225.0" promptText="Nom de la tâche" AnchorPane.topAnchor="46.0" />
+      <Text layoutX="46.0" layoutY="261.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="titre" text="Echeance" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="222.0" />
+      <DatePicker id="calandar1" fx:id="eDatePicker" editable="false" layoutX="40.0" layoutY="314.0" AnchorPane.topAnchor="244.0" />
+      <Text layoutX="43.0" layoutY="390.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="titre" text="Temps Supposé" AnchorPane.topAnchor="307.0" />
+      <HBox id="actions" layoutX="395.0" layoutY="468.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="436.0">
+         <children>
+            <Button id="clearButton" fx:id="clearButton" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#handleEffacerButtonAction" text="Effacer" />
+            <Button id="okButton" fx:id="okButton" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#handleValiderButtonAction" text="Valider" />
+            <Button fx:id="restaurerButton" mnemonicParsing="false" onAction="#handleRestaurerButtonAction" text="Restaurer" />
+         </children>
+      </HBox>
+      <TextArea fx:id="descriptionArea" layoutX="356.0" layoutY="200.0" prefHeight="200.0" prefWidth="200.0" promptText="Description de la tâche" wrapText="true" AnchorPane.topAnchor="170.0" />
+      <DatePicker id="calandar2" fx:id="tsDatePicker" layoutX="41.0" layoutY="399.0" AnchorPane.topAnchor="329.0" />
+      <Text layoutX="356.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="titre" text="Nom" AnchorPane.leftAnchor="356.0" AnchorPane.topAnchor="22.63020896911621" />
+      <Button id="fermerButton" fx:id="fermerButton" layoutX="43.0" layoutY="457.0" mnemonicParsing="false" onAction="#handleFermerButtonAction" prefHeight="38.0" prefWidth="74.0" text="Fermer" AnchorPane.topAnchor="437.0" />
+   </children>
+</AnchorPane>
