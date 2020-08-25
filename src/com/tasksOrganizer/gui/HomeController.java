@@ -80,9 +80,11 @@ public class HomeController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         ImageView addTaskImage = new ImageView(getClass().getResource("/images/addTask.png").toExternalForm());
         addTaskButton.setGraphic(addTaskImage);
+        addTaskButton.setTooltip(new Tooltip("Créer une nouvelle tâche"));
 
         ImageView parametersImage = new ImageView(getClass().getResource("/images/parameters.png").toExternalForm());
         parametersButton.setGraphic(parametersImage);
+        parametersButton.setTooltip(new Tooltip("Paramètres"));
 
         list = FXCollections.observableArrayList();
 

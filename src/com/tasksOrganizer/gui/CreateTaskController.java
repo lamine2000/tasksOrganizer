@@ -9,15 +9,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import com.gluonhq.charm.glisten.control.TextField;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Window;
@@ -102,12 +99,30 @@ public class CreateTaskController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         ImageView backImage = new ImageView(getClass().getResource("/images/back.png").toExternalForm());
         backButton.setGraphic(backImage);
+        backButton.setTooltip(new Tooltip("Revenir à la page d'accueil sans enregistrer"));
 
         ImageView okImage = new ImageView(getClass().getResource("/images/ok1.png").toExternalForm());
         okButton.setGraphic(okImage);
+        okButton.setTooltip(new Tooltip("Enregistrer la nouvelle tâche"));
 
         ImageView clearImage = new ImageView(getClass().getResource("/images/clear.png").toExternalForm());
         clearButton.setGraphic(clearImage);
+        clearButton.setTooltip(new Tooltip("Vider les champs"));
+
+        d1.setTooltip(new Tooltip("Très facile"));
+        d2.setTooltip(new Tooltip("Facile"));
+        d3.setTooltip(new Tooltip("Moyenne"));
+        d4.setTooltip(new Tooltip("Difficile"));
+        d5.setTooltip(new Tooltip("Très difficile"));
+
+        i1.setTooltip(new Tooltip("Pas importante"));
+        i2.setTooltip(new Tooltip("Peu importante"));
+        i3.setTooltip(new Tooltip("Moyenne"));
+        i4.setTooltip(new Tooltip("Importante"));
+        i5.setTooltip(new Tooltip("Très importante"));
+
+        eDatePicker.setTooltip(new Tooltip("Date limite d'exécution de la tâche"));
+        tsDatePicker.setTooltip(new Tooltip("Supposition de date de fin de tâche"));
 
         setStars();
     }

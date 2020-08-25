@@ -12,7 +12,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
@@ -38,9 +37,6 @@ public class ModifController extends MotherController implements Initializable {
     private static boolean starIClicked = true;
 
     private static int difficulte, importance;
-
-    @FXML
-    private AnchorPane container;
 
     @FXML
     private Button d1;
@@ -106,12 +102,32 @@ public class ModifController extends MotherController implements Initializable {
 
         ImageView okImage = new ImageView(getClass().getResource("/images/ok1.png").toExternalForm());
         okButton.setGraphic(okImage);
+        okButton.setTooltip(new Tooltip("Valider les changements"));
 
         ImageView clearImage = new ImageView(getClass().getResource("/images/clear.png").toExternalForm());
         clearButton.setGraphic(clearImage);
+        clearButton.setTooltip(new Tooltip("Vider les champs"));
 
         ImageView restoreImage = new ImageView(getClass().getResource("/images/restore.png").toExternalForm());
         restaurerButton.setGraphic(restoreImage);
+        restaurerButton.setTooltip(new Tooltip("Annuler les changements"));
+
+        fermerButton.setTooltip(new Tooltip("Fermer"));
+
+        d1.setTooltip(new Tooltip("Très facile"));
+        d2.setTooltip(new Tooltip("Facile"));
+        d3.setTooltip(new Tooltip("Moyenne"));
+        d4.setTooltip(new Tooltip("Difficile"));
+        d5.setTooltip(new Tooltip("Très difficile"));
+
+        i1.setTooltip(new Tooltip("Pas importante"));
+        i2.setTooltip(new Tooltip("Peu importante"));
+        i3.setTooltip(new Tooltip("Moyenne"));
+        i4.setTooltip(new Tooltip("Importante"));
+        i5.setTooltip(new Tooltip("Très importante"));
+
+        eDatePicker.setTooltip(new Tooltip("Date limite d'exécution de la tâche"));
+        tsDatePicker.setTooltip(new Tooltip("Supposition de date de fin de tâche"));
 
         task = DBFonctions.DBExtractTask(MotherController.taskName);
 
