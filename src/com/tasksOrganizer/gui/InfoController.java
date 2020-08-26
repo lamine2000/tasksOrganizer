@@ -1,6 +1,5 @@
 package com.tasksOrganizer.gui;
 
-import com.tasksOrganizer.db.DBFonctions;
 import com.tasksOrganizer.sample.Task;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -83,7 +82,7 @@ public class InfoController extends MotherController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        Task task = DBFonctions.DBExtractTask(taskName);
+        Task task = Task.extract(taskName);
 
         Text descText = !task.getDescription().trim().equals("") ? new Text("Description :\n"+ task.getDescription()) : new Text();
         descText.setStyle("-fx-fill: orange");

@@ -1,6 +1,5 @@
 package com.tasksOrganizer.gui;
 
-import com.tasksOrganizer.db.DBFonctions;
 import com.tasksOrganizer.sample.Task;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
@@ -140,7 +139,6 @@ public class HomeController implements Initializable {
                 } catch (IOException e) {
                     //e.printStackTrace();
                 }
-                //System.out.println("info "+name+" clicked");
             });
 
             modifyButtons[i].setId(row.getName());
@@ -151,7 +149,6 @@ public class HomeController implements Initializable {
                 } catch (IOException e) {
                     //e.printStackTrace();
                 }
-                //System.out.println("modif "+name+" clicked");
             });
 
             deleteButtons[i].setId((i+"").length()+row.getName() + i);
@@ -162,7 +159,7 @@ public class HomeController implements Initializable {
                 int index = Integer.parseInt(data.substring(data.length() - tailleIndex));
                 String name = data.substring(1/*tailleIndex.length*/, data.length() - tailleIndex);
 
-                Task.removeTask(name);
+                Task.remove(name);
                 referenceDel[index] = -1;
                 //System.out.println("la tache "+ name + " a été supprimée ! index : "+ index);
 
@@ -190,7 +187,7 @@ public class HomeController implements Initializable {
                 int index = Integer.parseInt(name.substring(name.length() - 1));
                 name = name.substring(0, name.length() - 1);
 
-                DBFonctions.taskDone(name);
+               Task.done(name);
                 referenceDone[index] = -1;
 
                 int countDone = 0;

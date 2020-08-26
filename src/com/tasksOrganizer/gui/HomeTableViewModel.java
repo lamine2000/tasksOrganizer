@@ -22,9 +22,9 @@ public class HomeTableViewModel {
         return name.get();
     }
 
-    public String getDays() {
+    /*public String getDays() {
         return days.get();
-    }
+    }*/
 
     public Button getInfo() {
         return info;

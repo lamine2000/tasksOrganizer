@@ -22,8 +22,6 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ResourceBundle;
 
-import com.tasksOrganizer.db.DBFonctions;
-
 
 public class ModifController extends MotherController implements Initializable {
 
@@ -129,7 +127,7 @@ public class ModifController extends MotherController implements Initializable {
         eDatePicker.setTooltip(new Tooltip("Date limite d'exécution de la tâche"));
         tsDatePicker.setTooltip(new Tooltip("Supposition de date de fin de tâche"));
 
-        task = DBFonctions.DBExtractTask(MotherController.taskName);
+        task = Task.extract(MotherController.taskName);
 
         setStars(task);
 
@@ -340,7 +338,7 @@ public class ModifController extends MotherController implements Initializable {
         LocalDate tsuppose = tsDatePicker.getValue();
 
         Task task2 = new Task(nom, descripiton, importance, difficulte, echeance, tsuppose, false, task.getDateCreation());
-        DBFonctions.modifyTask(task.getNom(), task2);
+        Task.modify(task.getNom(), task2);
 
         handleFermerButtonAction();
         MotherController.modifOpened = false;
@@ -473,7 +471,7 @@ public class ModifController extends MotherController implements Initializable {
                 int index = Integer.parseInt(data.substring(data.length() - tailleIndex));
                 String name = data.substring(1/*tailleIndex.length*/, data.length() - tailleIndex);
 
-                Task.removeTask(name);
+                Task.remove(name);
                 referenceDel[index] = -1;
                 //System.out.println("la tache "+ name + " a été supprimée ! index : "+ index);
 
@@ -501,7 +499,7 @@ public class ModifController extends MotherController implements Initializable {
                 int index = Integer.parseInt(name.substring(name.length() - 1));
                 name = name.substring(0, name.length() - 1);
 
-                DBFonctions.taskDone(name);
+                Task.done(name);
                 referenceDone[index] = -1;
 
                 int countDone = 0;

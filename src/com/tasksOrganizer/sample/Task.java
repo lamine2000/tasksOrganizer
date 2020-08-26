@@ -95,7 +95,27 @@ public class Task {
         return DBFonctions.DBExtractTasks();
     }
 
-    public static void removeTask(String nom){
+    public static void remove(String nom){
         DBFonctions.DBRemoveTask(nom);
+    }
+
+    public static void done(String name){
+        DBFonctions.taskDone(name);
+    }
+
+    public static Boolean exists(String name){
+        return DBFonctions.isTask(name);
+    }
+
+    public static void save(Task task){
+        DBFonctions.saveTask(task);
+    }
+
+    public static Task extract(String name){
+        return DBFonctions.DBExtractTask(name);
+    }
+
+    public static void modify(String name, Task newTask){
+        DBFonctions.modifyTask(name, newTask);
     }
 }

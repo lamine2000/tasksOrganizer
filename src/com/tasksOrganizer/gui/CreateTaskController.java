@@ -25,8 +25,6 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
-import com.tasksOrganizer.db.DBFonctions;
-
 public class CreateTaskController implements Initializable {
     private static ImageView d1Image0, d2Image0, d3Image0, d4Image0, d5Image0;
     private static ImageView d1Image1, d2Image1, d3Image1, d4Image1, d5Image1;
@@ -275,7 +273,7 @@ public class CreateTaskController implements Initializable {
 
         String nom = nameField.getText().toLowerCase();
 
-        if(DBFonctions.isTask(nom)){
+        if(Task.exists(nom)){
             AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Erreur!", "La tâche \"" + nom + "\" existe déjà dans la base de données !\nVeuillez renommer la nouvelle tâche.");
             nameField.setText("");
             return;
@@ -286,7 +284,7 @@ public class CreateTaskController implements Initializable {
         LocalDate tsuppose = tsDatePicker.getValue();
 
         Task task = new Task(nom, descripiton, importance, difficulte, echeance, tsuppose, false, today());
-        DBFonctions.saveTask(task);
+        Task.save(task);
             AlertHelper.showAlert(Alert.AlertType.INFORMATION, owner, "Enregistrement réussi !", "La tâche \"" + nom + "\" a été enregistrée avec succès !");
 
         emptyAll();
