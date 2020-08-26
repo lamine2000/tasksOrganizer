@@ -1,31 +1,30 @@
 package com.tasksOrganizer.db;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.time.LocalDate;
 import com.tasksOrganizer.sample.Task;
 
 public class DBFonctions {
     public static void saveTask(Task task){
-        Statement state = null;
 
         Connection conn = DBConnect.getInstance().getConn();
+        PreparedStatement state;
 
         try {
-            state = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-        } catch (Exception e) {
-            System.out.println("Erreur de creation du Statement");
-        }
+                state = conn.prepareStatement("insert into Task(nom, description, importance, difficulte, echeance, tsupp, dateCreation) values (?,?,?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                state.setString(1, task.getNom());
+                state.setString(2, task.getDescription());
+                state.setInt(3, task.getImportance());
+                state.setInt(4, task.getDifficulte());
+                state.setString(5, task.getEcheance().toString());
+                state.setString(6, task.getTsupp().toString());
+                state.setString(7, task.getDateCreation().toString());
 
-        try {
-            if(!isTask(task.getNom()))
-                state.executeUpdate("insert into Task(nom, description, importance, difficulte, echeance, tsupp, dateCreation) values ('" + task.getNom() + "','" + task.getDescription() + "'," + task.getImportance() + "," + task.getDifficulte() + ",'" + task.getEcheance() + "','" + task.getTsupp() + "', '"+ LocalDate.now() +"')");
+                state.executeUpdate();
+                state.close();
 
-            else
-                state.executeUpdate("update Task set nom = '"+ task.getNom() +"', description = '"+ task.getDescription() +"' , importance = "+ task.getImportance() + ", difficulte = " + task.getDifficulte() + ", echeance = '" + task.getEcheance() + "', tsupp = '" + task.getTsupp() + "' where nom = '"+ task.getNom() +"'");
-
-            state.close();
         } catch (Exception e) {
             System.out.println("Echec de communication avec la base de donnees");
         }
@@ -38,23 +37,20 @@ public class DBFonctions {
 
     public static boolean isTask(String nom){
         boolean exists = false;
-        Statement state = null;
-        ResultSet result = null;
+        PreparedStatement state;
+        ResultSet result;
 
         Connection conn = DBConnect.getInstance().getConn();
 
         try {
-            state = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-        } catch (Exception e) {
-            System.out.println("Erreur de creation du Statement");
-        }
+            state = conn.prepareStatement("select nom from Task where nom = ? and ok = ?",
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+            state.setString(1, nom);
+            state.setBoolean(2, false);
 
-        try {
-            result = state.executeQuery("select nom from Task where nom = '" + nom + "' and ok = false");
+            result = state.executeQuery();
             exists = result.first();
-
-            result.close();
-            state.close();
         } catch (Exception e) {
             System.out.println("Echec de communication avec la base de donnees");
         }
@@ -68,8 +64,8 @@ public class DBFonctions {
 
 
     public static Task[] DBExtractTasks(){
-        Statement state = null;
-        ResultSet result = null;
+        PreparedStatement state;
+        ResultSet result;
         int id;
         Task[] tasks = new Task[0];
         String[] paramList = {"nom", "description", "importance", "difficulte", "echeance", "tsupp", "ok", "dateCreation"};
@@ -79,13 +75,10 @@ public class DBFonctions {
         Connection conn = DBConnect.getInstance().getConn();
 
         try {
-            state = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-        } catch (Exception e) {
-            System.out.println("Erreur de creation du Statement");
-        }
-
-        try {
-            result = state.executeQuery("select id from Task where ok = "+ false);
+            state = conn.prepareStatement("select id from Task where ok = false",
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+            result = state.executeQuery();
 
             while(result.next())
                 taille++;
@@ -105,7 +98,7 @@ public class DBFonctions {
             state.close();
         } catch (Exception e) {
             System.out.println("Echec de communication avec la base de donnees");
-            //e.printStackTrace();
+            e.printStackTrace();
         }
 
         return tasks;
@@ -119,21 +112,18 @@ public class DBFonctions {
 
     public static Object DBgetParam(String nomParam, String nomIdentifiant, int valeurIdentifiant) {
         Object param = null;
-        Statement state = null;
-        ResultSet result = null;
-        String nomTable = "Task";
+        PreparedStatement state;
+        ResultSet result;
 
         Connection conn = DBConnect.getInstance().getConn();
 
         try {
-            state = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-        } catch (Exception e) {
-            System.out.println("Erreur de creation du Statement");
-        }
+            state = conn.prepareStatement("select "+nomParam+" from Task where "+nomIdentifiant+" = ?",
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+            state.setInt(1, valeurIdentifiant);
 
-        try {
-            result = state.executeQuery("SELECT " + nomParam + " FROM " + nomTable + " where " + nomIdentifiant + "="
-                    + valeurIdentifiant);
+            result = state.executeQuery();
 
             if (result.next() && result.getObject(1) != null)
                 param = result.getObject(1);
@@ -153,18 +143,18 @@ public class DBFonctions {
 
 
     public static void DBRemoveTask(String nom){
-        Statement state = null;
+        PreparedStatement state;
 
         Connection conn = DBConnect.getInstance().getConn();
 
         try {
-            state = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-        } catch (Exception e) {
-            System.out.println("Erreur de creation du Statement");
-        }
+            //state.executeUpdate("Delete from Task where nom = '"+nom.toLowerCase()+"'");
+            state = conn.prepareStatement("delete from Task where nom = ?",
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+            state.setString(1,  nom);
 
-        try {
-            state.executeUpdate("Delete from Task where nom = '"+nom.toLowerCase()+"'");
+            state.executeUpdate();
 
             state.close();
         } catch (Exception e) {
@@ -180,18 +170,18 @@ public class DBFonctions {
 
 
     public static void taskDone(String taskName){
-        Statement state = null;
+        PreparedStatement state;
 
         Connection conn = DBConnect.getInstance().getConn();
 
         try {
-            state = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-        } catch (Exception e) {
-            System.out.println("Erreur de creation du Statement");
-        }
+            state = conn.prepareStatement("update Task set ok = ? where nom = ?",
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+            state.setBoolean(1, true);
+            state.setString(2, taskName);
 
-        try {
-            state.executeUpdate("Update Task set ok = "+ true +" where nom = '"+ taskName +"'");
+            state.executeUpdate();
 
             state.close();
         } catch (Exception e) {
@@ -207,18 +197,9 @@ public class DBFonctions {
 
 
     public static Task DBExtractTask(String taskName){
-        Statement state = null;
         Task task = new Task();
         String[] paramList = {"nom", "description", "importance", "difficulte", "echeance", "tsupp", "ok", "dateCreation"};
         Object[] tab = new Object[paramList.length];
-
-        Connection conn = DBConnect.getInstance().getConn();
-
-        try {
-            state = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-        } catch (Exception e) {
-            System.out.println("Erreur de creation du Statement");
-        }
 
         try {
                 for(int j = 0; j < paramList.length; j++)
@@ -226,10 +207,9 @@ public class DBFonctions {
 
                 task = new Task(tab[0].toString(), tab[1].toString(), Integer.parseInt(tab[2].toString()), Integer.parseInt(tab[3].toString()), LocalDate.parse(tab[4].toString()), LocalDate.parse(tab[5].toString()), (Boolean)tab[6], LocalDate.parse(tab[7].toString()));
 
-            state.close();
         } catch (Exception e) {
-            //System.out.println("Echec de communication avec la base de donnees");
-            e.printStackTrace();
+            System.out.println("Echec de communication avec la base de donnees");
+            //e.printStackTrace();
         }
 
         return task;
@@ -243,21 +223,18 @@ public class DBFonctions {
 
     public static Object DBgetParam2(String nomParam, String nomIdentifiant, String valeurIdentifiant) {
         Object param = null;
-        Statement state = null;
-        ResultSet result = null;
-        String nomTable = "Task";
+        PreparedStatement state;
+        ResultSet result;
 
         Connection conn = DBConnect.getInstance().getConn();
 
         try {
-            state = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-        } catch (Exception e) {
-            System.out.println("Erreur de creation du Statement");
-        }
+            state = conn.prepareStatement("select "+nomParam+" from Task where "+nomIdentifiant+" = ?",
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+            state.setString(1, valeurIdentifiant);
 
-        try {
-            result = state.executeQuery("SELECT " + nomParam + " FROM " + nomTable + " where " + nomIdentifiant + " = '"
-                    + valeurIdentifiant + "'");
+            result = state.executeQuery();
 
             if (result.next() && result.getObject(1) != null)
                 param = result.getObject(1);
@@ -272,18 +249,26 @@ public class DBFonctions {
     }
 
     public static void modifyTask(String name, Task newtask){
-        Statement state = null;
+        PreparedStatement state;
 
         Connection conn = DBConnect.getInstance().getConn();
 
         try {
-            state = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-        } catch (Exception e) {
-            System.out.println("Erreur de creation du Statement");
-        }
+            state = conn.prepareStatement(
+                    "update Task set nom = ?, description = ?, importance = ?, difficulte = ?, echeance = ?, tsupp = ?, dateCreation = ? where nom = ?",
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
 
-        try {
-            state.executeUpdate("Update Task set nom = '"+ newtask.getNom() +"', description = '"+ newtask.getDescription() +"', importance = "+newtask.getImportance()+", difficulte = "+newtask.getDifficulte()+", echeance = '"+newtask.getEcheance()+"', tsupp = '"+newtask.getTsupp()+"', ok = "+newtask.isOk()+", dateCreation = '"+newtask.getDateCreation()+"' where nom = '"+name+"'");
+            state.setString(1, newtask.getNom());
+            state.setString(2, newtask.getDescription());
+            state.setInt(3, newtask.getImportance());
+            state.setInt(4, newtask.getDifficulte());
+            state.setString(5, newtask.getEcheance().toString());
+            state.setString(6, newtask.getTsupp().toString());
+            state.setString(7, newtask.getDateCreation().toString());
+            state.setString(8, name);
+
+            state.executeUpdate();
 
             state.close();
         } catch (Exception e) {
