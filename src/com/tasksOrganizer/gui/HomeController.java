@@ -133,6 +133,7 @@ public class HomeController implements Initializable {
 
             infoButtons[i].setId(row.getName());
             row.getInfo().setOnAction(event -> {
+
                 String name = ((Button) (event.getSource())).getId();
                 try {
                     loadInfo(name);
@@ -154,6 +155,7 @@ public class HomeController implements Initializable {
             deleteButtons[i].setId((i+"").length()+row.getName() + i);
             referenceDel[i] = i;
             row.getDelete().setOnAction(event -> {
+
                 String data = ((Button) (event.getSource())).getId();
                 int tailleIndex = Integer.parseInt(data.substring(0,1));
                 int index = Integer.parseInt(data.substring(data.length() - tailleIndex));
@@ -178,14 +180,15 @@ public class HomeController implements Initializable {
 
             });
 
-            oks[i].setId(row.getName() + i);
+            oks[i].setId((i+"").length()+row.getName() + i);
             oks[i].getStyleClass().add("doneButton");
             referenceDone[i] = i;
             row.getOk().setOnAction(event -> {
 
-                String name = ((Button) (event.getSource())).getId();
-                int index = Integer.parseInt(name.substring(name.length() - 1));
-                name = name.substring(0, name.length() - 1);
+                String data = ((Button) (event.getSource())).getId();
+                int tailleIndex = Integer.parseInt(data.substring(0,1));
+                int index = Integer.parseInt(data.substring(data.length() - tailleIndex));
+                String name = data.substring(1/*tailleIndex.length*/, data.length() - tailleIndex);
 
                Task.done(name);
                 referenceDone[index] = -1;
