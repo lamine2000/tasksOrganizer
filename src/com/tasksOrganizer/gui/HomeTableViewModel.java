@@ -1,46 +1,45 @@
 package com.tasksOrganizer.gui;
 
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.Button;
 
 public class HomeTableViewModel {
     private final SimpleStringProperty name;
     private final SimpleStringProperty days;
-    private final Button info, modif, delete, ok;
+    private final SimpleObjectProperty<Button> info, modif, delete, ok;
 
     public HomeTableViewModel(String nom, String days, Button info, Button modif, Button delete, Button ok) {
 
         this.name = new SimpleStringProperty(nom);
         this.days = new SimpleStringProperty(days);
-        this.info = info;
-        this.modif = modif;
-        this.delete = delete;
-        this.ok = ok;
+        this.info = new SimpleObjectProperty<Button>(info);
+        this.modif = new SimpleObjectProperty<Button>(modif);
+        this.delete = new SimpleObjectProperty<Button>(delete);
+        this.ok = new SimpleObjectProperty<Button>(ok);
     }
 
     public String getName() {
         return name.get();
     }
 
-    /*public String getDays() {
+    public String getDays() {
         return days.get();
-    }*/
+    }
 
     public Button getInfo() {
-        return info;
+        return info.get();
     }
 
     public Button getModif() {
-        return modif;
+        return modif.get();
     }
 
     public Button getDelete() {
-        return delete;
+        return delete.get();
     }
 
     public Button getOk() {
-        return ok;
+        return ok.get();
     }
-
-
 }
