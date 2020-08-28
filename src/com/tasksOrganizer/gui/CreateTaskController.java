@@ -17,8 +17,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Paint;
 import javafx.stage.Window;
 import javafx.util.Duration;
+import tray.animations.AnimationType;
+import tray.notification.TrayNotification;
 
 import java.io.IOException;
 import java.net.URL;
@@ -288,6 +291,13 @@ public class CreateTaskController implements Initializable {
             AlertHelper.showAlert(Alert.AlertType.INFORMATION, owner, "Enregistrement réussi !", "La tâche \"" + nom + "\" a été enregistrée avec succès !");
 
         emptyAll();
+
+        TrayNotification tray = new TrayNotification();
+        tray.setTitle("Création réussie");
+        tray.setMessage("La tâche '"+task.getNom()+"' a été créée avec succès.");
+        tray.setRectangleFill(Paint.valueOf("#6D8F00"));
+        tray.setAnimationType(AnimationType.SLIDE);
+        tray.showAndDismiss(Duration.seconds(5));
 
     }
 

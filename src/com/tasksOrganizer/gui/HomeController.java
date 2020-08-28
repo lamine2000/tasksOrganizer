@@ -21,16 +21,21 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import tray.animations.AnimationType;
+import tray.notification.NotificationType;
+import tray.notification.TrayNotification;
 
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ResourceBundle;
+//import tray.*;
 
 public class HomeController implements Initializable {
 
@@ -177,6 +182,13 @@ public class HomeController implements Initializable {
                 table.refresh();
 
                 nb[0] = refreshText(nb[0], event);
+
+                TrayNotification tray = new TrayNotification();
+                tray.setTitle("Suppression réussie");
+                tray.setMessage("La tâche '"+name+"' a été supprimée avec succès.");
+                tray.setRectangleFill(Paint.valueOf("#6D8F00"));
+                tray.setAnimationType(AnimationType.SLIDE);
+                tray.showAndDismiss(Duration.seconds(5));
 
             });
 

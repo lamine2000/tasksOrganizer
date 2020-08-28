@@ -12,9 +12,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
+import javafx.util.Duration;
+import tray.animations.AnimationType;
+import tray.notification.TrayNotification;
 
 import java.io.IOException;
 import java.net.URL;
@@ -343,6 +347,14 @@ public class ModifController extends MotherController implements Initializable {
         handleFermerButtonAction();
         MotherController.modifOpened = false;
 
+
+        TrayNotification tray = new TrayNotification();
+        tray.setTitle("Enregistrement réussi");
+        tray.setMessage("La tâche '"+taskName+"' a été modifiée avec succès.");
+        tray.setRectangleFill(Paint.valueOf("#6D8F00"));
+        tray.setAnimationType(AnimationType.SLIDE);
+        tray.showAndDismiss(Duration.seconds(5));
+
         updateTable();
 
     }
@@ -595,7 +607,10 @@ public class ModifController extends MotherController implements Initializable {
 
         difficulte = task.getDifficulte();
 
-        setGraphics('d', importance);
-        setGraphics('i', difficulte);
+        setGraphics('i', importance);
+        setGraphics('d', difficulte);
+
+        starDClicked = true;
+        starIClicked = true;
     }
 }

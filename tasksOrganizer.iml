@@ -11,5 +11,6 @@
     <orderEntry type="library" name="mysql-connector-java-8.0.21" level="project" />
     <orderEntry type="library" name="javafx14" level="project" />
     <orderEntry type="library" name="charm-glisten-6.0.5" level="project" />
+    <orderEntry type="library" name="TrayNotification" level="project" />
   </component>
 </module>
