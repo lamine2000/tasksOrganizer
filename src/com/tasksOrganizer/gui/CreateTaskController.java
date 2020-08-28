@@ -1,18 +1,21 @@
 package com.tasksOrganizer.gui;
 
+import com.gluonhq.charm.glisten.control.TextField;
 import com.tasksOrganizer.sample.Task;
+import com.tasksOrganizer.tray.animations.AnimationType;
+import com.tasksOrganizer.tray.notification.NotificationType;
+import com.tasksOrganizer.tray.notification.TrayNotification;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import com.gluonhq.charm.glisten.control.TextField;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -20,8 +23,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
 import javafx.stage.Window;
 import javafx.util.Duration;
-import tray.animations.AnimationType;
-import tray.notification.TrayNotification;
 
 import java.io.IOException;
 import java.net.URL;
@@ -288,7 +289,6 @@ public class CreateTaskController implements Initializable {
 
         Task task = new Task(nom, descripiton, importance, difficulte, echeance, tsuppose, false, today());
         Task.save(task);
-            AlertHelper.showAlert(Alert.AlertType.INFORMATION, owner, "Enregistrement réussi !", "La tâche \"" + nom + "\" a été enregistrée avec succès !");
 
         emptyAll();
 
@@ -297,6 +297,7 @@ public class CreateTaskController implements Initializable {
         tray.setMessage("La tâche '"+task.getNom()+"' a été créée avec succès.");
         tray.setRectangleFill(Paint.valueOf("#6D8F00"));
         tray.setAnimationType(AnimationType.SLIDE);
+        tray.setNotificationType(NotificationType.SUCCESS);
         tray.showAndDismiss(Duration.seconds(5));
 
     }

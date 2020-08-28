@@ -1,15 +1,18 @@
 package com.tasksOrganizer.gui;
 
 
+import com.gluonhq.charm.glisten.control.TextField;
 import com.tasksOrganizer.sample.Task;
+import com.tasksOrganizer.tray.animations.AnimationType;
+import com.tasksOrganizer.tray.notification.NotificationType;
+import com.tasksOrganizer.tray.notification.TrayNotification;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import com.gluonhq.charm.glisten.control.TextField;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
@@ -17,8 +20,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.util.Duration;
-import tray.animations.AnimationType;
-import tray.notification.TrayNotification;
 
 import java.io.IOException;
 import java.net.URL;
@@ -351,8 +352,8 @@ public class ModifController extends MotherController implements Initializable {
         TrayNotification tray = new TrayNotification();
         tray.setTitle("Enregistrement réussi");
         tray.setMessage("La tâche '"+taskName+"' a été modifiée avec succès.");
-        tray.setRectangleFill(Paint.valueOf("#6D8F00"));
         tray.setAnimationType(AnimationType.SLIDE);
+        tray.setNotificationType(NotificationType.SUCCESS);
         tray.showAndDismiss(Duration.seconds(5));
 
         updateTable();

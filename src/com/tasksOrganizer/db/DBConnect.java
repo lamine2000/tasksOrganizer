@@ -24,6 +24,22 @@ public class DBConnect {
         return single;
     }
 
+    private static Connection DBconnecter(String[] params) {
+        // se sert des parametres de connexion pour se connecter a la base de donnees et
+        // renvoie l'objet Connection obtenu
+
+        Connection conn = null;
+
+        try {
+            Class.forName(params[3]);
+            conn = DriverManager.getConnection(params[0], params[1], params[2]);
+        } catch (Exception e) {
+            System.out.println("Echec de connection a la base de donnees");
+            // e.printStackTrace();
+        }
+        return conn;
+    }
+
     public Connection getConn() {
         return this.conn;
     }
@@ -53,21 +69,5 @@ public class DBConnect {
         proprietes = url + "°" + user + "°" + password + "°" + driver;
 
         return proprietes.split("°");
-    }
-
-    private static Connection DBconnecter(String[] params) {
-        // se sert des parametres de connexion pour se connecter a la base de donnees et
-        // renvoie l'objet Connection obtenu
-
-        Connection conn = null;
-
-        try {
-            Class.forName(params[3]);
-            conn = DriverManager.getConnection(params[0], params[1], params[2]);
-        } catch (Exception e) {
-            System.out.println("Echec de connection a la base de donnees");
-            // e.printStackTrace();
-        }
-        return conn;
     }
 }
