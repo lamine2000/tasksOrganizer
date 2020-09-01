@@ -12,7 +12,7 @@
     -fx-effect: dropshadow( gaussian , rgba(0.0,0.0,0.0,0.8) , 20.0,0.0,0.0,1.0 );
 }
 
-.button:hover{
+.button:hover, .check-box:hover{
     -fx-cursor: hand;
 }
 
@@ -114,4 +114,12 @@
 #actions .button:pressed,
 #back:pressed{
     -fx-effect: innershadow( gaussian , rgba(0.0,0.0,0.0,0.8) , 5.0,0.0,0.0,0.0 );
+}
+
+.check-box{
+    -fx-font-weight: bold;
+    -fx-font-style: italic;
+    -fx-text-fill: aliceblue;
+    -fx-font-size: 1.2em;
+    //-fx-font-family: 'Pacifico';
 }

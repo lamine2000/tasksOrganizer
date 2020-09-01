@@ -2,6 +2,7 @@ package com.tasksOrganizer.gui;
 
 
 import com.gluonhq.charm.glisten.control.TextField;
+import com.tasksOrganizer.sample.Reminder;
 import com.tasksOrganizer.sample.Task;
 import com.tasksOrganizer.tray.animations.AnimationType;
 import com.tasksOrganizer.tray.notification.NotificationType;
@@ -15,6 +16,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
@@ -23,6 +26,8 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ResourceBundle;
 
@@ -94,13 +99,50 @@ public class ModifController extends MotherController implements Initializable {
     @FXML
     private Button restaurerButton;
 
+    @FXML
+    private VBox vbox, vboxStep;
+
+    @FXML
+    private DatePicker reminderFirstDate;
+
+    @FXML
+    private Text text1, text2, text3;
+
+    @FXML
+    private CheckBox reminderOn;
+
+    TimeSpinner tsFirst, tsStep;
+
 
     Task task = new Task();
+    Reminder reminder = new Reminder();
 
     HomeTableViewModel row;
 
+    boolean rmdrAssociated;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        rmdrAssociated = Reminder.exists(MotherController.taskName);
+
+        reminderOn.setTooltip(new Tooltip("Activer les rappels"));
+
+        reminderFirstDate.setTooltip(new Tooltip("Date de la première notification"));
+        reminderFirstDate.setEditable(false);
+
+        tsFirst = new TimeSpinner();
+        tsFirst.setTooltip(new Tooltip("Heure de la première notification"));
+        tsFirst.setId("firsTimeSpinner");
+        vbox.getChildren().add(tsFirst);
+
+        tsStep = new TimeSpinner();
+        tsStep.setTooltip(new Tooltip("Fréquence des notifications"));
+        tsStep.setId("StepTimeSpinner");
+        vboxStep.getChildren().add(tsStep);
+
+        reminderOn.setSelected(rmdrAssociated);
+        setReminderStuffVisility(rmdrAssociated);
 
         ImageView okImage = new ImageView(getClass().getResource("/images/ok1.png").toExternalForm());
         okButton.setGraphic(okImage);
@@ -132,6 +174,7 @@ public class ModifController extends MotherController implements Initializable {
         tsDatePicker.setTooltip(new Tooltip("Supposition de date de fin de tâche"));
 
         task = Task.extract(MotherController.taskName);
+        reminder = rmdrAssociated ? Reminder.extract(task.getNom()) : null;
 
         setStars(task);
 
@@ -146,6 +189,12 @@ public class ModifController extends MotherController implements Initializable {
         importance = task.getImportance();
 
         difficulte = task.getDifficulte();
+
+        if(rmdrAssociated){
+            reminderFirstDate.setValue(reminder.getFirstDateTime().toLocalDate());
+            tsFirst.getEditor().setText(reminder.getFirstDateTime().getHour()+":"+reminder.getFirstDateTime().getMinute());
+            tsStep.getEditor().setText(reminder.getStep().getHour()+":"+reminder.getStep().getMinute());
+        }
 
     }
 
@@ -227,6 +276,8 @@ public class ModifController extends MotherController implements Initializable {
         setGraphics('i', 0);
         eDatePicker.setValue(null);
         tsDatePicker.setValue(null);
+        reminderOn.setSelected(false);
+        setReminderStuffVisility(false);
     }
 
     @FXML
@@ -305,7 +356,7 @@ public class ModifController extends MotherController implements Initializable {
             return;
         }
 
-        if (eDatePicker.getValue().isBefore(today()) || eDatePicker.getValue().isEqual(today())) {
+        if (!eDatePicker.getValue().isAfter(today())) {
             AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Erreur!", "L'échéance doit etre ultérieure à la date du jour (" + today().getDayOfMonth() + "/" + today().getMonthValue() + "/" + today().getYear() + ") !");
             return;
         }
@@ -335,15 +386,40 @@ public class ModifController extends MotherController implements Initializable {
             return;
         }
 
+        if(rmdrAssociated){
+
+            if(reminderFirstDate.getValue() == null){
+                AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Erreur!", "Veuillez entrer la date de la première notification");
+                return;
+            }
+
+            if(!reminderFirstDate.getValue().isBefore(eDatePicker.getValue())){
+                AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Erreur!", "La date du rappel doit être antérieure à l'échéance");
+                return;
+            }
+        }
+
         String nom = nameField.getText().toLowerCase();
 
         String descripiton = descriptionArea.getText();
         LocalDate echeance = eDatePicker.getValue();
         LocalDate tsuppose = tsDatePicker.getValue();
 
-        Task task2 = new Task(nom, descripiton, importance, difficulte, echeance, tsuppose, false, task.getDateCreation());
-        Task.modify(task.getNom(), task2);
+        LocalDateTime firstDateTime = LocalDateTime.of(reminderFirstDate.getValue(), tsFirst.getValue());
+        LocalTime step = tsStep.getValue();
+        LocalDateTime nextDateTime = firstDateTime.plusHours(step.getHour()).plusMinutes(step.getMinute());
 
+        if(rmdrAssociated){
+            if(Reminder.exists(taskName))
+                Reminder.modify(taskName, new Reminder(nom, firstDateTime, step, reminder.getNextDateTime(), reminder.getIteration(), reminder.isActive()));
+            else
+                Reminder.save(new Reminder(nom, firstDateTime, step, nextDateTime, 0, true), Task.getId(taskName));
+        }
+
+        else if(Reminder.exists(taskName))
+            Reminder.remove(taskName);
+
+        Task.modify(task.getNom(), new Task(nom, descripiton, importance, difficulte, echeance, tsuppose, false, task.getDateCreation()));
         handleFermerButtonAction();
         MotherController.modifOpened = false;
 
@@ -612,5 +688,30 @@ public class ModifController extends MotherController implements Initializable {
 
         starDClicked = true;
         starIClicked = true;
+
+        reminderOn.setSelected(rmdrAssociated);
+        setReminderStuffVisility(rmdrAssociated);
+
+        if(rmdrAssociated){
+            reminderFirstDate.setValue(reminder.getFirstDateTime().toLocalDate());
+            tsFirst.getEditor().setText(reminder.getFirstDateTime().getHour()+":"+reminder.getFirstDateTime().getMinute());
+            tsStep.getEditor().setText(reminder.getStep().getHour()+":"+reminder.getStep().getMinute());
+        }
+    }
+
+    @FXML
+    void handleReminderCheckBoxAction() {
+        boolean visible = reminderOn.isSelected();
+        setReminderStuffVisility(visible);
+        rmdrAssociated = visible;
+    }
+
+    void setReminderStuffVisility(boolean visible){
+        text1.setVisible(visible);
+        text2.setVisible(visible);
+        text3.setVisible(visible);
+        reminderFirstDate.setVisible(visible);
+        vboxStep.setVisible(visible);
+        vbox.setVisible(visible);
     }
 }

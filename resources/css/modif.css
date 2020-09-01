@@ -47,11 +47,12 @@
 }
 
 #actions .button{
-    -fx-background-color: grey;
+    //-fx-background-color: grey;
     -fx-text-fill: black;
     //-fx-font-weight: bold;
     -fx-font-style: italic;
     -fx-font-size: 1.07em;
+    -fx-background-color: transparent;
 }
 
 .text-area{
@@ -85,7 +86,7 @@
     -fx-prompt-text-fill: transparent;
 }
 
-.button:hover{
+.button:hover, .check-box:hover{
     -fx-cursor: hand;
 }
 
@@ -96,4 +97,12 @@
 .star{
     -fx-background-color: transparent;
     -fx-padding: 8px;
+}
+
+.check-box{
+    -fx-font-weight: bold;
+    -fx-font-style: italic;
+    -fx-text-fill: aliceblue;
+    -fx-font-size: 1.2em;
+//-fx-font-family: 'Pacifico';
 }

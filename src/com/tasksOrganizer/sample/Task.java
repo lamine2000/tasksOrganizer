@@ -107,8 +107,8 @@ public class Task {
         return DBFonctions.isTask(name);
     }
 
-    public static void save(Task task){
-        DBFonctions.saveTask(task);
+    public static int save(Task task){
+       return DBFonctions.saveTask(task);
     }
 
     public static Task extract(String name){
@@ -117,5 +117,12 @@ public class Task {
 
     public static void modify(String name, Task newTask){
         DBFonctions.modifyTask(name, newTask);
+    }
+
+    public static int getId(String taskName){
+        if(Task.exists(taskName))
+            return Integer.parseInt(DBFonctions.DBgetParam2("id", "Task", "nom", taskName).toString());
+        else
+            return -1;
     }
 }

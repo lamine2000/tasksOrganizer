@@ -172,7 +172,7 @@ public class HomeController implements Initializable {
                 for (int j = 0; j < index; j++)
                     countDel = referenceDel[j] == -1 ? countDel + 1 : countDel;
 
-                //try to animate this
+                // TODO: Animate deletion of tableView  elements
                 list.remove(index - countDel);
 
                 table.setItems(list);
@@ -182,7 +182,7 @@ public class HomeController implements Initializable {
                 nb[0] = refreshText(nb[0], event);
 
                 TrayNotification tray = new TrayNotification();
-                tray.setTitle("Création réussie");
+                tray.setTitle("Suppression réussie");
                 tray.setMessage("La tâche '"+name+"' a été supprimée avec succès.");
                 tray.setAnimationType(AnimationType.SLIDE);
                 tray.setNotificationType(NotificationType.SUCCESS);

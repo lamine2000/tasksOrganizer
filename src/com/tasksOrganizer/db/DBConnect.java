@@ -7,7 +7,7 @@ import java.util.Properties;
 
 public class DBConnect {
     private volatile static DBConnect single;
-    private Connection conn = null;
+    private Connection conn;
 
     private DBConnect() {
         String[] params = chargerProprietes("jdbc.properties");
@@ -49,7 +49,7 @@ public class DBConnect {
         // chaines de caracteres
 
         Properties prop = null;
-        InputStream in = null;
+        InputStream in;
         String url, user, password, driver, proprietes;
 
         try {

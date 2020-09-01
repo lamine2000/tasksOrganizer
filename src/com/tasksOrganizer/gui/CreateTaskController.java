@@ -1,6 +1,7 @@
 package com.tasksOrganizer.gui;
 
 import com.gluonhq.charm.glisten.control.TextField;
+import com.tasksOrganizer.sample.Reminder;
 import com.tasksOrganizer.sample.Task;
 import com.tasksOrganizer.tray.animations.AnimationType;
 import com.tasksOrganizer.tray.notification.NotificationType;
@@ -20,13 +21,17 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Text;
 import javafx.stage.Window;
 import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ResourceBundle;
 
 public class CreateTaskController implements Initializable {
@@ -96,9 +101,42 @@ public class CreateTaskController implements Initializable {
     @FXML
     private DatePicker tsDatePicker;
 
+    @FXML
+    private VBox vbox, vboxStep;
+
+    @FXML
+    private DatePicker reminderFirstDate;
+
+    @FXML
+    private Text text1, text2, text3;
+
+    @FXML
+    private CheckBox reminderOn;
+
+    TimeSpinner tsFirst, tsStep;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        reminderOn.setTooltip(new Tooltip("Activer les rappels"));
+
+        reminderFirstDate.setTooltip(new Tooltip("Date de la première notification"));
+        reminderFirstDate.setEditable(false);
+
+        tsFirst = new TimeSpinner();
+        tsFirst.setTooltip(new Tooltip("Heure de la première notification"));
+        tsFirst.setId("firsTimeSpinner");
+        vbox.getChildren().add(tsFirst);
+
+        tsStep = new TimeSpinner();
+        tsStep.setTooltip(new Tooltip("Fréquence des notifications"));
+        tsStep.setId("StepTimeSpinner");
+        vboxStep.getChildren().add(tsStep);
+
+        reminderOn.setSelected(false);
+        setReminderStuffVisility(false);
+
         ImageView backImage = new ImageView(getClass().getResource("/images/back.png").toExternalForm());
         backButton.setGraphic(backImage);
         backButton.setTooltip(new Tooltip("Revenir à la page d'accueil sans enregistrer"));
@@ -245,7 +283,7 @@ public class CreateTaskController implements Initializable {
             return;
         }
 
-        if(eDatePicker.getValue().isBefore(today()) || eDatePicker.getValue().isEqual(today())){
+        if(!eDatePicker.getValue().isAfter(today())){
             AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Erreur!", "L'échéance doit etre ultérieure à la date du jour ("+today().getDayOfMonth()+"/"+today().getMonthValue()+"/"+today().getYear()+") !");
             return;
         }
@@ -255,7 +293,7 @@ public class CreateTaskController implements Initializable {
             return;
         }
 
-        if(tsDatePicker.getValue().isBefore(today()) || tsDatePicker.getValue().isEqual(today())){
+        if(!tsDatePicker.getValue().isAfter(today())){
             AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Erreur!", "la date supposée de fin de tâche doit etre ultérieure à la date du jour ("+today().getDayOfMonth()+"/"+today().getMonthValue()+"/"+today().getYear()+") !");
             return;
         }
@@ -288,7 +326,32 @@ public class CreateTaskController implements Initializable {
         LocalDate tsuppose = tsDatePicker.getValue();
 
         Task task = new Task(nom, descripiton, importance, difficulte, echeance, tsuppose, false, today());
-        Task.save(task);
+
+        if(reminderOn.isSelected()){
+
+            if(reminderFirstDate.getValue() == null){
+                AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Erreur!", "Veuillez entrer la date de la première notification");
+                return;
+            }
+
+            if(!reminderFirstDate.getValue().isBefore(echeance)){
+                AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Erreur!", "La date du rappel doit être antérieure à l'échéance");
+                return;
+            }
+
+            if(!reminderFirstDate.getValue().isAfter(today())){
+                AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Erreur!", "La date du rappel doit être ultérieure à la date du jour");
+                return;
+            }
+
+            LocalDateTime firstDateTime = LocalDateTime.of(reminderFirstDate.getValue(), tsFirst.getValue());
+            LocalTime step = tsStep.getValue();
+            LocalDateTime nextDateTime = firstDateTime.plusHours(step.getHour()).plusMinutes(step.getMinute());
+
+            Reminder reminder = new Reminder(nom, firstDateTime, step, nextDateTime, 0, true);
+            int idTask = Task.save(task);
+            Reminder.save(reminder, idTask);
+        }
 
         emptyAll();
 
@@ -395,6 +458,8 @@ public class CreateTaskController implements Initializable {
         setGraphics('i', 0);
         eDatePicker.setValue(null);
         tsDatePicker.setValue(null);
+        setReminderStuffVisility(false);
+        reminderOn.setSelected(false);
     }
 
     private void setStars(){
@@ -427,4 +492,18 @@ public class CreateTaskController implements Initializable {
         setGraphics('i', 0);
     }
 
+    @FXML
+    void handleReminderCheckBoxAction() {
+        boolean visible = reminderOn.isSelected();
+        setReminderStuffVisility(visible);
+    }
+
+    void setReminderStuffVisility(boolean visible){
+        text1.setVisible(visible);
+        text2.setVisible(visible);
+        text3.setVisible(visible);
+        reminderFirstDate.setVisible(visible);
+        vboxStep.setVisible(visible);
+        vbox.setVisible(visible);
+    }
 }

@@ -12,5 +12,7 @@
     <orderEntry type="library" name="mysql-connector-java-8.0.21" level="project" />
     <orderEntry type="library" name="javafx14" level="project" />
     <orderEntry type="library" name="charm-glisten-6.0.5" level="project" />
+    <orderEntry type="library" name="com.coreoz:wisp:2.2.0" level="project" />
+    <orderEntry type="library" name="org.slf4j:slf4j-api:2.0.0-alpha1" level="project" />
   </component>
 </module>

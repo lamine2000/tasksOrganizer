@@ -1,17 +1,21 @@
 package com.tasksOrganizer.db;
 
+import com.tasksOrganizer.sample.Reminder;
 import com.tasksOrganizer.sample.Task;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class DBFonctions {
-    public static void saveTask(Task task) {
+    public static int saveTask(Task task) {
 
         Connection conn = DBConnect.getInstance().getConn();
         PreparedStatement state;
+        int id = -1;
 
         try {
             state = conn.prepareStatement("insert into Task(nom, description, importance, difficulte, echeance, tsupp, dateCreation) values (?,?,?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -24,11 +28,16 @@ public class DBFonctions {
             state.setString(7, task.getDateCreation().toString());
 
             state.executeUpdate();
+
+            id = Integer.parseInt((DBgetParam2("id", "Task","nom", task.getNom())).toString());
+
             state.close();
 
         } catch (Exception e) {
             System.out.println("Echec de communication avec la base de donnees");
         }
+
+        return id;
     }
 
 
@@ -140,8 +149,9 @@ public class DBFonctions {
             state.setString(1, nom);
 
             state.executeUpdate();
-
             state.close();
+
+            DBRemoveReminder(nom);
         } catch (Exception e) {
             System.out.println("Echec de communication avec la base de donnees");
             //e.printStackTrace();
@@ -180,9 +190,17 @@ public class DBFonctions {
 
         try {
             for (int j = 0; j < paramList.length; j++)
-                tab[j] = DBgetParam2(paramList[j], "nom", taskName);
+                tab[j] = DBgetParam2(paramList[j], "Task","nom", taskName);
 
-            task = new Task(tab[0].toString(), tab[1].toString(), Integer.parseInt(tab[2].toString()), Integer.parseInt(tab[3].toString()), LocalDate.parse(tab[4].toString()), LocalDate.parse(tab[5].toString()), (Boolean) tab[6], LocalDate.parse(tab[7].toString()));
+            task = new Task(tab[0].toString(),
+                    tab[1].toString(),
+                    Integer.parseInt(tab[2].toString()),
+                    Integer.parseInt(tab[3].toString()),
+                    LocalDate.parse(tab[4].toString()),
+                    LocalDate.parse(tab[5].toString()),
+                    (Boolean) tab[6],
+                    LocalDate.parse(tab[7].toString())
+            );
 
         } catch (Exception e) {
             System.out.println("Echec de communication avec la base de donnees");
@@ -190,11 +208,10 @@ public class DBFonctions {
         }
 
         return task;
-
     }
 
 
-    public static Object DBgetParam2(String nomParam, String nomIdentifiant, String valeurIdentifiant) {
+    public static Object DBgetParam2(String nomParam,String nomTable ,String nomIdentifiant, String valeurIdentifiant) {
         Object param = null;
         PreparedStatement state;
         ResultSet result;
@@ -202,7 +219,7 @@ public class DBFonctions {
         Connection conn = DBConnect.getInstance().getConn();
 
         try {
-            state = conn.prepareStatement("select " + nomParam + " from Task where " + nomIdentifiant + " = ?",
+            state = conn.prepareStatement("select " + nomParam + " from " + nomTable + " where " + nomIdentifiant + " = ?",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
             state.setString(1, valeurIdentifiant);
@@ -216,6 +233,7 @@ public class DBFonctions {
             result.close();
         } catch (Exception e) {
             System.out.println("Echec de communication avec la base de donnees");
+            //e.printStackTrace();
         }
 
         return param;
@@ -231,7 +249,7 @@ public class DBFonctions {
             state = conn.prepareStatement(
                     "update Task set nom = ?, description = ?, importance = ?, difficulte = ?, echeance = ?, tsupp = ?, dateCreation = ? where nom = ?",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
-                    ResultSet.CONCUR_READ_ONLY);
+                    ResultSet.CONCUR_UPDATABLE);
 
             state.setString(1, newtask.getNom());
             state.setString(2, newtask.getDescription());
@@ -251,4 +269,159 @@ public class DBFonctions {
         }
     }
 
+
+
+
+
+
+    public static void saveReminder(Reminder reminder, int idTask){
+        Connection conn = DBConnect.getInstance().getConn();
+        PreparedStatement state;
+
+        try {
+            state = conn.prepareStatement("insert into Reminder (id, taskName, firstDateTime, step, nextDateTime, iteration, active) values (?,?,?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+
+            String fdt = reminder.getFirstDateTime().toString().replace("T"," ");
+            String ndt = reminder.getNextDateTime().toString().replace("T", " ");
+
+            state.setInt(1, idTask);
+            state.setString(2, reminder.getTaskName());
+            state.setString(3, fdt);
+            state.setString(4, reminder.getStep().toString());
+            state.setString(5, ndt);
+            state.setInt(6, reminder.getIteration());
+            state.setBoolean(7, reminder.isActive());
+
+            state.executeUpdate();
+            state.close();
+
+        } catch (Exception e) {
+            System.out.println("Echec de communication avec la base de donnees");
+            //e.printStackTrace();
+        }
+    }
+
+
+
+
+
+
+    public static void modifyReminder(Reminder newReminder, String taskName){
+        PreparedStatement state;
+
+        Connection conn = DBConnect.getInstance().getConn();
+
+        try {
+            state = conn.prepareStatement(
+                    "update Reminder set taskName = ?, firstDateTime = ?, step = ?, nextDateTime = ?, iteration = ?, active = ? where taskName = ?",
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+
+            state.setString(1, newReminder.getTaskName());
+            state.setString(2, newReminder.getFirstDateTime().toString());
+            state.setString(3, newReminder.getStep().toString());
+            state.setString(4, newReminder.getNextDateTime().toString());
+            state.setInt(5, newReminder.getIteration());
+            state.setBoolean(6, newReminder.isActive());
+            state.setString(7, taskName);
+
+            state.executeUpdate();
+
+            state.close();
+        } catch (Exception e) {
+            System.out.println("Echec de communication avec la base de donnees");
+            //e.printStackTrace();
+        }
+    }
+
+
+
+
+
+
+    public static Reminder DBExtractReminder(String taskName){
+        Reminder reminder = new Reminder();
+        String[] paramList = {"taskName", "firstDateTime", "step", "nextDateTime", "iteration", "active"};
+        Object[] tab = new Object[paramList.length];
+
+        try {
+            for (int j = 0; j < paramList.length; j++)
+                tab[j] = DBgetParam2(paramList[j], "Reminder","taskName", taskName);
+
+            reminder = new Reminder(
+                    tab[0].toString(),
+                    LocalDateTime.parse(tab[1].toString().replace(" ", "T")),
+                    LocalTime.parse(tab[2].toString()),
+                    LocalDateTime.parse(tab[3].toString().replace(" ", "T")),
+                    Integer.parseInt(tab[4].toString()),
+                    (Boolean) tab[5]
+            );
+        } catch (Exception e) {
+            System.out.println("Echec de communication avec la base de donnees");
+            //e.printStackTrace();
+        }
+
+        return reminder;
+    }
+
+
+
+
+
+
+    public static Reminder[] DBExtractReminders(){return new Reminder[0];}
+
+
+
+
+
+
+    public static void DBRemoveReminder(String taskName){
+        if(isReminder(taskName)){
+            PreparedStatement state;
+
+            Connection conn = DBConnect.getInstance().getConn();
+
+            try {
+                state = conn.prepareStatement("delete from Reminder where taskName = ?",
+                        ResultSet.TYPE_SCROLL_INSENSITIVE,
+                        ResultSet.CONCUR_UPDATABLE);
+                state.setString(1, taskName);
+
+                state.executeUpdate();
+
+                state.close();
+            } catch (Exception e) {
+                System.out.println("Echec de communication avec la base de donnees");
+                //e.printStackTrace();
+            }
+        }
+    }
+
+
+
+
+
+
+    public static boolean isReminder(String taskName) {
+        boolean exists = false;
+        PreparedStatement state;
+        ResultSet result;
+
+        Connection conn = DBConnect.getInstance().getConn();
+
+        try {
+            state = conn.prepareStatement("select taskName from Reminder where taskName = ? and active = true",
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+            state.setString(1, taskName);
+
+            result = state.executeQuery();
+            exists = result.first();
+        } catch (Exception e) {
+            System.out.println("Echec de communication avec la base de donnees");
+        }
+
+        return exists;
+    }
 }
