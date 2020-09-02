@@ -89,9 +89,9 @@ public class DBFonctions {
             result.relative(-1 * taille - 1);
             for (int i = 0; i < taille; i++) {
                 result.next();
-                id = Integer.parseInt(result.getObject(1).toString());
+                id = result.getInt(1);
                 for (int j = 0; j < paramList.length; j++)
-                    tab[j] = DBgetParam(paramList[j], "id", id);
+                    tab[j] = DBgetParam(paramList[j], "Task","id", id);
 
                 tasks[i] = new Task(tab[0].toString(), tab[1].toString(), Integer.parseInt(tab[2].toString()), Integer.parseInt(tab[3].toString()), LocalDate.parse(tab[4].toString()), LocalDate.parse(tab[5].toString()), (Boolean) tab[6], LocalDate.parse(tab[7].toString()));
             }
@@ -104,11 +104,10 @@ public class DBFonctions {
         }
 
         return tasks;
-
     }
 
 
-    public static Object DBgetParam(String nomParam, String nomIdentifiant, int valeurIdentifiant) {
+    public static Object DBgetParam(String nomParam, String nomTable, String nomIdentifiant, int valeurIdentifiant) {
         Object param = null;
         PreparedStatement state;
         ResultSet result;
@@ -116,7 +115,7 @@ public class DBFonctions {
         Connection conn = DBConnect.getInstance().getConn();
 
         try {
-            state = conn.prepareStatement("select " + nomParam + " from Task where " + nomIdentifiant + " = ?",
+            state = conn.prepareStatement("select " + nomParam + " from " + nomTable + " where " + nomIdentifiant + " = ?",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
             state.setInt(1, valeurIdentifiant);
@@ -369,7 +368,52 @@ public class DBFonctions {
 
 
 
-    public static Reminder[] DBExtractReminders(){return new Reminder[0];}
+    public static Reminder[] DBExtractReminders(){
+        PreparedStatement state;
+        ResultSet result;
+        int id;
+        Reminder[] reminder = new Reminder[0];
+        String[] paramList = {"taskName", "firstDateTime", "step", "nextDateTime", "iteration", "active"};
+        Object[] tab = new Object[paramList.length];
+        int taille = 0;
+
+        Connection conn = DBConnect.getInstance().getConn();
+
+        try {
+            state = conn.prepareStatement("select id from Reminder where active = true",
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+            result = state.executeQuery();
+
+            while (result.next())
+                taille++;
+
+            reminder = new Reminder[taille];
+            result.relative(-1 * taille - 1);
+            for (int i = 0; i < taille; i++) {
+                result.next();
+                id = result.getInt(1);
+                for (int j = 0; j < paramList.length; j++)
+                    tab[j] = DBgetParam(paramList[j], "Reminder","id", id);
+
+                reminder[i] = new Reminder(
+                        tab[0].toString(),
+                        LocalDateTime.parse(tab[1].toString().replace(" ", "T")),
+                        LocalTime.parse(tab[2].toString()),
+                        LocalDateTime.parse(tab[3].toString().replace(" ", "T")),
+                        Integer.parseInt(tab[4].toString()),
+                        (Boolean) tab[5]
+                );
+            }
+            result.close();
+            state.close();
+        } catch (Exception e) {
+            System.out.println("Echec de communication avec la base de donnees");
+            //e.printStackTrace();
+        }
+
+        return reminder;
+    }
 
 
 

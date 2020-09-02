@@ -9,9 +9,6 @@
       <root url="jar://$PROJECT_DIR$/lib/wisp-2.2.0-javadoc.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/slf4j-api-1.7.25-javadoc.jar!/" />
     </JAVADOC>
-    <SOURCES>
-      <root url="jar://$PROJECT_DIR$/lib/wisp-2.2.0-sources.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/slf4j-api-1.7.25-sources.jar!/" />
-    </SOURCES>
+    <SOURCES />
   </library>
 </component>

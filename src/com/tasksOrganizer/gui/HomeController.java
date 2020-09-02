@@ -1,5 +1,6 @@
 package com.tasksOrganizer.gui;
 
+import com.tasksOrganizer.sample.Reminder;
 import com.tasksOrganizer.sample.Task;
 import com.tasksOrganizer.tray.animations.AnimationType;
 import com.tasksOrganizer.tray.notification.NotificationType;

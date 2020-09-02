@@ -1,5 +1,6 @@
 package com.tasksOrganizer.gui;
 
+import com.tasksOrganizer.sample.Reminder;
 import com.tasksOrganizer.sample.Task;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -16,8 +17,11 @@ import javafx.util.Duration;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ResourceBundle;
+
+import static javafx.scene.input.KeyCode.R;
 
 public class InfoController extends MotherController implements Initializable {
 
@@ -72,6 +76,9 @@ public class InfoController extends MotherController implements Initializable {
     @FXML
     private TextFlow description;
 
+    @FXML
+    private Text textRmdr;
+
     String taskName = MotherController.taskName;
     private static ImageView d1Image0, d2Image0, d3Image0, d4Image0, d5Image0;
     private static ImageView d1Image1, d2Image1, d3Image1, d4Image1, d5Image1;
@@ -83,6 +90,18 @@ public class InfoController extends MotherController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         Task task = Task.extract(taskName);
+        String textTime, textHour, textMinute;
+        LocalDateTime nextDateTime;
+        if(Reminder.exists(taskName)){
+            nextDateTime = Reminder.extract(taskName).getNextDateTime();
+            textTime = nextDateTime.toString().split("T")[1];
+            textHour = textTime.split(":")[0];
+            textMinute = textTime.split(":")[1];
+            textRmdr.setText("Prochaine notification prévue pour le "+nextDateTime.getDayOfMonth()+"-"+nextDateTime.getMonthValue()+"-"+nextDateTime.getYear()+" à "+textHour+"h "+textMinute+"min");
+        }
+        else
+            textRmdr.setText("Notifications désactivées pour cette tâche");
+
 
         Text descText = !task.getDescription().trim().equals("") ? new Text("Description :\n"+ task.getDescription()) : new Text();
         descText.setStyle("-fx-fill: orange");

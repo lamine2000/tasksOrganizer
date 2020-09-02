@@ -12,6 +12,14 @@
     -fx-font-family: "serif", "cursive", "Fira Code";
 }
 
+.titre{
+    -fx-font-weight: bold;
+    -fx-font-style: italic;
+    -fx-fill: aliceblue;
+    -fx-font-size: 1.1em;
+//-fx-font-family: 'Pacifico';
+}
+
 .progressLabel{
     -fx-font-size: 1.1em;
     -fx-fill: cornflowerblue;
