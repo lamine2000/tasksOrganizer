@@ -22,7 +22,7 @@ public class MainHidden extends Application {
         scheduler.schedule(
                 () -> {
                     //code à exécuter à chaque minute
-                    System.out.println("my first Job");
+                    System.out.println("tic");
 
                     Reminder[] reminders = Reminder.extractReminders();
                     LocalDateTime[] nextDateTimes = new LocalDateTime[reminders.length];
