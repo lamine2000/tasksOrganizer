@@ -468,4 +468,32 @@ public class DBFonctions {
 
         return exists;
     }
+
+
+
+
+
+
+
+    public static void refreshReminder(int iteration, LocalDateTime next, String name){
+        PreparedStatement state;
+
+        Connection conn = DBConnect.getInstance().getConn();
+
+        try{
+            state = conn.prepareStatement("Update Reminder set iteration = ?, nextDateTime = ? where taskName = ?",
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE
+            );
+            state.setInt(1, iteration);
+            state.setString(2, next.toString().replace("T", " "));
+            state.setString(3, name);
+
+            state.executeUpdate();
+            state.close();
+        }catch (Exception e){
+            System.out.println("Echec de communication avec la base de donnees");
+            //e.printStackTrace();
+        }
+    }
 }

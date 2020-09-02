@@ -96,4 +96,8 @@ public class Reminder {
     public static void remove(String taskName){
         DBFonctions.DBRemoveReminder(taskName);
     }
+
+    public static void refresh(int iteration, LocalDateTime next, String taskName){
+        DBFonctions.refreshReminder(iteration, next, taskName);
+    }
 }
