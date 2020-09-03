@@ -3,6 +3,7 @@ package com.tasksOrganizer.gui;
 import com.coreoz.wisp.Scheduler;
 import com.coreoz.wisp.schedule.Schedules;
 import com.tasksOrganizer.sample.Reminder;
+import com.tasksOrganizer.sample.Task;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -11,17 +12,23 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 
 
 public class MainHidden extends Application {
+    private LocalDateTime next;
+    private LocalTime step;
+    private String name, message;
+    private Process process;
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage){
+
         Scheduler scheduler = new Scheduler();
 
         scheduler.schedule(
                 () -> {
-                    //code à exécuter à chaque minute
+                    //code à exécuter à chaque 2 secondes
                     System.out.println("tic");
 
                     Reminder[] reminders = Reminder.extractReminders();
@@ -42,53 +49,48 @@ public class MainHidden extends Application {
                         else if(nextDateTimes[i].isBefore(LocalDateTime.now().plusSeconds(5)) && nextDateTimes[i].isAfter(LocalDateTime.now().minusSeconds(5))){
                             try {
                                 showNotif(reminders[i]);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            } catch (InterruptedException e) {
+                            } catch (IOException | InterruptedException e ) {
                                 //e.printStackTrace();
                             }
                         }
                     }
                 }
-                ,Schedules.fixedDelaySchedule(Duration.ofSeconds(1)) // the schedule associated to the runnable
+                ,Schedules.fixedDelaySchedule(Duration.ofSeconds(2)) // the schedule associated to the runnable
         );
 
     }
 
 
     private void showMissedNotif(Reminder reminder) throws IOException, InterruptedException {
-        LocalDateTime next = reminder.getNextDateTime();
-        LocalTime step = reminder.getStep();
+        next = reminder.getNextDateTime();
+        step = reminder.getStep();
         LocalDate date = LocalDate.parse(next.toString().split("T")[0]);
         LocalTime time = LocalTime.parse(next.toString().split("T")[1]);
-        String name = reminder.getTaskName();
-        int iteration = reminder.getIteration();
-
+        name = reminder.getTaskName();
+        message = "Rappel__Manqué_:__Le__" + date.toString() + "__à__" + time.getHour() + "h" + time.getMinute() + "min";
 
         while(next.isBefore(LocalDateTime.now())) {
-            Process process = Runtime.getRuntime().exec("notify-send Tâche : " + reminder.getTaskName() + "\nRappel manqué le " + date.toString() + " à " + time.getHour() + "h" + time.getMinute() + "min");
+            process = Runtime.getRuntime().exec(String.format("notify-send %s %s", name, message));
             process.waitFor();
 
             next = next.plusHours(step.getHour()).plusMinutes(step.getMinute());
-            iteration++;
-            Reminder.refresh(iteration, next , name);
+            Reminder.refresh(next , name);
         }
     }
 
     private void showNotif(Reminder reminder) throws IOException, InterruptedException {
-        LocalDateTime next = reminder.getNextDateTime();
-        LocalTime step = reminder.getStep();
-        LocalDate date = LocalDate.parse(next.toString().split("T")[0]);
-        LocalTime time = LocalTime.parse(next.toString().split("T")[1]);
-        String name = reminder.getTaskName();
-        int iteration = reminder.getIteration();
+        next = reminder.getNextDateTime();
+        step = reminder.getStep();
+        name = reminder.getTaskName();
+        Task task = Task.extract(name);
+        long interval = ChronoUnit.DAYS.between(LocalDate.now(), task.getEcheance());
+        message = "Rappel_:__Il__vous__reste__encore__"+ interval +"j";
 
-        Process process = Runtime.getRuntime().exec("notify-send Tâche : " + reminder.getTaskName() + "\nRappel le " + date.toString() + " à " + time.getHour() + "h" + time.getMinute() + "min");
+        process = Runtime.getRuntime().exec(String.format("notify-send %s %s", name, message));
         process.waitFor();
 
         next = next.plusHours(step.getHour()).plusMinutes(step.getMinute());
-        iteration++;
-        Reminder.refresh(iteration, next , name);
+        Reminder.refresh(next, name);
     }
 
     public static void main(String[] args){ launch(args); }

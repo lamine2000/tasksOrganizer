@@ -21,8 +21,6 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ResourceBundle;
 
-import static javafx.scene.input.KeyCode.R;
-
 public class InfoController extends MotherController implements Initializable {
 
     @FXML

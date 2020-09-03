@@ -27,10 +27,8 @@ select DATE_FORMAT (dateCreation, '%Y-%m-%d') from tasksOrganizer.Task;
 create table Reminder(
   id 			int not null,
   taskName 		varchar(255) not null,
-  firstDateTime datetime not null,
   step 			time,
   nextDateTime 	datetime,
-  iteration 	integer default 0,
   active 		boolean default true,
 
   constraint pk_Rem primary key (id),

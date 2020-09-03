@@ -1,7 +1,5 @@
 package com.tasksOrganizer.tray.animations;
 
-import com.tasksOrganizer.tray.animations.TrayAnimation;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

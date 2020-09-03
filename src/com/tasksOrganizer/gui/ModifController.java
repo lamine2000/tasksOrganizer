@@ -103,7 +103,7 @@ public class ModifController extends MotherController implements Initializable {
     private VBox vbox, vboxStep;
 
     @FXML
-    private DatePicker reminderFirstDate;
+    private DatePicker reminderNextDate;
 
     @FXML
     private Text text1, text2, text3;
@@ -128,16 +128,16 @@ public class ModifController extends MotherController implements Initializable {
 
         reminderOn.setTooltip(new Tooltip("Activer les rappels"));
 
-        reminderFirstDate.setTooltip(new Tooltip("Date de la première notification"));
-        reminderFirstDate.setEditable(false);
+        reminderNextDate.setTooltip(new Tooltip("Date de la prochaine notification"));
+        reminderNextDate.setEditable(false);
 
         tsFirst = new TimeSpinner();
-        tsFirst.setTooltip(new Tooltip("Heure de la première notification"));
+        tsFirst.setTooltip(new Tooltip("Heure de la prochaine notification"));
         tsFirst.setId("firsTimeSpinner");
         vbox.getChildren().add(tsFirst);
 
         tsStep = new TimeSpinner();
-        tsStep.setTooltip(new Tooltip("Fréquence des notifications"));
+        tsStep.setTooltip(new Tooltip("Fréquence des notifications (hh:mm)"));
         tsStep.setId("StepTimeSpinner");
         vboxStep.getChildren().add(tsStep);
 
@@ -191,8 +191,8 @@ public class ModifController extends MotherController implements Initializable {
         difficulte = task.getDifficulte();
 
         if(rmdrAssociated){
-            reminderFirstDate.setValue(reminder.getFirstDateTime().toLocalDate());
-            tsFirst.getEditor().setText(reminder.getFirstDateTime().getHour()+":"+reminder.getFirstDateTime().getMinute());
+            reminderNextDate.setValue(reminder.getNextDateTime().toLocalDate());
+            tsFirst.getEditor().setText(reminder.getNextDateTime().getHour()+":"+reminder.getNextDateTime().getMinute());
             tsStep.getEditor().setText(reminder.getStep().getHour()+":"+reminder.getStep().getMinute());
         }
 
@@ -386,15 +386,22 @@ public class ModifController extends MotherController implements Initializable {
             return;
         }
 
+        LocalDateTime fdt;
         if(rmdrAssociated){
 
-            if(reminderFirstDate.getValue() == null){
+            if(reminderNextDate.getValue() == null){
                 AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Erreur!", "Veuillez entrer la date de la première notification");
                 return;
             }
 
-            if(!reminderFirstDate.getValue().isBefore(eDatePicker.getValue())){
+            if(!reminderNextDate.getValue().isBefore(eDatePicker.getValue())){
                 AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Erreur!", "La date du rappel doit être antérieure à l'échéance");
+                return;
+            }
+
+            fdt = LocalDateTime.of(reminderNextDate.getValue(), tsFirst.getValue());
+            if(!fdt.isAfter(LocalDateTime.now())){
+                AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Erreur!", "La date du premier rappel doit être ultérieure à : "+LocalDateTime.now().toString().split("\\.")[0].replace("T", "   ")+" (càd maintenant)");
                 return;
             }
         }
@@ -405,15 +412,16 @@ public class ModifController extends MotherController implements Initializable {
         LocalDate echeance = eDatePicker.getValue();
         LocalDate tsuppose = tsDatePicker.getValue();
 
-        LocalDateTime firstDateTime = LocalDateTime.of(reminderFirstDate.getValue(), tsFirst.getValue());
+        LocalDateTime nextDateTime = LocalDateTime.of(reminderNextDate.getValue(), tsFirst.getValue());
         LocalTime step = tsStep.getValue();
-        LocalDateTime nextDateTime = firstDateTime.plusHours(step.getHour()).plusMinutes(step.getMinute());
+        Reminder newR;
 
         if(rmdrAssociated){
+            newR = new Reminder(nom, nextDateTime, step, true);
             if(Reminder.exists(taskName))
-                Reminder.modify(taskName, new Reminder(nom, firstDateTime, step, reminder.getNextDateTime(), reminder.getIteration(), reminder.isActive()));
+                Reminder.modify(taskName, newR);
             else
-                Reminder.save(new Reminder(nom, firstDateTime, step, nextDateTime, 0, true), Task.getId(taskName));
+                Reminder.save(newR, Task.getId(taskName));
         }
 
         else if(Reminder.exists(taskName))
@@ -432,7 +440,6 @@ public class ModifController extends MotherController implements Initializable {
         tray.showAndDismiss(Duration.seconds(5));
 
         updateTable();
-
     }
 
     private LocalDate today() {
@@ -693,8 +700,8 @@ public class ModifController extends MotherController implements Initializable {
         setReminderStuffVisility(rmdrAssociated);
 
         if(rmdrAssociated){
-            reminderFirstDate.setValue(reminder.getFirstDateTime().toLocalDate());
-            tsFirst.getEditor().setText(reminder.getFirstDateTime().getHour()+":"+reminder.getFirstDateTime().getMinute());
+            reminderNextDate.setValue(reminder.getNextDateTime().toLocalDate());
+            tsFirst.getEditor().setText(reminder.getNextDateTime().getHour()+":"+reminder.getNextDateTime().getMinute());
             tsStep.getEditor().setText(reminder.getStep().getHour()+":"+reminder.getStep().getMinute());
         }
     }
@@ -710,7 +717,7 @@ public class ModifController extends MotherController implements Initializable {
         text1.setVisible(visible);
         text2.setVisible(visible);
         text3.setVisible(visible);
-        reminderFirstDate.setVisible(visible);
+        reminderNextDate.setVisible(visible);
         vboxStep.setVisible(visible);
         vbox.setVisible(visible);
     }

@@ -326,6 +326,7 @@ public class CreateTaskController implements Initializable {
         LocalDate tsuppose = tsDatePicker.getValue();
 
         Task task = new Task(nom, descripiton, importance, difficulte, echeance, tsuppose, false, today());
+        LocalDateTime fdt;
 
         if(reminderOn.isSelected()){
 
@@ -335,20 +336,22 @@ public class CreateTaskController implements Initializable {
             }
 
             if(!reminderFirstDate.getValue().isBefore(echeance)){
-                AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Erreur!", "La date du rappel doit être antérieure à l'échéance");
+                AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Erreur!", "La date du premier rappel doit être antérieure à l'échéance");
                 return;
             }
 
-            if(!reminderFirstDate.getValue().isAfter(today())){
-                AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Erreur!", "La date du rappel doit être ultérieure à la date du jour");
+            fdt = LocalDateTime.of(reminderFirstDate.getValue(), tsFirst.getValue());
+            if(!fdt.isAfter(LocalDateTime.now())){
+                AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Erreur!", "La date du rappel doit être ultérieure à : "+LocalDateTime.now().toString().split(".")[0].replace("T", "   ")+" (càd maintenant)");
                 return;
             }
 
-            LocalDateTime firstDateTime = LocalDateTime.of(reminderFirstDate.getValue(), tsFirst.getValue());
+            LocalDateTime firstDateTime = fdt;
             LocalTime step = tsStep.getValue();
-            LocalDateTime nextDateTime = firstDateTime.plusHours(step.getHour()).plusMinutes(step.getMinute());
 
-            Reminder reminder = new Reminder(nom, firstDateTime, step, nextDateTime, 0, true);
+            Reminder reminder = new Reminder(nom, firstDateTime, step, true);
+            //a la creation d une tache, la prochaine notificationn de cette tache est aussi la premiere
+
             int idTask = Task.save(task);
             Reminder.save(reminder, idTask);
         }

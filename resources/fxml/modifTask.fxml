@@ -49,7 +49,7 @@
       <Button id="fermerButton" fx:id="fermerButton" layoutX="38.0" layoutY="570.0" mnemonicParsing="false" onAction="#handleFermerButtonAction" prefHeight="38.0" prefWidth="74.0" text="Fermer" AnchorPane.topAnchor="570.0" />
       <VBox fx:id="vbox" layoutX="493.0" layoutY="439.0" prefHeight="38.0" prefWidth="96.0" />
       <Text fx:id="text1" layoutX="40.0" layoutY="455.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="titre" text="Me notifier à partir du" wrappingWidth="246.0" />
-      <DatePicker fx:id="reminderFirstDate" layoutX="296.0" layoutY="438.0" prefHeight="26.0" prefWidth="149.0" />
+      <DatePicker fx:id="reminderNextDate" layoutX="296.0" layoutY="438.0" prefHeight="26.0" prefWidth="149.0" />
       <Text fx:id="text2" layoutX="463.0" layoutY="463.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="titre" text="à" />
       <Text fx:id="text3" layoutX="40.0" layoutY="528.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="titre" text="Ensuite, notifier toutes les" wrappingWidth="246.0" />
       <CheckBox fx:id="reminderOn" layoutX="40.0" layoutY="394.0" mnemonicParsing="false" onAction="#handleReminderCheckBoxAction" prefHeight="26.0" prefWidth="239.0" styleClass="texte" text="Activer les rappels" />

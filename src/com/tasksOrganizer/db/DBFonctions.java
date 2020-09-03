@@ -276,20 +276,20 @@ public class DBFonctions {
     public static void saveReminder(Reminder reminder, int idTask){
         Connection conn = DBConnect.getInstance().getConn();
         PreparedStatement state;
+        String ndt;
 
         try {
-            state = conn.prepareStatement("insert into Reminder (id, taskName, firstDateTime, step, nextDateTime, iteration, active) values (?,?,?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            state = conn.prepareStatement("insert into Reminder (id, taskName, nextDateTime, step, active) values (?,?,?,?,?)",
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
 
-            String fdt = reminder.getFirstDateTime().toString().replace("T"," ");
-            String ndt = reminder.getNextDateTime().toString().replace("T", " ");
+            ndt = reminder.getNextDateTime().toString().replace("T", " ");
 
             state.setInt(1, idTask);
             state.setString(2, reminder.getTaskName());
-            state.setString(3, fdt);
+            state.setString(3, ndt);
             state.setString(4, reminder.getStep().toString());
-            state.setString(5, ndt);
-            state.setInt(6, reminder.getIteration());
-            state.setBoolean(7, reminder.isActive());
+            state.setBoolean(5, reminder.isActive());
 
             state.executeUpdate();
             state.close();
@@ -312,17 +312,15 @@ public class DBFonctions {
 
         try {
             state = conn.prepareStatement(
-                    "update Reminder set taskName = ?, firstDateTime = ?, step = ?, nextDateTime = ?, iteration = ?, active = ? where taskName = ?",
+                    "update Reminder set taskName = ?, nextDateTime = ?, step = ?, active = ? where taskName = ?",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
 
             state.setString(1, newReminder.getTaskName());
-            state.setString(2, newReminder.getFirstDateTime().toString());
+            state.setString(2, newReminder.getNextDateTime().toString());
             state.setString(3, newReminder.getStep().toString());
-            state.setString(4, newReminder.getNextDateTime().toString());
-            state.setInt(5, newReminder.getIteration());
-            state.setBoolean(6, newReminder.isActive());
-            state.setString(7, taskName);
+            state.setBoolean(4, newReminder.isActive());
+            state.setString(5, taskName);
 
             state.executeUpdate();
 
@@ -340,7 +338,7 @@ public class DBFonctions {
 
     public static Reminder DBExtractReminder(String taskName){
         Reminder reminder = new Reminder();
-        String[] paramList = {"taskName", "firstDateTime", "step", "nextDateTime", "iteration", "active"};
+        String[] paramList = {"taskName", "nextDateTime", "step", "active"};
         Object[] tab = new Object[paramList.length];
 
         try {
@@ -351,9 +349,7 @@ public class DBFonctions {
                     tab[0].toString(),
                     LocalDateTime.parse(tab[1].toString().replace(" ", "T")),
                     LocalTime.parse(tab[2].toString()),
-                    LocalDateTime.parse(tab[3].toString().replace(" ", "T")),
-                    Integer.parseInt(tab[4].toString()),
-                    (Boolean) tab[5]
+                    (Boolean) tab[3]
             );
         } catch (Exception e) {
             System.out.println("Echec de communication avec la base de donnees");
@@ -372,8 +368,8 @@ public class DBFonctions {
         PreparedStatement state;
         ResultSet result;
         int id;
-        Reminder[] reminder = new Reminder[0];
-        String[] paramList = {"taskName", "firstDateTime", "step", "nextDateTime", "iteration", "active"};
+        Reminder[] reminders = new Reminder[0];
+        String[] paramList = {"taskName", "nextDateTime", "step", "active"};
         Object[] tab = new Object[paramList.length];
         int taille = 0;
 
@@ -388,7 +384,7 @@ public class DBFonctions {
             while (result.next())
                 taille++;
 
-            reminder = new Reminder[taille];
+            reminders = new Reminder[taille];
             result.relative(-1 * taille - 1);
             for (int i = 0; i < taille; i++) {
                 result.next();
@@ -396,13 +392,11 @@ public class DBFonctions {
                 for (int j = 0; j < paramList.length; j++)
                     tab[j] = DBgetParam(paramList[j], "Reminder","id", id);
 
-                reminder[i] = new Reminder(
+                reminders[i] = new Reminder(
                         tab[0].toString(),
                         LocalDateTime.parse(tab[1].toString().replace(" ", "T")),
                         LocalTime.parse(tab[2].toString()),
-                        LocalDateTime.parse(tab[3].toString().replace(" ", "T")),
-                        Integer.parseInt(tab[4].toString()),
-                        (Boolean) tab[5]
+                        (Boolean) tab[3]
                 );
             }
             result.close();
@@ -412,7 +406,7 @@ public class DBFonctions {
             //e.printStackTrace();
         }
 
-        return reminder;
+        return reminders;
     }
 
 
@@ -475,19 +469,18 @@ public class DBFonctions {
 
 
 
-    public static void refreshReminder(int iteration, LocalDateTime next, String name){
+    public static void refreshReminder(LocalDateTime next, String name){
         PreparedStatement state;
 
         Connection conn = DBConnect.getInstance().getConn();
 
         try{
-            state = conn.prepareStatement("Update Reminder set iteration = ?, nextDateTime = ? where taskName = ?",
+            state = conn.prepareStatement("Update Reminder set nextDateTime = ? where taskName = ?",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_UPDATABLE
             );
-            state.setInt(1, iteration);
-            state.setString(2, next.toString().replace("T", " "));
-            state.setString(3, name);
+            state.setString(1, next.toString().replace("T", " "));
+            state.setString(2, name);
 
             state.executeUpdate();
             state.close();
