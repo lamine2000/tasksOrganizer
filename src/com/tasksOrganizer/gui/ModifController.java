@@ -412,8 +412,13 @@ public class ModifController extends MotherController implements Initializable {
         LocalDate echeance = eDatePicker.getValue();
         LocalDate tsuppose = tsDatePicker.getValue();
 
-        LocalDateTime nextDateTime = LocalDateTime.of(reminderNextDate.getValue(), tsFirst.getValue());
-        LocalTime step = tsStep.getValue();
+        String[] strFirst = tsFirst.getEditor().getText().split(":");
+        LocalDateTime nextDateTime = LocalDateTime.of(
+                reminderNextDate.getValue(),
+                LocalTime.of(Integer.parseInt(strFirst[0]), Integer.parseInt(strFirst[1]))
+        );
+        String[] strStep = tsStep.getEditor().getText().split(":");
+        LocalTime step = LocalTime.of(Integer.parseInt(strStep[0]), Integer.parseInt(strStep[1]));
         Reminder newR;
 
         if(rmdrAssociated){

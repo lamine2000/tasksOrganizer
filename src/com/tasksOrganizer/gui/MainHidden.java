@@ -62,19 +62,27 @@ public class MainHidden extends Application {
 
 
     private void showMissedNotif(Reminder reminder) throws IOException, InterruptedException {
-        next = reminder.getNextDateTime();
         step = reminder.getStep();
-        LocalDate date = LocalDate.parse(next.toString().split("T")[0]);
-        LocalTime time = LocalTime.parse(next.toString().split("T")[1]);
+        LocalDate date;
+        LocalTime time;
         name = reminder.getTaskName();
-        message = "Rappel__Manqué_:__Le__" + date.toString() + "__à__" + time.getHour() + "h" + time.getMinute() + "min";
+        LocalDateTime now = LocalDateTime.now();
+        next = reminder.getNextDateTime();
 
-        while(next.isBefore(LocalDateTime.now())) {
-            process = Runtime.getRuntime().exec(String.format("notify-send %s %s", name, message));
+        while(next.isBefore(now)) {
+            date = LocalDate.parse(next.toString().split("T")[0]);
+            time = LocalTime.parse(next.toString().split("T")[1]);
+            System.out.println("here");
+            message = "Rappel__Manqué_:__Le__" + date.toString() + "__à__" + time.getHour() + "h" + time.getMinute() + "min";
+            //process = Runtime.getRuntime().exec(String.format("notify-send %s %s", name, message));
+
+            process = Runtime.getRuntime().exec(new String[]{"notify-send", name, message}, null);
             process.waitFor();
+            System.out.println("here");
 
             next = next.plusHours(step.getHour()).plusMinutes(step.getMinute());
             Reminder.refresh(next , name);
+            System.out.println("refresh");
         }
     }
 
@@ -86,7 +94,7 @@ public class MainHidden extends Application {
         long interval = ChronoUnit.DAYS.between(LocalDate.now(), task.getEcheance());
         message = "Rappel_:__Il__vous__reste__encore__"+ interval +"j";
 
-        process = Runtime.getRuntime().exec(String.format("notify-send %s %s", name, message));
+        process = Runtime.getRuntime().exec(new String[]{"notify-send", name, message}, null);
         process.waitFor();
 
         next = next.plusHours(step.getHour()).plusMinutes(step.getMinute());
