@@ -412,16 +412,21 @@ public class ModifController extends MotherController implements Initializable {
         LocalDate echeance = eDatePicker.getValue();
         LocalDate tsuppose = tsDatePicker.getValue();
 
-        String[] strFirst = tsFirst.getEditor().getText().split(":");
-        LocalDateTime nextDateTime = LocalDateTime.of(
-                reminderNextDate.getValue(),
-                LocalTime.of(Integer.parseInt(strFirst[0]), Integer.parseInt(strFirst[1]))
-        );
-        String[] strStep = tsStep.getEditor().getText().split(":");
-        LocalTime step = LocalTime.of(Integer.parseInt(strStep[0]), Integer.parseInt(strStep[1]));
+        String[] strFirst;
+        LocalDateTime nextDateTime;
+        String[] strStep;
+        LocalTime step;
         Reminder newR;
 
         if(rmdrAssociated){
+            strFirst = tsFirst.getEditor().getText().split(":");
+            nextDateTime = LocalDateTime.of(
+                    reminderNextDate.getValue(),
+                    LocalTime.of(Integer.parseInt(strFirst[0]), Integer.parseInt(strFirst[1]))
+            );
+            strStep = tsStep.getEditor().getText().split(":");
+            step = LocalTime.of(Integer.parseInt(strStep[0]), Integer.parseInt(strStep[1]));
+
             newR = new Reminder(nom, nextDateTime, step, true);
             if(Reminder.exists(taskName))
                 Reminder.modify(taskName, newR);
@@ -590,14 +595,15 @@ public class ModifController extends MotherController implements Initializable {
 
             });
 
-            oks[i].setId(row.getName() + i);
+            oks[i].setId((i+"").length()+row.getName() + i);
             oks[i].getStyleClass().add("doneButton");
             referenceDone[i] = i;
             row.getOk().setOnAction(event -> {
 
-                String name = ((Button) (event.getSource())).getId();
-                int index = Integer.parseInt(name.substring(name.length() - 1));
-                name = name.substring(0, name.length() - 1);
+                String data = ((Button) (event.getSource())).getId();
+                int tailleIndex = Integer.parseInt(data.substring(0,1));
+                int index = Integer.parseInt(data.substring(data.length() - tailleIndex));
+                String name = data.substring(1/*tailleIndex.length*/, data.length() - tailleIndex);
 
                 Task.done(name);
                 referenceDone[index] = -1;
@@ -624,6 +630,8 @@ public class ModifController extends MotherController implements Initializable {
 
         table.getItems().remove(list);
         table.setItems(list);
+
+        updateTable();
     }
 
     private int refreshText(int nb, ActionEvent event) {
