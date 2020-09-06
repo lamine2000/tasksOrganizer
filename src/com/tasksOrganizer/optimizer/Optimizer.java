@@ -17,7 +17,7 @@ public class Optimizer {
         double marge = Double.parseDouble(String.valueOf(echeance)) / (Double.parseDouble(String.valueOf(tsupp))-1);
 
         if(marge != 0)
-            return (0.2*difficulte + 1) / (Double.parseDouble(String.valueOf(echeance)) / (Double.parseDouble(String.valueOf(tsupp))-1));
+            return (0.2*difficulte + 1) / marge;
 
         return (0.2*difficulte + 1) / 0.1;
     }
@@ -35,7 +35,7 @@ public class Optimizer {
         double marge = Double.parseDouble(String.valueOf(echeance)) / (Double.parseDouble(String.valueOf(tsupp))-1);
 
         if(marge != 0)
-            return Double.parseDouble(String.valueOf(importance)) / (Double.parseDouble(String.valueOf(echeance)) / (Double.parseDouble(String.valueOf(tsupp))-1));
+            return Double.parseDouble(String.valueOf(importance)) / marge;
 
         return Double.parseDouble(String.valueOf(importance)) / 0.1;
     }
