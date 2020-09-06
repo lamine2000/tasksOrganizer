@@ -2,6 +2,7 @@ package com.tasksOrganizer.gui;
 
 
 import com.gluonhq.charm.glisten.control.TextField;
+import com.tasksOrganizer.optimizer.Optimizer;
 import com.tasksOrganizer.sample.Reminder;
 import com.tasksOrganizer.sample.Task;
 import com.tasksOrganizer.tray.animations.AnimationType;
@@ -510,6 +511,10 @@ public class ModifController extends MotherController implements Initializable {
         list.clear();
 
         Task[] tasks = Task.extractTasks();
+
+        Optimizer op = new Optimizer();
+        op.optimizeList(tasks);
+
         final int[] nb = {tasks.length};
 
         nb[0] = refreshText(nb[0], null);

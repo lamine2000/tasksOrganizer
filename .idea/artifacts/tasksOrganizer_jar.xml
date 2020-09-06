@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="tasksOrganizer:jar">
+  <artifact type="jar" name="tasksOrganizer:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/tasksOrganizer_jar</output-path>
     <root id="archive" name="tasksOrganizer.jar">
       <element id="module-output" name="tasksOrganizer" />
