@@ -327,6 +327,9 @@ public class CreateTaskController implements Initializable {
 
         Task task = new Task(nom, descripiton, importance, difficulte, echeance, tsuppose, false, today());
         LocalDateTime fdt;
+        boolean allOk = false;
+        int idTask;
+        Reminder reminder = null;
 
         if(reminderOn.isSelected()){
 
@@ -346,15 +349,22 @@ public class CreateTaskController implements Initializable {
                 return;
             }
 
+            allOk = true;
+
             LocalDateTime firstDateTime = fdt;
             LocalTime step = tsStep.getValue();
 
-            Reminder reminder = new Reminder(nom, firstDateTime, step, true);
+            reminder = new Reminder(nom, firstDateTime, step, true);
             //a la creation d une tache, la prochaine notificationn de cette tache est aussi la premiere
+        }
 
-            int idTask = Task.save(task);
+        if(allOk){ //task with reminder
+            idTask = Task.save(task);
             Reminder.save(reminder, idTask);
         }
+        else //task without reminder
+            Task.save(task);
+
 
         emptyAll();
 
