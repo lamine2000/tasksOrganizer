@@ -431,7 +431,7 @@ public class ModifController extends MotherController implements Initializable {
             if(Reminder.exists(taskName))
                 Reminder.modify(taskName, newR);
             else
-                Reminder.save(newR, Task.getId(taskName));
+                Reminder.save(newR, Task.getIdOf(taskName));
         }
 
         else if(Reminder.exists(taskName))

@@ -119,7 +119,7 @@ public class Task {
         DBFonctions.modifyTask(name, newTask);
     }
 
-    public static int getId(String taskName){
+    public static int getIdOf(String taskName){
         if(Task.exists(taskName))
             return Integer.parseInt(DBFonctions.DBgetParam2("id", "Task", "nom", taskName).toString());
         else
