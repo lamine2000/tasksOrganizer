@@ -631,7 +631,6 @@ public class ModifController extends MotherController implements Initializable {
         table.getItems().remove(list);
         table.setItems(list);
 
-        updateTable();
     }
 
     private int refreshText(int nb, ActionEvent event) {
