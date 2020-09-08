@@ -35,7 +35,6 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ResourceBundle;
-import com.tasksOrganizer.gui.MotherController;
 
 public class HomeController implements Initializable {
 
@@ -113,7 +112,7 @@ public class HomeController implements Initializable {
             Parent root = FXMLLoader.load(getClass().getResource("/fxml/createTask.fxml"));
             root.getStylesheets().add(getClass().getResource("/css/createTask.css").toString());
 
-            root.translateYProperty().set(600);
+            root.translateYProperty().set(650);
             parentContainer.getChildren().add(root);
 
             Timeline timeLine = new Timeline();
