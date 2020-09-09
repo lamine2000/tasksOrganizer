@@ -345,7 +345,7 @@ public class CreateTaskController implements Initializable {
 
             fdt = LocalDateTime.of(reminderFirstDate.getValue(), tsFirst.getValue());
             if(!fdt.isAfter(LocalDateTime.now())){
-                AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Erreur!", "La date du rappel doit être ultérieure à : "+LocalDateTime.now().toString().split(".")[0].replace("T", "   ")+" (càd maintenant)");
+                AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Erreur!", "La date du rappel doit être ultérieure à : "+LocalDateTime.now().toString().split("\\.")[0].replace("T", "   ")+" (càd maintenant)");
                 return;
             }
 
