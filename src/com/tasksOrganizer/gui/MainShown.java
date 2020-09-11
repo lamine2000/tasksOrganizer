@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class MainShown extends Application {
@@ -14,6 +15,7 @@ public class MainShown extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/home.fxml"));
         root.getStylesheets().add(getClass().getResource("/css/home.css").toString());
         primaryStage.setTitle("tasksOrganizer");
+        primaryStage.getIcons().add(new Image(getClass().getResource("/images/appIcone.png").toExternalForm(), false));
         primaryStage.setScene(new Scene(root));
         primaryStage.setResizable(false);
         primaryStage.show();

@@ -57,6 +57,7 @@ public class DBConnect {
             in = getClass().getClassLoader().getResourceAsStream(fichierProperties);
             prop.load(in);
             in.close();
+
         } catch (Exception e) {
             System.out.println("Echec de chargement du fichier jdbc.properties");
             // e.printStackTrace();

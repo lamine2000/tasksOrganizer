@@ -30,7 +30,6 @@ public class Optimizer {
         double marge = Double.parseDouble(String.valueOf(echeance)) / (Double.parseDouble(String.valueOf(tsupp)))-1;
 
         marge = marge!=0 ? marge : 0.1d;
-        //System.out.print("Importance "+importance+" marge "+ marge);
 
         return Double.parseDouble(String.valueOf(importance)) / marge;
     }
@@ -55,7 +54,6 @@ public class Optimizer {
             if (index < copy.size())
                 copy.add(index, newOne);
         }
-
         return copy;
     }
 
@@ -95,6 +93,38 @@ public class Optimizer {
     }
 
 
+    private void naiveOptimizeList(Task[] tasks){
+        Double[] s = new Double[tasks.length];
+
+        for (int i = 0; i < tasks.length; i++)
+            s[i] = temporalDifficultyValue(tasks[i]) + temporalImportanceValue(tasks[i]);
+
+        rMapBubbleSort(s, tasks);
+    }
+
+
+    private void rMapBubbleSort(Double[] arr, Task[] tasks)
+    {
+        //reverse bubble sort -> and mapping changes to the 'tasks' array
+        Double temp;
+        Task ech;
+        int n = arr.length;
+        for (int i = 0; i < n-1; i++)
+            for (int j = 0; j < n-i-1; j++)
+                if (arr[j] < arr[j+1])
+                {
+                    temp = arr[j];
+                    ech = tasks[j];
+
+                    arr[j] = arr[j+1];
+                    tasks[j] = tasks[j+1];
+
+                    arr[j+1] = temp;
+                    tasks[j+1] = ech;
+                }
+    }
+
+
     public void optimize(Task[] tasks) throws CloneNotSupportedException {
         naiveOptimizeList(tasks);
         if(tasks.length > 1) {
@@ -123,37 +153,5 @@ public class Optimizer {
             for (int i = 0; i < tasks.length; i++)
                 tasks[i] = subTable.get(i);
         }
-    }
-
-
-    private void naiveOptimizeList(Task[] tasks){
-        Double[] s = new Double[tasks.length];
-
-        for (int i = 0; i < tasks.length; i++)
-            s[i] = temporalDifficultyValue(tasks[i]) + temporalImportanceValue(tasks[i]);
-
-        rMapBubbleSort(s, tasks);
-    }
-
-
-    private void rMapBubbleSort(Double[] arr, Task[] tasks)
-    {
-        //reverse bubble sort
-        Double temp;
-        Task ech;
-        int n = arr.length;
-        for (int i = 0; i < n-1; i++)
-            for (int j = 0; j < n-i-1; j++)
-                if (arr[j] < arr[j+1])
-                {
-                    temp = arr[j];
-                    ech = tasks[j];
-
-                    arr[j] = arr[j+1];
-                    tasks[j] = tasks[j+1];
-
-                    arr[j+1] = temp;
-                    tasks[j+1] = ech;
-                }
     }
 }

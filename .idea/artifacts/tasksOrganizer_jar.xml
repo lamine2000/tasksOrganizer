@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="tasksOrganizer:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/tasksOrganizer_jar</output-path>
+    <output-path>$PROJECT_DIR$/resources/release</output-path>
     <root id="archive" name="tasksOrganizer.jar">
       <element id="module-output" name="tasksOrganizer" />
       <element id="extracted-dir" path="/usr/share/java/mysql-connector-java-8.0.21.jar" path-in-jar="/" />
