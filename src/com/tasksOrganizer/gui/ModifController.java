@@ -344,7 +344,7 @@ public class ModifController extends MotherController implements Initializable {
     }
 
     @FXML
-    protected void handleValiderButtonAction() {
+    protected void handleValiderButtonAction() throws CloneNotSupportedException {
         Window owner = nameField.getScene().getWindow();
 
         if (nameField.getText().isEmpty()) {
@@ -507,10 +507,12 @@ public class ModifController extends MotherController implements Initializable {
         }
     }
 
-    private void updateTable() {
+    private void updateTable() throws CloneNotSupportedException {
         list.clear();
 
         Task[] tasks = Task.extractTasks();
+        Optimizer op = new Optimizer();
+        op.optimize(tasks);
 
         final int[] nb = {tasks.length};
 

@@ -16,7 +16,7 @@ public class Optimizer {
         long tsupp = ChronoUnit.DAYS.between(now(), task.getTsupp());
         short difficulte = (short)(task.getDifficulte());
         long echeance = ChronoUnit.DAYS.between(now(), task.getEcheance());
-        double marge = Double.parseDouble(String.valueOf(echeance)) / (Double.parseDouble(String.valueOf(tsupp))-1);
+        double marge = Double.parseDouble(String.valueOf(echeance)) / (Double.parseDouble(String.valueOf(tsupp)))-1;
 
         marge = marge!=0 ? marge : 0.1d;
 
@@ -28,9 +28,10 @@ public class Optimizer {
         long tsupp = ChronoUnit.DAYS.between(now(), task.getTsupp());
         short importance = (short)(task.getImportance());
         long echeance = ChronoUnit.DAYS.between(now(), task.getEcheance());
-        double marge = Double.parseDouble(String.valueOf(echeance)) / (Double.parseDouble(String.valueOf(tsupp))-1);
+        double marge = Double.parseDouble(String.valueOf(echeance)) / (Double.parseDouble(String.valueOf(tsupp)))-1;
 
         marge = marge!=0 ? marge : 0.1d;
+        //System.out.print("Importance "+importance+" marge "+ marge);
 
         return Double.parseDouble(String.valueOf(importance)) / marge;
     }
@@ -45,25 +46,18 @@ public class Optimizer {
 
 
     private ArrayList<Task> insert(ArrayList<Task> tasks, Task newOne, int index) throws CloneNotSupportedException {
-        Task[] copy = new Task[tasks.size()+1];
-        for (int i = 0; i < tasks.size(); i++)
-            copy[i] = tasks.get(i).clone();
 
-        if(index < copy.length) {
-            Task temp1 = new Task();
-            Task temp2;
-            for (int i = index; i < copy.length; i++) {
-                if (i == index) {
-                    temp1 = copy[index];
-                    copy[index] = newOne;
-                } else {
-                    temp2 = copy[i];
-                    copy[i] = temp1;
-                    temp1 = temp2;
-                }
-            }
+        ArrayList<Task> copy = new ArrayList<>(tasks);
+
+        if(tasks.size() != 0) {
+            for (int i = 0; i < tasks.size(); i++)
+                copy.set(i, tasks.get(i).clone());
+
+            if (index < copy.size())
+                copy.add(index, newOne);
         }
-        return new ArrayList<>(Arrays.asList(copy));
+
+        return copy;
     }
 
 
@@ -101,6 +95,11 @@ public class Optimizer {
         return Double.parseDouble(String.valueOf(sum));
     }
 
+    /*public void optimize(Task[] tasks){
+        for(Task elt : tasks)
+            System.out.print(elt.getNom()+" : "+temporalImportanceDifficultyCompromiseValue(elt)+" // ");
+    }*/
+
 
     /*private Task[] subTable(Task[] tasks, int size) throws CloneNotSupportedException {
 
@@ -115,36 +114,40 @@ public class Optimizer {
 
 
     public void optimize(Task[] tasks) throws CloneNotSupportedException {
-        ArrayList<Task> subTable = new ArrayList<>();
-        ArrayList<Task> set;
-        double sigma, minSigma = 1000000d;
+        naiveOptimizeList(tasks);
+        if(tasks.length > 1) {
+            ArrayList<Task> subTable = new ArrayList<>();
+            ArrayList<Task> set;
+            double sigma, minSigma = 1000000d;
 
-        subTable.add(tasks[0]);
+            subTable.add(tasks[0]);
 
-        for(int i = 0; i < tasks.length; i++){
-            for (int j = 0; j <= i; j++) {
-                if(i+1 < tasks.length) {
-                    set = insert(subTable, tasks[i + 1], j);
-                    sigma = sigmaUnrealisableTasksValue(set);
-                    if(sigma < minSigma){
-                        subTable = set;
-                        minSigma = sigma;
+            for (int i = 0; i < tasks.length; i++) {
+
+                for (int j = 0; j <= i; j++) {
+                    if (i + 1 < tasks.length) {
+                        set = insert(subTable, tasks[i + 1], j);
+                        sigma = sigmaUnrealisableTasksValue(set);
+
+                        if (sigma < minSigma) {
+                            subTable = set;
+                            minSigma = sigma;
+                        }
                     }
                 }
+                minSigma = 1000000d;
             }
-            minSigma = 1000000d;
+
+            for (int i = 0; i < tasks.length; i++)
+                tasks[i] = subTable.get(i);
         }
-
-        for (int i = 0; i < tasks.length; i++)
-            tasks[i] = subTable.get(i);
-
     }
 
 
 
 
 
-    /*private void naiveOptimizeList(Task[] tasks){
+    private void naiveOptimizeList(Task[] tasks){
         Double[] s = new Double[tasks.length];
 
         for (int i = 0; i < tasks.length; i++)
@@ -173,5 +176,5 @@ public class Optimizer {
                     arr[j+1] = temp;
                     tasks[j+1] = ech;
                 }
-    }*/
+    }
 }

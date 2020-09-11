@@ -147,10 +147,10 @@ public class DBFonctions {
                     ResultSet.CONCUR_UPDATABLE);
             state.setString(1, nom);
 
+            DBRemoveReminder(nom);
             state.executeUpdate();
             state.close();
 
-            DBRemoveReminder(nom);
         } catch (Exception e) {
             System.out.println("Echec de communication avec la base de donnees");
             //e.printStackTrace();
