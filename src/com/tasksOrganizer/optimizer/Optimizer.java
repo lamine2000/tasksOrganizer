@@ -5,7 +5,6 @@ import com.tasksOrganizer.sample.Task;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Optimizer {
 
@@ -95,23 +94,6 @@ public class Optimizer {
         return Double.parseDouble(String.valueOf(sum));
     }
 
-    /*public void optimize(Task[] tasks){
-        for(Task elt : tasks)
-            System.out.print(elt.getNom()+" : "+temporalImportanceDifficultyCompromiseValue(elt)+" // ");
-    }*/
-
-
-    /*private Task[] subTable(Task[] tasks, int size) throws CloneNotSupportedException {
-
-        Task[] subTable = new Task[0];
-        if(size <= tasks.length) {
-            subTable = new Task[size];
-            for (int i = 0; i < size; i++)
-                subTable[i] = tasks[i].clone();
-        }
-        return subTable;
-    }*/
-
 
     public void optimize(Task[] tasks) throws CloneNotSupportedException {
         naiveOptimizeList(tasks);
@@ -142,9 +124,6 @@ public class Optimizer {
                 tasks[i] = subTable.get(i);
         }
     }
-
-
-
 
 
     private void naiveOptimizeList(Task[] tasks){
