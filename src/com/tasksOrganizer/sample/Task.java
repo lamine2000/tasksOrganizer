@@ -4,7 +4,7 @@ import com.tasksOrganizer.db.DBFonctions;
 
 import java.time.LocalDate;
 
-public class Task {
+public class Task implements Cloneable {
     private String nom;
     private LocalDate echeance;
     private LocalDate tsupp;
@@ -14,9 +14,32 @@ public class Task {
     private boolean ok = false;
     private LocalDate dateCreation;
 
-    public Task() {}
+    @Override
+    public Task clone() throws CloneNotSupportedException {
+        Task clone = null;
+        try {
 
-    public Task(String nom, String description, int importance,  int difficulte, LocalDate echeance, LocalDate tsupp, boolean ok, LocalDate dateCreation) {
+            clone = (Task) super.clone();
+            clone.nom = nom;
+            clone.echeance = echeance;
+            clone.tsupp = tsupp;
+            clone.difficulte = difficulte;
+            clone.importance = importance;
+            clone.description = description;
+            clone.ok = ok;
+            clone.dateCreation = dateCreation;
+
+        } catch (CloneNotSupportedException e) {
+            System.out.println("Erreur de clonage");
+        }
+
+        return clone;
+    }
+
+    public Task() {
+    }
+
+    public Task(String nom, String description, int importance, int difficulte, LocalDate echeance, LocalDate tsupp, boolean ok, LocalDate dateCreation) {
         this.nom = nom;
         this.echeance = echeance;
         this.tsupp = tsupp;
@@ -91,36 +114,36 @@ public class Task {
         this.dateCreation = dateCreation;
     }
 
-    public static Task[] extractTasks(){
+    public static Task[] extractTasks() {
         return DBFonctions.DBExtractTasks();
     }
 
-    public static void remove(String nom){
+    public static void remove(String nom) {
         DBFonctions.DBRemoveTask(nom);
     }
 
-    public static void done(String name){
+    public static void done(String name) {
         DBFonctions.taskDone(name);
     }
 
-    public static Boolean exists(String name){
+    public static Boolean exists(String name) {
         return DBFonctions.isTask(name);
     }
 
-    public static int save(Task task){
-       return DBFonctions.saveTask(task);
+    public static int save(Task task) {
+        return DBFonctions.saveTask(task);
     }
 
-    public static Task extract(String name){
+    public static Task extract(String name) {
         return DBFonctions.DBExtractTask(name);
     }
 
-    public static void modify(String name, Task newTask){
+    public static void modify(String name, Task newTask) {
         DBFonctions.modifyTask(name, newTask);
     }
 
-    public static int getIdOf(String taskName){
-        if(Task.exists(taskName))
+    public static int getIdOf(String taskName) {
+        if (Task.exists(taskName))
             return Integer.parseInt(DBFonctions.DBgetParam2("id", "Task", "nom", taskName).toString());
         else
             return -1;

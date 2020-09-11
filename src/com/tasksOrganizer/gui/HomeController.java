@@ -98,7 +98,11 @@ public class HomeController implements Initializable {
         col_del.setCellValueFactory(new PropertyValueFactory<>("delete"));
         col_ok.setCellValueFactory(new PropertyValueFactory<>("ok"));
 
-        updateTable();
+        try {
+            updateTable();
+        } catch (CloneNotSupportedException e) {
+            //e.printStackTrace();
+        }
 
         MotherController.list = list;
         MotherController.table = table;
@@ -186,11 +190,11 @@ public class HomeController implements Initializable {
         return nb;
     }
     
-    public void updateTable() {
+    public void updateTable() throws CloneNotSupportedException {
         tasks = Task.extractTasks();
-        
         Optimizer op = new Optimizer();
-        op.optimizeList(tasks);
+        op.optimize(tasks);
+
 
         final int[] nb = {tasks.length};
 
