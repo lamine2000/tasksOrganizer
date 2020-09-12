@@ -1,6 +1,8 @@
 #!/bin/bash
 
 desktopFile=tasksOrganizerScheduler.desktop
+
+#jarPath doit contenir l'emplacement de tasksOrganizer.jar
 jarPath=$HOME/IdeaProjects/tasksOrganizer/resources/release/tasksOrganizer.jar
 
 touch "$HOME"/.config/autostart/$desktopFile
