@@ -135,8 +135,7 @@ public class Optimizer {
             subTable.add(tasks[0]);
 
             for (int i = 0; i < tasks.length; i++) {
-
-                for (int j = 0; j <= i; j++) {
+                for (int j = 0; j <= i+1; j++) {
                     if (i + 1 < tasks.length) {
                         set = insert(subTable, tasks[i + 1], j);
                         sigma = sigmaUnrealisableTasksValue(set);

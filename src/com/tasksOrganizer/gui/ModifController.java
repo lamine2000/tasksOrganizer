@@ -346,6 +346,7 @@ public class ModifController extends MotherController implements Initializable {
     @FXML
     protected void handleValiderButtonAction() throws CloneNotSupportedException {
         Window owner = nameField.getScene().getWindow();
+        LocalTime time;
 
         if (nameField.getText().isEmpty()) {
             AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Erreur!", "Veuillez entrer le nom de la nouvelle tâche !");
@@ -400,7 +401,11 @@ public class ModifController extends MotherController implements Initializable {
                 return;
             }
 
-            fdt = LocalDateTime.of(reminderNextDate.getValue(), tsFirst.getValue());
+            time = LocalTime.of(
+                    Integer.parseInt(tsFirst.getEditor().getText().split(":")[0]),
+                    Integer.parseInt(tsFirst.getEditor().getText().split(":")[1])
+            );
+            fdt = LocalDateTime.of(reminderNextDate.getValue(), time);
             if(!fdt.isAfter(LocalDateTime.now())){
                 AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Erreur!", "La date du premier rappel doit être ultérieure à : "+LocalDateTime.now().toString().split("\\.")[0].replace("T", "   ")+" (càd maintenant)");
                 return;
