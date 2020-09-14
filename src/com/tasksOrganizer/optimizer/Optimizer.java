@@ -19,7 +19,7 @@ public class Optimizer {
 
         marge = marge!=0 ? marge : 0.1d;
 
-        return (0.2*difficulte + 1) / marge;
+        return tsupp * (0.2*difficulte + 1) / marge;
     }
 
 
@@ -43,13 +43,13 @@ public class Optimizer {
     private LocalDate now(){ return LocalDate.now(); }
 
 
-    private ArrayList<Task> insert(ArrayList<Task> tasks, Task newOne, int index) throws CloneNotSupportedException {
+    private ArrayList<Task> insert(ArrayList<Task> subTable, Task newOne, int index) throws CloneNotSupportedException {
 
-        ArrayList<Task> copy = new ArrayList<>(tasks);
+        ArrayList<Task> copy = new ArrayList<>(subTable);
 
-        if(tasks.size() != 0) {
-            for (int i = 0; i < tasks.size(); i++)
-                copy.set(i, tasks.get(i).clone());
+        if(subTable.size() != 0) {
+            for (int i = 0; i < subTable.size(); i++)
+                copy.set(i, subTable.get(i).clone());
 
             if (index < copy.size())
                 copy.add(index, newOne);
@@ -58,23 +58,34 @@ public class Optimizer {
     }
 
 
-    private Double sigmaUnrealisableTasksValue(ArrayList<Task> tasks){
+    private Double sigmaUnrealisableTasksValue(ArrayList<Task> set){
         //renvoie la somme de Ci des taches qui ne pourront pas etre
 
-        int daysBefore = 0, size;
+        long daysBefore = 0;
+        int size;
         StringBuilder strIndexes = new StringBuilder();
         Task[] unrealisableTasks;
         String[] indexes;
         double sum = 0d;
+        boolean unDoable;
 
-        for (int i = 0; i < tasks.size(); i++) {
-            //extraire les indices des taches non-faisables
-
+        for (int i = 1; i < set.size(); i++) {
+            /*
+            parcourir la liste de tâches et identifier celles non faisables
+            (en faisant la somme des temps supposés des tâches qui la précedent)
+            */
             for (int j = 0; j < i; j++)
-                if (now().isBefore(tasks.get(i).getTsupp()))
-                    daysBefore += ChronoUnit.DAYS.between(now(), tasks.get(j).getTsupp());
+                if (now().isBefore(set.get(i).getTsupp()))
+                    daysBefore += ChronoUnit.DAYS.between(now(), set.get(j).getTsupp());
 
-            if (daysBefore > ChronoUnit.DAYS.between(now(), tasks.get(i).getEcheance()))
+
+            unDoable = daysBefore >
+                    ChronoUnit.DAYS.between(now(), set.get(i).getEcheance())
+                    -
+                    ChronoUnit.DAYS.between(now(), set.get(i).getTsupp());
+
+            //extraire les indices des taches non-faisables
+            if (unDoable)
                 strIndexes.append(i).append("/");
         }
         //calcul du nombre de taches non faisables
@@ -84,7 +95,7 @@ public class Optimizer {
         indexes = strIndexes.toString().split("/");
 
         for (int i = 0; i < unrealisableTasks.length; i++)
-            unrealisableTasks[i] = tasks.get(Integer.parseInt(indexes[i]));
+            unrealisableTasks[i] = set.get(Integer.parseInt(indexes[i]));
 
         for(Task elt : unrealisableTasks)
             sum += temporalImportanceDifficultyCompromiseValue(elt);
@@ -126,26 +137,31 @@ public class Optimizer {
 
 
     public void optimize(Task[] tasks) throws CloneNotSupportedException {
-        naiveOptimizeList(tasks);
         if(tasks.length > 1) {
-            ArrayList<Task> subTable = new ArrayList<>();
-            ArrayList<Task> set;
+            naiveOptimizeList(tasks);
+            ArrayList<Task> subTable = new ArrayList<>(), set, bestSet = new ArrayList<>();
             double sigma, minSigma = 1000000d;
 
             subTable.add(tasks[0]);
 
-            for (int i = 0; i < tasks.length; i++) {
-                for (int j = 0; j <= i+1; j++) {
-                    if (i + 1 < tasks.length) {
-                        set = insert(subTable, tasks[i + 1], j);
-                        sigma = sigmaUnrealisableTasksValue(set);
+            for (int i = 1; i < tasks.length; i++) {
+                for (int j = 0; j <= i; j++) {
 
-                        if (sigma < minSigma) {
-                            subTable = set;
-                            minSigma = sigma;
-                        }
+                    if(!(i == j))
+                        set = insert(subTable, tasks[i], j);
+                    else{
+                        subTable.add(tasks[i]);
+                        set = subTable;
+                    }
+
+                    sigma = sigmaUnrealisableTasksValue(set);
+
+                    if (sigma < minSigma) {
+                        bestSet = set;
+                        minSigma = sigma;
                     }
                 }
+                subTable = bestSet;
                 minSigma = 1000000d;
             }
 
