@@ -2,5 +2,5 @@
 
 #Installation on LINUX:
 
--download the .jar, .sql and .sh files
+-download the .jar, .sql and .sh files <br/>
 -modify the 6th file of the .sh file : [jarPath=<the absolute path of the .jar file>]
