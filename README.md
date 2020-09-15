@@ -21,4 +21,4 @@ You can see your current java version with the command <code>java --version</cod
 <h2>Execution</h2>
 	<code>java -jar <.jar file path></code>
 <br/><br/>
-![](execution.gif
+![](execution.gif)
