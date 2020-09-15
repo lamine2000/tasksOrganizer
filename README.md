@@ -19,4 +19,4 @@ You can see your current java version with the command <code>java --version</cod
 </ol>
 		
 <h2>Execution<h2>
-<p><code>java -jar <.jar file path></code></p>
+	<ul><li><code>java -jar <.jar file path></code></li></ul>
