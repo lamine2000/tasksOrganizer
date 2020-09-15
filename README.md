@@ -21,7 +21,6 @@ You can see your current java version with the command <code>java --version</cod
 <h2>Execution</h2>
 	<code>java -jar <.jar file path></code>
 	 <video width="320" height="240" autoplay>
-  <source src="movie.mp4" type="video/mp4">
-  <source src="movie.ogg" type="video/ogg">
+  <source src="https://www.youtube.com/watch?v=WsIGGVQ0A2c" type="video/mp4">
 Your browser does not support the video tag.
 </video> 
