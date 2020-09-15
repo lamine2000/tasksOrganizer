@@ -147,7 +147,7 @@ public class Optimizer {
             for (int i = 1; i < tasks.length; i++) {
                 for (int j = 0; j <= i; j++) {
 
-                    if(!(i == j))
+                    if(i != j)
                         set = insert(subTable, tasks[i], j);
                     else{
                         subTable.add(tasks[i]);

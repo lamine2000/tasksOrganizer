@@ -23,6 +23,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
@@ -68,7 +70,7 @@ public class HomeController implements Initializable {
     private AnchorPane container;
 
     @FXML
-    Button addTaskButton, parametersButton;
+    Button addTaskButton, aProposButton;
 
     @FXML
     Text title;
@@ -85,9 +87,9 @@ public class HomeController implements Initializable {
         addTaskButton.setGraphic(addTaskImage);
         addTaskButton.setTooltip(new Tooltip("Créer une nouvelle tâche"));
 
-        ImageView parametersImage = new ImageView(getClass().getResource("/images/parameters.png").toExternalForm());
-        parametersButton.setGraphic(parametersImage);
-        parametersButton.setTooltip(new Tooltip("Paramètres"));
+        ImageView aboutImage = new ImageView(getClass().getResource("/images/about.png").toExternalForm());
+        aProposButton.setGraphic(aboutImage);
+        aProposButton.setTooltip(new Tooltip("À propos..."));
 
         list = FXCollections.observableArrayList();
 
@@ -106,7 +108,6 @@ public class HomeController implements Initializable {
 
         MotherController.list = list;
         MotherController.table = table;
-
     }
 
     @FXML
@@ -135,8 +136,15 @@ public class HomeController implements Initializable {
     }
 
     @FXML
-    protected void handleParametersButtonAction() {
-        //load the parameters ui
+    protected void handleAProposButtonAction() throws IOException {
+        //load the 'à propos' ui
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/aPropos.fxml"));
+        root.getStylesheets().add(getClass().getResource("/css/about.css").toExternalForm());
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setScene(new Scene(root));
+        stage.setAlwaysOnTop(true);
+        stage.show();
     }
 
     private void loadInfo(String taskName) throws IOException {
