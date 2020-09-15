@@ -20,4 +20,8 @@ You can see your current java version with the command <code>java --version</cod
 		
 <h2>Execution</h2>
 	<code>java -jar <.jar file path></code>
-	[<img src="https://img.youtube.com/vi/<VIDEO ID>/maxresdefault.jpg" width="50%">](https://youtu.be/<VIDEO ID>)
+	 <video width="320" height="240" autoplay>
+  <source src="movie.mp4" type="video/mp4">
+  <source src="movie.ogg" type="video/ogg">
+Your browser does not support the video tag.
+</video> 
