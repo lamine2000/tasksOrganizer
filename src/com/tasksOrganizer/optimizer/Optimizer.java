@@ -15,7 +15,7 @@ public class Optimizer {
         long tsupp = ChronoUnit.DAYS.between(now(), task.getTsupp());
         short difficulte = (short)(task.getDifficulte());
         long echeance = ChronoUnit.DAYS.between(now(), task.getEcheance());
-        double marge = Double.parseDouble(String.valueOf(echeance)) / (Double.parseDouble(String.valueOf(tsupp)))-1;
+        double marge = Double.parseDouble(String.valueOf(echeance)) / (Double.parseDouble(String.valueOf(tsupp))) - 1;
 
         marge = marge!=0 ? marge : 0.1d;
 
@@ -27,7 +27,7 @@ public class Optimizer {
         long tsupp = ChronoUnit.DAYS.between(now(), task.getTsupp());
         short importance = (short)(task.getImportance());
         long echeance = ChronoUnit.DAYS.between(now(), task.getEcheance());
-        double marge = Double.parseDouble(String.valueOf(echeance)) / (Double.parseDouble(String.valueOf(tsupp)))-1;
+        double marge = Double.parseDouble(String.valueOf(echeance)) / (Double.parseDouble(String.valueOf(tsupp))) - 1;
 
         marge = marge!=0 ? marge : 0.1d;
 
@@ -145,7 +145,7 @@ public class Optimizer {
             subTable.add(tasks[0]);
 
             for (int i = 1; i < tasks.length; i++) {
-                for (int j = 0; j <= i; j++) {
+                for (int j = i; j >= 0 ; j--) {
 
                     if(i != j)
                         set = insert(subTable, tasks[i], j);
