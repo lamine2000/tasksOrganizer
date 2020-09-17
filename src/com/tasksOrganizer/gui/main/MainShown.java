@@ -13,7 +13,7 @@ public class MainShown extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/views/home.fxml"));
-        root.getStylesheets().add(getClass().getResource("/style/home.css").toString());
+        root.getStylesheets().add(getClass().getResource("/stylesheets/home.css").toString());
         primaryStage.setTitle("tasksOrganizer");
         primaryStage.getIcons().add(new Image(getClass().getResource("/images/appIcone.png").toExternalForm(), false));
         primaryStage.setScene(new Scene(root));

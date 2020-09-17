@@ -115,7 +115,7 @@ public class HomeController implements Initializable {
         if (finAnimation) {
             finAnimation = false;
             Parent root = FXMLLoader.load(getClass().getResource("/views/createTask.fxml"));
-            root.getStylesheets().add(getClass().getResource("/style/createTask.css").toString());
+            root.getStylesheets().add(getClass().getResource("/stylesheets/createTask.css").toString());
 
             root.translateYProperty().set(650);
             parentContainer.getChildren().add(root);
@@ -139,7 +139,7 @@ public class HomeController implements Initializable {
     protected void handleAProposButtonAction() throws IOException {
         //load the 'à propos' ui
         Parent root = FXMLLoader.load(getClass().getResource("/views/aPropos.fxml"));
-        root.getStylesheets().add(getClass().getResource("/style/about.css").toExternalForm());
+        root.getStylesheets().add(getClass().getResource("/stylesheets/about.css").toExternalForm());
         Stage stage = new Stage();
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(new Scene(root));
@@ -155,7 +155,7 @@ public class HomeController implements Initializable {
             MotherController.taskName = taskName;
 
             Parent root = FXMLLoader.load(getClass().getResource("/views/infoTask.fxml"));
-            root.getStylesheets().add(getClass().getResource("/style/info.css").toExternalForm());
+            root.getStylesheets().add(getClass().getResource("/stylesheets/info.css").toExternalForm());
             Stage stage = new Stage();
             stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(new Scene(root));
@@ -173,7 +173,7 @@ public class HomeController implements Initializable {
             MotherController.taskName = taskName;
 
             Parent root = FXMLLoader.load(getClass().getResource("/views/modifTask.fxml"));
-            root.getStylesheets().add(getClass().getResource("/style/modif.css").toExternalForm());
+            root.getStylesheets().add(getClass().getResource("/stylesheets/modif.css").toExternalForm());
             Stage stage = new Stage();
             stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(new Scene(root));

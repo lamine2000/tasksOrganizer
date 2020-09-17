@@ -680,7 +680,7 @@ public class ModifController extends MotherController implements Initializable {
             MotherController.taskName = taskName;
 
             Parent root = FXMLLoader.load(getClass().getResource("/views/infoTask.fxml"));
-            root.getStylesheets().add(getClass().getResource("/style/info.css").toExternalForm());
+            root.getStylesheets().add(getClass().getResource("/stylesheets/info.css").toExternalForm());
             Stage stage = new Stage();
             stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(new Scene(root));
@@ -697,7 +697,7 @@ public class ModifController extends MotherController implements Initializable {
             MotherController.taskName = taskName;
 
             Parent root = FXMLLoader.load(getClass().getResource("/views/modifTask.fxml"));
-            root.getStylesheets().add(getClass().getResource("/style/modif.css").toExternalForm());
+            root.getStylesheets().add(getClass().getResource("/stylesheets/modif.css").toExternalForm());
             Stage stage = new Stage();
             stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(new Scene(root));

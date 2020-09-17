@@ -440,7 +440,7 @@ public class CreateTaskController implements Initializable {
             finAnimation = false;
             Parent root = FXMLLoader.load(getClass().getResource("/views/home.fxml"));
             Scene scene = backButton.getScene();
-            root.getStylesheets().add(getClass().getResource("/style/home.css").toString());
+            root.getStylesheets().add(getClass().getResource("/stylesheets/home.css").toString());
 
             root.translateXProperty().set(scene.getWidth());
             StackPane parentContainer = (StackPane)scene.getRoot();
