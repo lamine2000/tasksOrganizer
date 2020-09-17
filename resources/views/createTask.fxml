@@ -12,7 +12,7 @@
 
 <AnchorPane id="createScene" fx:id="container" prefHeight="650.0" prefWidth="900.0"
             xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.tasksOrganizer.gui.CreateTaskController">
+            fx:controller="com.tasksOrganizer.gui.controllers.CreateTaskController">
    <Text layoutX="66.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="titre" text="Difficulté"/>
    <HBox layoutX="64.0" layoutY="116.0" onMouseExited="#difficultyStarsExitedAction" prefHeight="38.0"
          prefWidth="280.0">

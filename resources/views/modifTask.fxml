@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane id="modif" fx:id="container" prefHeight="625.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tasksOrganizer.gui.ModifController">
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tasksOrganizer.gui.controllers.ModifController">
    <Text layoutX="37.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="titre" text="Difficulté"
          AnchorPane.topAnchor="23.63020896911621"/>
    <HBox layoutX="38.0" layoutY="116.0" onMouseExited="#difficultyStarsExitedAction" prefHeight="38.0"

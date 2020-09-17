@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane id="about" onMouseExited="#handleMouseExcitedAction" prefHeight="356.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tasksOrganizer.gui.AProposController">
+<AnchorPane id="about" onMouseExited="#handleMouseExcitedAction" prefHeight="356.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tasksOrganizer.gui.controllers.AProposController">
    <Label id="titre" layoutX="170.0" layoutY="14.0" text="À propos de tasksOrganizer ..." />
    <TextFlow layoutX="41.0" layoutY="178.0" prefHeight="52.0" prefWidth="519.0" AnchorPane.leftAnchor="41.0" AnchorPane.rightAnchor="40.0">
       <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text2" text="     Son code source est disponible sur" />

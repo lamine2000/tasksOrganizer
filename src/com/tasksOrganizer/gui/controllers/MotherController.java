@@ -1,5 +1,6 @@
-package com.tasksOrganizer.gui;
+package com.tasksOrganizer.gui.controllers;
 
+import com.tasksOrganizer.gui.models.HomeTableViewModel;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
 import javafx.scene.text.Text;

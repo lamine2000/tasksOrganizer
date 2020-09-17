@@ -1,6 +1,6 @@
-package com.tasksOrganizer.gui;
+package com.tasksOrganizer.gui.controllers;
 
-import com.tasksOrganizer.myExceptions.MysqlUnreachableException;
+import com.tasksOrganizer.exceptions.MysqlUnreachableException;
 import com.tasksOrganizer.sample.Reminder;
 import com.tasksOrganizer.sample.Task;
 import javafx.animation.KeyFrame;

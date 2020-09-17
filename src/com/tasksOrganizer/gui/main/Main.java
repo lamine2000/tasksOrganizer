@@ -1,4 +1,4 @@
-package com.tasksOrganizer.gui;
+package com.tasksOrganizer.gui.main;
 
 public class Main {
     public static void main(String[] args) {

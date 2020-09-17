@@ -1,4 +1,4 @@
-package com.tasksOrganizer.gui;
+package com.tasksOrganizer.gui.models;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;

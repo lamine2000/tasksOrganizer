@@ -1,6 +1,7 @@
-package com.tasksOrganizer.gui;
+package com.tasksOrganizer.gui.controllers;
 
-import com.tasksOrganizer.myExceptions.MysqlUnreachableException;
+import com.tasksOrganizer.gui.models.HomeTableViewModel;
+import com.tasksOrganizer.exceptions.MysqlUnreachableException;
 import com.tasksOrganizer.optimizer.Optimizer;
 import com.tasksOrganizer.sample.Task;
 import com.tasksOrganizer.tray.animations.AnimationType;
@@ -113,8 +114,8 @@ public class HomeController implements Initializable {
     protected void handleAddTaskButtonAction() throws IOException {
         if (finAnimation) {
             finAnimation = false;
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/createTask.fxml"));
-            root.getStylesheets().add(getClass().getResource("/css/createTask.css").toString());
+            Parent root = FXMLLoader.load(getClass().getResource("/views/createTask.fxml"));
+            root.getStylesheets().add(getClass().getResource("/style/createTask.css").toString());
 
             root.translateYProperty().set(650);
             parentContainer.getChildren().add(root);
@@ -137,8 +138,8 @@ public class HomeController implements Initializable {
     @FXML
     protected void handleAProposButtonAction() throws IOException {
         //load the 'à propos' ui
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/aPropos.fxml"));
-        root.getStylesheets().add(getClass().getResource("/css/about.css").toExternalForm());
+        Parent root = FXMLLoader.load(getClass().getResource("/views/aPropos.fxml"));
+        root.getStylesheets().add(getClass().getResource("/style/about.css").toExternalForm());
         Stage stage = new Stage();
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(new Scene(root));
@@ -153,8 +154,8 @@ public class HomeController implements Initializable {
             MotherController.infoOpened = true;
             MotherController.taskName = taskName;
 
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/infoTask.fxml"));
-            root.getStylesheets().add(getClass().getResource("/css/info.css").toExternalForm());
+            Parent root = FXMLLoader.load(getClass().getResource("/views/infoTask.fxml"));
+            root.getStylesheets().add(getClass().getResource("/style/info.css").toExternalForm());
             Stage stage = new Stage();
             stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(new Scene(root));
@@ -171,8 +172,8 @@ public class HomeController implements Initializable {
             MotherController.modifOpened = true;
             MotherController.taskName = taskName;
 
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/modifTask.fxml"));
-            root.getStylesheets().add(getClass().getResource("/css/modif.css").toExternalForm());
+            Parent root = FXMLLoader.load(getClass().getResource("/views/modifTask.fxml"));
+            root.getStylesheets().add(getClass().getResource("/style/modif.css").toExternalForm());
             Stage stage = new Stage();
             stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(new Scene(root));

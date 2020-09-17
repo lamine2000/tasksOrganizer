@@ -10,7 +10,7 @@
 
 <StackPane fx:id="stackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
            prefHeight="600.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1"
-           xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tasksOrganizer.gui.InfoController">
+           xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tasksOrganizer.gui.controllers.InfoController">
    <AnchorPane id="info" fx:id="home" onMouseExited="#handleDropFocus" prefHeight="600.0" prefWidth="500.0">
       <HBox layoutY="107.0" prefHeight="47.0" prefWidth="233.0" styleClass="hbox">
          <Button fx:id="d1" mnemonicParsing="false"/>

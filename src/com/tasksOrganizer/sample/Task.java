@@ -1,7 +1,7 @@
 package com.tasksOrganizer.sample;
 
 import com.tasksOrganizer.db.DBFonctions;
-import com.tasksOrganizer.myExceptions.MysqlUnreachableException;
+import com.tasksOrganizer.exceptions.MysqlUnreachableException;
 
 import java.time.LocalDate;
 

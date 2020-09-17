@@ -1,6 +1,6 @@
 package com.tasksOrganizer.db;
 
-import com.tasksOrganizer.myExceptions.MysqlUnreachableException;
+import com.tasksOrganizer.exceptions.MysqlUnreachableException;
 import com.tasksOrganizer.sample.Reminder;
 import com.tasksOrganizer.sample.Task;
 

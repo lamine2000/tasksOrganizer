@@ -1,8 +1,11 @@
-package com.tasksOrganizer.gui;
+package com.tasksOrganizer.gui.controllers;
 
 
 import com.gluonhq.charm.glisten.control.TextField;
-import com.tasksOrganizer.myExceptions.MysqlUnreachableException;
+import com.tasksOrganizer.gui.AlertHelper;
+import com.tasksOrganizer.gui.models.HomeTableViewModel;
+import com.tasksOrganizer.gui.TimeSpinner;
+import com.tasksOrganizer.exceptions.MysqlUnreachableException;
 import com.tasksOrganizer.optimizer.Optimizer;
 import com.tasksOrganizer.sample.Reminder;
 import com.tasksOrganizer.sample.Task;
@@ -676,8 +679,8 @@ public class ModifController extends MotherController implements Initializable {
             MotherController.infoOpened = true;
             MotherController.taskName = taskName;
 
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/infoTask.fxml"));
-            root.getStylesheets().add(getClass().getResource("/css/info.css").toExternalForm());
+            Parent root = FXMLLoader.load(getClass().getResource("/views/infoTask.fxml"));
+            root.getStylesheets().add(getClass().getResource("/style/info.css").toExternalForm());
             Stage stage = new Stage();
             stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(new Scene(root));
@@ -693,8 +696,8 @@ public class ModifController extends MotherController implements Initializable {
             MotherController.modifOpened = true;
             MotherController.taskName = taskName;
 
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/modifTask.fxml"));
-            root.getStylesheets().add(getClass().getResource("/css/modif.css").toExternalForm());
+            Parent root = FXMLLoader.load(getClass().getResource("/views/modifTask.fxml"));
+            root.getStylesheets().add(getClass().getResource("/style/modif.css").toExternalForm());
             Stage stage = new Stage();
             stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(new Scene(root));

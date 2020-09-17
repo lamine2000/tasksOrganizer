@@ -1,8 +1,8 @@
-package com.tasksOrganizer.gui;
+package com.tasksOrganizer.gui.main;
 
 import com.coreoz.wisp.Scheduler;
 import com.coreoz.wisp.schedule.Schedules;
-import com.tasksOrganizer.myExceptions.MysqlUnreachableException;
+import com.tasksOrganizer.exceptions.MysqlUnreachableException;
 import com.tasksOrganizer.sample.Reminder;
 import com.tasksOrganizer.sample.Task;
 import javafx.application.Application;

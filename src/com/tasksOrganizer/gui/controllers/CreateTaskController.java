@@ -1,7 +1,9 @@
-package com.tasksOrganizer.gui;
+package com.tasksOrganizer.gui.controllers;
 
 import com.gluonhq.charm.glisten.control.TextField;
-import com.tasksOrganizer.myExceptions.MysqlUnreachableException;
+import com.tasksOrganizer.gui.AlertHelper;
+import com.tasksOrganizer.gui.TimeSpinner;
+import com.tasksOrganizer.exceptions.MysqlUnreachableException;
 import com.tasksOrganizer.sample.Reminder;
 import com.tasksOrganizer.sample.Task;
 import com.tasksOrganizer.tray.animations.AnimationType;
@@ -436,9 +438,9 @@ public class CreateTaskController implements Initializable {
 
         if(finAnimation){
             finAnimation = false;
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/home.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/views/home.fxml"));
             Scene scene = backButton.getScene();
-            root.getStylesheets().add(getClass().getResource("/css/home.css").toString());
+            root.getStylesheets().add(getClass().getResource("/style/home.css").toString());
 
             root.translateXProperty().set(scene.getWidth());
             StackPane parentContainer = (StackPane)scene.getRoot();
