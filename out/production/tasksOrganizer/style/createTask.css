@@ -1,0 +1,125 @@
+#createScene{
+    -fx-background-image: url("../images/800x600/4.jpg");
+    -fx-background-position: center;
+    -fx-background-size: cover;
+}
+
+#back{
+    -fx-background-color: transparent;
+}
+
+#back:hover{
+    -fx-effect: dropshadow( gaussian , rgba(0.0,0.0,0.0,0.8) , 20.0,0.0,0.0,1.0 );
+}
+
+.button:hover, .check-box:hover{
+    -fx-cursor: hand;
+}
+
+.star:pressed{
+    -fx-effect: innershadow( gaussian , rgba(0.0,0.0,0.0,0.8) , 5.0,0.0,0.0,0.0 );
+}
+
+.star{
+    -fx-background-color: transparent;
+    -fx-padding: 8px;
+}
+
+/*.text-field{
+    -fx-background-color: rgba(0,0,0,0.3);
+    -fx-border-color: rgba(0,0,0,0.3);
+    -fx-background-radius:30;
+    -fx-border-radius:20;
+    -fx-min-height:45;
+    -fx-text-fill: #fff;
+    -fx-prompt-text-fill: #fff;
+    -fx-border-width:0px;
+    -fx-alignment: center;
+    -fx-font-size: 1.2em;
+    -fx-effect: null;
+}*/
+
+/*.text-field:hover,
+.text-field:focused,
+.text-field:selected {
+    -fx-background-color: rgba(0,0,0,0.3);
+    -fx-border-color: rgba(0,0,0,0.3);
+    -fx-background-radius:30;
+    -fx-border-radius:20;
+    -fx-min-height:45;
+    -fx-text-fill: #fff;
+    -fx-prompt-text-fill: #fff;
+    -fx-border-width:0px;
+    -fx-alignment: center;
+    -fx-font-size: 1.2em;
+    -fx-effect: null;
+}*/
+
+.text-area{
+    -fx-opacity: 0.4;
+    -fx-font-weight: bold;
+    -fx-font-size: 1.2em;
+    -fx-border-width: 0px;
+    -fx-prompt-text-fill: black;
+}
+
+.text-area:focused{
+    -fx-prompt-text-fill: transparent;
+}
+
+.text-field,
+.text-field:hover{
+    -fx-border-color: grey;
+    -fx-border-width: 0 0 1 0;
+    -fx-background-color: rgba(0,0,0,0.4);
+    -fx-text-fill: #ffffff;
+    -fx-prompt-text-fill: #ffffff;
+    -fx-alignment: center;
+    -fx-font-size: 1.1em;
+    -fx-effect: null;
+}
+
+.text-field:focused,
+.text-field:selected{
+    -fx-border-width: 0 0 2 0;
+    -fx-border-color: whitesmoke;
+    -fx-prompt-text-fill: transparent;
+}
+
+.titre{
+    -fx-font-weight: bold;
+    -fx-font-style: italic;
+    -fx-fill: darkorange;
+    -fx-font-size: 1.2em;
+    //-fx-font-family: 'Pacifico';
+}
+
+#actions .button{
+    -fx-background-color: grey;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-font-style: italic;
+    -fx-font-size: 1.07em;
+}
+
+#actions{
+    -fx-spacing: 10px;
+}
+
+#actions .button:hover{
+    -fx-background-color:orange;
+    -fx-effect: dropshadow( gaussian , rgba(0.0,0.0,0.0,0.8) , 15.0,0.0,0.0,1.0 );
+}
+
+#actions .button:pressed,
+#back:pressed{
+    -fx-effect: innershadow( gaussian , rgba(0.0,0.0,0.0,0.8) , 5.0,0.0,0.0,0.0 );
+}
+
+.check-box{
+    -fx-font-weight: bold;
+    -fx-font-style: italic;
+    -fx-text-fill: aliceblue;
+    -fx-font-size: 1.2em;
+    //-fx-font-family: 'Pacifico';
+}
