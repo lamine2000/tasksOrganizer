@@ -21,7 +21,7 @@ public class DBFonctions {
     }
 
 
-    public static int saveTask(Task task) throws MysqlUnreachableException {
+    public static int saveTask(Task task) {
 
         PreparedStatement state;
         int id = -1;
@@ -54,7 +54,7 @@ public class DBFonctions {
     }
 
 
-    public static boolean isTask(String nom) throws MysqlUnreachableException {
+    public static boolean isTask(String nom) {
         boolean exists = false;
         PreparedStatement state;
         ResultSet result;
@@ -82,7 +82,7 @@ public class DBFonctions {
     }
 
 
-    public static Task[] DBExtractTasks() throws MysqlUnreachableException {
+    public static Task[] DBExtractTasks() {
         PreparedStatement state;
         ResultSet result;
         int id;
@@ -128,7 +128,7 @@ public class DBFonctions {
     }
 
 
-    public static Object DBgetParam(String nomParam, String nomTable, String nomIdentifiant, int valeurIdentifiant) throws MysqlUnreachableException {
+    public static Object DBgetParam(String nomParam, String nomTable, String nomIdentifiant, int valeurIdentifiant) {
         Object param = null;
         PreparedStatement state;
         ResultSet result;
@@ -159,7 +159,7 @@ public class DBFonctions {
     }
 
 
-    public static void DBRemoveTask(String nom) throws MysqlUnreachableException {
+    public static void DBRemoveTask(String nom) {
         PreparedStatement state;
 
 
@@ -186,7 +186,7 @@ public class DBFonctions {
     }
 
 
-    public static void taskDone(String taskName) throws MysqlUnreachableException {
+    public static void taskDone(String taskName) {
         PreparedStatement state;
 
         try {
@@ -230,9 +230,6 @@ public class DBFonctions {
                     LocalDate.parse(tab[7].toString())
             );
 
-        }catch (MysqlUnreachableException e){
-            System.out.println("Le SGBD mysql est inateignable...Vérifiez qu'il est bien en marche.");
-            System.exit(0);
         } catch (Exception e) {
             System.out.println("Echec de communication avec la base de donnees");
             //e.printStackTrace();
@@ -242,7 +239,7 @@ public class DBFonctions {
     }
 
 
-    public static Object DBgetParam2(String nomParam,String nomTable ,String nomIdentifiant, String valeurIdentifiant) throws MysqlUnreachableException {
+    public static Object DBgetParam2(String nomParam,String nomTable ,String nomIdentifiant, String valeurIdentifiant) {
         Object param = null;
         PreparedStatement state;
         ResultSet result;
@@ -273,7 +270,7 @@ public class DBFonctions {
     }
 
 
-    public static void modifyTask(String name, Task newtask) throws MysqlUnreachableException {
+    public static void modifyTask(String name, Task newtask) {
         PreparedStatement state;
 
         try {
@@ -309,7 +306,7 @@ public class DBFonctions {
 
 
 
-    public static void saveReminder(Reminder reminder, int idTask) throws MysqlUnreachableException {
+    public static void saveReminder(Reminder reminder, int idTask) {
         PreparedStatement state;
         String ndt;
 
@@ -344,7 +341,7 @@ public class DBFonctions {
 
 
 
-    public static void modifyReminder(Reminder newReminder, String taskName) throws MysqlUnreachableException {
+    public static void modifyReminder(Reminder newReminder, String taskName) {
         PreparedStatement state;
 
         try {
@@ -392,9 +389,6 @@ public class DBFonctions {
                     LocalTime.parse(tab[2].toString()),
                     (Boolean) tab[3]
             );
-        }catch (MysqlUnreachableException e){
-            System.out.println("Le SGBD mysql est inateignable...Vérifiez qu'il est bien en marche.");
-            System.exit(0);
         } catch (Exception e) {
             System.out.println("Echec de communication avec la base de donnees");
             //e.printStackTrace();
@@ -408,7 +402,7 @@ public class DBFonctions {
 
 
 
-    public static Reminder[] DBExtractReminders() throws MysqlUnreachableException {
+    public static Reminder[] DBExtractReminders() {
         PreparedStatement state;
         ResultSet result;
         int id;
@@ -460,7 +454,7 @@ public class DBFonctions {
 
 
 
-    public static void DBRemoveReminder(String taskName) throws MysqlUnreachableException {
+    public static void DBRemoveReminder(String taskName) {
         if(isReminder(taskName)){
             PreparedStatement state;
 
@@ -489,7 +483,7 @@ public class DBFonctions {
 
 
 
-    public static boolean isReminder(String taskName) throws MysqlUnreachableException {
+    public static boolean isReminder(String taskName) {
         boolean exists = false;
         PreparedStatement state;
         ResultSet result;
@@ -519,7 +513,7 @@ public class DBFonctions {
 
 
 
-    public static void refreshReminder(LocalDateTime next, String name) throws MysqlUnreachableException {
+    public static void refreshReminder(LocalDateTime next, String name) {
         PreparedStatement state;
 
         try{
