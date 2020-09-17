@@ -1,5 +1,6 @@
 package com.tasksOrganizer.gui;
 
+import com.tasksOrganizer.myExceptions.MysqlUnreachableException;
 import com.tasksOrganizer.sample.Reminder;
 import com.tasksOrganizer.sample.Task;
 import javafx.animation.KeyFrame;
@@ -90,15 +91,19 @@ public class InfoController extends MotherController implements Initializable {
         Task task = Task.extract(taskName);
         String textTime, textHour, textMinute;
         LocalDateTime nextDateTime;
-        if(Reminder.exists(taskName)){
-            nextDateTime = Reminder.extract(taskName).getNextDateTime();
-            textTime = nextDateTime.toString().split("T")[1];
-            textHour = textTime.split(":")[0];
-            textMinute = textTime.split(":")[1];
-            textRmdr.setText("Prochaine notification prévue pour le "+nextDateTime.getDayOfMonth()+"-"+nextDateTime.getMonthValue()+"-"+nextDateTime.getYear()+" à "+textHour+"h "+textMinute+"min");
+        try {
+            if(Reminder.exists(taskName)){
+                nextDateTime = Reminder.extract(taskName).getNextDateTime();
+                textTime = nextDateTime.toString().split("T")[1];
+                textHour = textTime.split(":")[0];
+                textMinute = textTime.split(":")[1];
+                textRmdr.setText("Prochaine notification prévue pour le "+nextDateTime.getDayOfMonth()+"-"+nextDateTime.getMonthValue()+"-"+nextDateTime.getYear()+" à "+textHour+"h "+textMinute+"min");
+            }
+            else
+                textRmdr.setText("Notifications désactivées pour cette tâche");
+        } catch (MysqlUnreachableException e) {
+            //e.printStackTrace();
         }
-        else
-            textRmdr.setText("Notifications désactivées pour cette tâche");
 
 
         Text descText = !task.getDescription().trim().equals("") ? new Text("Description :\n"+ task.getDescription()) : new Text();

@@ -1,6 +1,7 @@
 package com.tasksOrganizer.sample;
 
 import com.tasksOrganizer.db.DBFonctions;
+import com.tasksOrganizer.myExceptions.MysqlUnreachableException;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -53,11 +54,11 @@ public class Reminder {
         this.active = active;
     }
 
-    public static void save(Reminder reminder, int idTask){
+    public static void save(Reminder reminder, int idTask) throws MysqlUnreachableException {
         DBFonctions.saveReminder(reminder, idTask);
     }
 
-    public static void modify(String taskName, Reminder newReminder){
+    public static void modify(String taskName, Reminder newReminder) throws MysqlUnreachableException {
         DBFonctions.modifyReminder(newReminder, taskName);
     }
 
@@ -65,19 +66,19 @@ public class Reminder {
         return DBFonctions.DBExtractReminder(taskName);
     }
 
-    public static Reminder[] extractReminders(){
+    public static Reminder[] extractReminders() throws MysqlUnreachableException {
         return DBFonctions.DBExtractReminders();
     }
 
-    public static boolean exists(String taskName){
+    public static boolean exists(String taskName) throws MysqlUnreachableException {
         return DBFonctions.isReminder(taskName);
     }
 
-    public static void remove(String taskName){
+    public static void remove(String taskName) throws MysqlUnreachableException {
         DBFonctions.DBRemoveReminder(taskName);
     }
 
-    public static void refresh(LocalDateTime next, String taskName){
+    public static void refresh(LocalDateTime next, String taskName) throws MysqlUnreachableException {
         DBFonctions.refreshReminder(next, taskName);
     }
 }

@@ -2,6 +2,7 @@ package com.tasksOrganizer.gui;
 
 import com.coreoz.wisp.Scheduler;
 import com.coreoz.wisp.schedule.Schedules;
+import com.tasksOrganizer.myExceptions.MysqlUnreachableException;
 import com.tasksOrganizer.sample.Reminder;
 import com.tasksOrganizer.sample.Task;
 import javafx.application.Application;
@@ -31,7 +32,12 @@ public class MainHidden extends Application {
                     //code à exécuter à chaque 2 secondes
                     System.out.println("tic");
 
-                    Reminder[] reminders = Reminder.extractReminders();
+                    Reminder[] reminders = new Reminder[0];
+                    try {
+                        reminders = Reminder.extractReminders();
+                    } catch (MysqlUnreachableException e) {
+                        //e.printStackTrace();
+                    }
                     LocalDateTime[] nextDateTimes = new LocalDateTime[reminders.length];
 
                     for (int i = 0; i < reminders.length; i++){
@@ -41,7 +47,7 @@ public class MainHidden extends Application {
                             //notif ratées
                             try {
                                 showMissedNotif(reminders[i]);
-                            } catch (IOException | InterruptedException e) {
+                            } catch (IOException | InterruptedException | MysqlUnreachableException e) {
                                 //e.printStackTrace();
                             }
                         }
@@ -49,7 +55,7 @@ public class MainHidden extends Application {
                         else if(nextDateTimes[i].isBefore(LocalDateTime.now().plusSeconds(5)) && nextDateTimes[i].isAfter(LocalDateTime.now().minusSeconds(5))){
                             try {
                                 showNotif(reminders[i]);
-                            } catch (IOException | InterruptedException e ) {
+                            } catch (IOException | InterruptedException | MysqlUnreachableException e ) {
                                 //e.printStackTrace();
                             }
                         }
@@ -61,7 +67,7 @@ public class MainHidden extends Application {
     }
 
 
-    private void showMissedNotif(Reminder reminder) throws IOException, InterruptedException {
+    private void showMissedNotif(Reminder reminder) throws IOException, InterruptedException, MysqlUnreachableException {
         step = reminder.getStep();
         LocalDate date;
         LocalTime time;
@@ -86,7 +92,7 @@ public class MainHidden extends Application {
         }
     }
 
-    private void showNotif(Reminder reminder) throws IOException, InterruptedException {
+    private void showNotif(Reminder reminder) throws IOException, InterruptedException, MysqlUnreachableException {
         next = reminder.getNextDateTime();
         step = reminder.getStep();
         name = reminder.getTaskName();

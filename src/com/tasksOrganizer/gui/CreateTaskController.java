@@ -1,6 +1,7 @@
 package com.tasksOrganizer.gui;
 
 import com.gluonhq.charm.glisten.control.TextField;
+import com.tasksOrganizer.myExceptions.MysqlUnreachableException;
 import com.tasksOrganizer.sample.Reminder;
 import com.tasksOrganizer.sample.Task;
 import com.tasksOrganizer.tray.animations.AnimationType;
@@ -270,7 +271,7 @@ public class CreateTaskController implements Initializable {
     }
 
     @FXML
-    protected void handleValiderButtonAction() {
+    protected void handleValiderButtonAction() throws MysqlUnreachableException {
         Window owner = nameField.getScene().getWindow();
 
         if(nameField.getText().isEmpty()){

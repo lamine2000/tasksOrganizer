@@ -1,6 +1,7 @@
 package com.tasksOrganizer.sample;
 
 import com.tasksOrganizer.db.DBFonctions;
+import com.tasksOrganizer.myExceptions.MysqlUnreachableException;
 
 import java.time.LocalDate;
 
@@ -114,23 +115,23 @@ public class Task implements Cloneable {
         this.dateCreation = dateCreation;
     }
 
-    public static Task[] extractTasks() {
+    public static Task[] extractTasks() throws MysqlUnreachableException {
         return DBFonctions.DBExtractTasks();
     }
 
-    public static void remove(String nom) {
+    public static void remove(String nom) throws MysqlUnreachableException {
         DBFonctions.DBRemoveTask(nom);
     }
 
-    public static void done(String name) {
+    public static void done(String name) throws MysqlUnreachableException {
         DBFonctions.taskDone(name);
     }
 
-    public static Boolean exists(String name) {
+    public static Boolean exists(String name) throws MysqlUnreachableException {
         return DBFonctions.isTask(name);
     }
 
-    public static int save(Task task) {
+    public static int save(Task task) throws MysqlUnreachableException {
         return DBFonctions.saveTask(task);
     }
 
@@ -138,11 +139,11 @@ public class Task implements Cloneable {
         return DBFonctions.DBExtractTask(name);
     }
 
-    public static void modify(String name, Task newTask) {
+    public static void modify(String name, Task newTask) throws MysqlUnreachableException {
         DBFonctions.modifyTask(name, newTask);
     }
 
-    public static int getIdOf(String taskName) {
+    public static int getIdOf(String taskName) throws MysqlUnreachableException {
         if (Task.exists(taskName))
             return Integer.parseInt(DBFonctions.DBgetParam2("id", "Task", "nom", taskName).toString());
         else

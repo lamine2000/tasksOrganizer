@@ -1,5 +1,6 @@
 package com.tasksOrganizer.gui;
 
+import com.tasksOrganizer.myExceptions.MysqlUnreachableException;
 import com.tasksOrganizer.optimizer.Optimizer;
 import com.tasksOrganizer.sample.Task;
 import com.tasksOrganizer.tray.animations.AnimationType;
@@ -23,8 +24,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.Clipboard;
-import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
@@ -102,7 +101,7 @@ public class HomeController implements Initializable {
 
         try {
             updateTable();
-        } catch (CloneNotSupportedException e) {
+        } catch (CloneNotSupportedException | MysqlUnreachableException e) {
             //e.printStackTrace();
         }
 
@@ -198,7 +197,7 @@ public class HomeController implements Initializable {
         return nb;
     }
     
-    public void updateTable() throws CloneNotSupportedException {
+    public void updateTable() throws CloneNotSupportedException, MysqlUnreachableException {
         tasks = Task.extractTasks();
         Optimizer op = new Optimizer();
         op.optimize(tasks);
@@ -270,7 +269,11 @@ public class HomeController implements Initializable {
                 int index = Integer.parseInt(data.substring(data.length() - tailleIndex));
                 String name = data.substring(1/*tailleIndex.length*/, data.length() - tailleIndex);
 
-                Task.remove(name);
+                try {
+                    Task.remove(name);
+                } catch (MysqlUnreachableException e) {
+                    //e.printStackTrace();
+                }
                 referenceDel[index] = -1;
                 //System.out.println("la tache "+ name + " a été supprimée ! index : "+ index);
 
@@ -306,7 +309,11 @@ public class HomeController implements Initializable {
                 int index = Integer.parseInt(data.substring(data.length() - tailleIndex));
                 String name = data.substring(1/*tailleIndex.length*/, data.length() - tailleIndex);
 
-                Task.done(name);
+                try {
+                    Task.done(name);
+                } catch (MysqlUnreachableException e) {
+                    //e.printStackTrace();
+                }
                 referenceDone[index] = -1;
 
                 int countDone = 0;

@@ -2,6 +2,7 @@ package com.tasksOrganizer.gui;
 
 
 import com.gluonhq.charm.glisten.control.TextField;
+import com.tasksOrganizer.myExceptions.MysqlUnreachableException;
 import com.tasksOrganizer.optimizer.Optimizer;
 import com.tasksOrganizer.sample.Reminder;
 import com.tasksOrganizer.sample.Task;
@@ -125,7 +126,11 @@ public class ModifController extends MotherController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        rmdrAssociated = Reminder.exists(MotherController.taskName);
+        try {
+            rmdrAssociated = Reminder.exists(MotherController.taskName);
+        } catch (MysqlUnreachableException e) {
+            //e.printStackTrace();
+        }
 
         reminderOn.setTooltip(new Tooltip("Activer les rappels"));
 
@@ -344,7 +349,7 @@ public class ModifController extends MotherController implements Initializable {
     }
 
     @FXML
-    protected void handleValiderButtonAction() throws CloneNotSupportedException {
+    protected void handleValiderButtonAction() throws CloneNotSupportedException, MysqlUnreachableException {
         Window owner = nameField.getScene().getWindow();
         LocalTime time;
 
@@ -512,7 +517,7 @@ public class ModifController extends MotherController implements Initializable {
         }
     }
 
-    private void updateTable() throws CloneNotSupportedException {
+    private void updateTable() throws CloneNotSupportedException, MysqlUnreachableException {
         list.clear();
 
         Task[] tasks = Task.extractTasks();
@@ -585,7 +590,11 @@ public class ModifController extends MotherController implements Initializable {
                 int index = Integer.parseInt(data.substring(data.length() - tailleIndex));
                 String name = data.substring(1/*tailleIndex.length*/, data.length() - tailleIndex);
 
-                Task.remove(name);
+                try {
+                    Task.remove(name);
+                } catch (MysqlUnreachableException e) {
+                    ///e.printStackTrace();
+                }
                 referenceDel[index] = -1;
                 //System.out.println("la tache "+ name + " a été supprimée ! index : "+ index);
 
@@ -614,7 +623,11 @@ public class ModifController extends MotherController implements Initializable {
                 int index = Integer.parseInt(data.substring(data.length() - tailleIndex));
                 String name = data.substring(1/*tailleIndex.length*/, data.length() - tailleIndex);
 
-                Task.done(name);
+                try {
+                    Task.done(name);
+                } catch (MysqlUnreachableException e) {
+                    //e.printStackTrace();
+                }
                 referenceDone[index] = -1;
 
                 int countDone = 0;

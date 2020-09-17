@@ -1,5 +1,6 @@
 package com.tasksOrganizer.db;
 
+import com.tasksOrganizer.myExceptions.MysqlUnreachableException;
 import com.tasksOrganizer.sample.Reminder;
 import com.tasksOrganizer.sample.Task;
 
@@ -11,13 +12,22 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class DBFonctions {
-    public static int saveTask(Task task) {
+    private static Connection connect() throws MysqlUnreachableException {
+       Connection conn = DBConnect.getInstance().getConn();
 
-        Connection conn = DBConnect.getInstance().getConn();
+       if(conn == null)
+            throw new MysqlUnreachableException();
+        return conn;
+    }
+
+
+    public static int saveTask(Task task) throws MysqlUnreachableException {
+
         PreparedStatement state;
         int id = -1;
 
         try {
+            Connection conn = connect();
             state = conn.prepareStatement("insert into Task(nom, description, importance, difficulte, echeance, tsupp, dateCreation) values (?,?,?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
             state.setString(1, task.getNom());
             state.setString(2, task.getDescription());
@@ -33,7 +43,10 @@ public class DBFonctions {
 
             state.close();
 
-        } catch (Exception e) {
+        } catch (MysqlUnreachableException e){
+            System.out.println("Le SGBD mysql est inateignable...Vérifiez qu'il est bien en marche.");
+            System.exit(0);
+        }catch (Exception e) {
             System.out.println("Echec de communication avec la base de donnees");
         }
 
@@ -41,14 +54,15 @@ public class DBFonctions {
     }
 
 
-    public static boolean isTask(String nom) {
+    public static boolean isTask(String nom) throws MysqlUnreachableException {
         boolean exists = false;
         PreparedStatement state;
         ResultSet result;
 
-        Connection conn = DBConnect.getInstance().getConn();
+
 
         try {
+            Connection conn = connect();
             state = conn.prepareStatement("select nom from Task where nom = ? and ok = ?",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
@@ -57,7 +71,10 @@ public class DBFonctions {
 
             result = state.executeQuery();
             exists = result.first();
-        } catch (Exception e) {
+        } catch (MysqlUnreachableException e){
+            System.out.println("Le SGBD mysql est inateignable...Vérifiez qu'il est bien en marche.");
+            System.exit(0);
+        }catch (Exception e) {
             System.out.println("Echec de communication avec la base de donnees");
         }
 
@@ -65,7 +82,7 @@ public class DBFonctions {
     }
 
 
-    public static Task[] DBExtractTasks() {
+    public static Task[] DBExtractTasks() throws MysqlUnreachableException {
         PreparedStatement state;
         ResultSet result;
         int id;
@@ -74,9 +91,10 @@ public class DBFonctions {
         Object[] tab = new Object[paramList.length];
         int taille = 0;
 
-        Connection conn = DBConnect.getInstance().getConn();
+
 
         try {
+            Connection conn = connect();
             state = conn.prepareStatement("select id from Task where ok = false",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
@@ -98,6 +116,9 @@ public class DBFonctions {
 
             result.close();
             state.close();
+        }catch (MysqlUnreachableException e){
+            System.out.println("Le SGBD mysql est inateignable...Vérifiez qu'il est bien en marche.");
+            System.exit(0);
         } catch (Exception e) {
             System.out.println("Echec de communication avec la base de donnees");
             e.printStackTrace();
@@ -107,14 +128,14 @@ public class DBFonctions {
     }
 
 
-    public static Object DBgetParam(String nomParam, String nomTable, String nomIdentifiant, int valeurIdentifiant) {
+    public static Object DBgetParam(String nomParam, String nomTable, String nomIdentifiant, int valeurIdentifiant) throws MysqlUnreachableException {
         Object param = null;
         PreparedStatement state;
         ResultSet result;
 
-        Connection conn = DBConnect.getInstance().getConn();
 
         try {
+            Connection conn = connect();
             state = conn.prepareStatement("select " + nomParam + " from " + nomTable + " where " + nomIdentifiant + " = ?",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
@@ -127,6 +148,9 @@ public class DBFonctions {
 
             state.close();
             result.close();
+        }catch (MysqlUnreachableException e){
+            System.out.println("Le SGBD mysql est inateignable...Vérifiez qu'il est bien en marche.");
+            System.exit(0);
         } catch (Exception e) {
             System.out.println("Echec de communication avec la base de donnees");
         }
@@ -135,12 +159,12 @@ public class DBFonctions {
     }
 
 
-    public static void DBRemoveTask(String nom) {
+    public static void DBRemoveTask(String nom) throws MysqlUnreachableException {
         PreparedStatement state;
 
-        Connection conn = DBConnect.getInstance().getConn();
 
         try {
+            Connection conn = connect();
             //state.executeUpdate("Delete from Task where nom = '"+nom.toLowerCase()+"'");
             state = conn.prepareStatement("delete from Task where nom = ?",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
@@ -151,6 +175,9 @@ public class DBFonctions {
             state.executeUpdate();
             state.close();
 
+        }catch (MysqlUnreachableException e){
+            System.out.println("Le SGBD mysql est inateignable...Vérifiez qu'il est bien en marche.");
+            System.exit(0);
         } catch (Exception e) {
             System.out.println("Echec de communication avec la base de donnees");
             //e.printStackTrace();
@@ -159,12 +186,11 @@ public class DBFonctions {
     }
 
 
-    public static void taskDone(String taskName) {
+    public static void taskDone(String taskName) throws MysqlUnreachableException {
         PreparedStatement state;
 
-        Connection conn = DBConnect.getInstance().getConn();
-
         try {
+            Connection conn = connect();
             state = conn.prepareStatement("update Task set ok = ? where nom = ?",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
@@ -174,6 +200,9 @@ public class DBFonctions {
             state.executeUpdate();
 
             state.close();
+        }catch (MysqlUnreachableException e){
+            System.out.println("Le SGBD mysql est inateignable...Vérifiez qu'il est bien en marche.");
+            System.exit(0);
         } catch (Exception e) {
             System.out.println("Echec de communication avec la base de donnees");
             //e.printStackTrace();
@@ -201,6 +230,9 @@ public class DBFonctions {
                     LocalDate.parse(tab[7].toString())
             );
 
+        }catch (MysqlUnreachableException e){
+            System.out.println("Le SGBD mysql est inateignable...Vérifiez qu'il est bien en marche.");
+            System.exit(0);
         } catch (Exception e) {
             System.out.println("Echec de communication avec la base de donnees");
             //e.printStackTrace();
@@ -210,14 +242,13 @@ public class DBFonctions {
     }
 
 
-    public static Object DBgetParam2(String nomParam,String nomTable ,String nomIdentifiant, String valeurIdentifiant) {
+    public static Object DBgetParam2(String nomParam,String nomTable ,String nomIdentifiant, String valeurIdentifiant) throws MysqlUnreachableException {
         Object param = null;
         PreparedStatement state;
         ResultSet result;
 
-        Connection conn = DBConnect.getInstance().getConn();
-
         try {
+            Connection conn = connect();
             state = conn.prepareStatement("select " + nomParam + " from " + nomTable + " where " + nomIdentifiant + " = ?",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
@@ -230,6 +261,9 @@ public class DBFonctions {
 
             state.close();
             result.close();
+        }catch (MysqlUnreachableException e){
+            System.out.println("Le SGBD mysql est inateignable...Vérifiez qu'il est bien en marche.");
+            System.exit(0);
         } catch (Exception e) {
             System.out.println("Echec de communication avec la base de donnees");
             //e.printStackTrace();
@@ -239,12 +273,11 @@ public class DBFonctions {
     }
 
 
-    public static void modifyTask(String name, Task newtask) {
+    public static void modifyTask(String name, Task newtask) throws MysqlUnreachableException {
         PreparedStatement state;
 
-        Connection conn = DBConnect.getInstance().getConn();
-
         try {
+            Connection conn = connect();
             state = conn.prepareStatement(
                     "update Task set nom = ?, description = ?, importance = ?, difficulte = ?, echeance = ?, tsupp = ?, dateCreation = ? where nom = ?",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
@@ -262,6 +295,9 @@ public class DBFonctions {
             state.executeUpdate();
 
             state.close();
+        }catch (MysqlUnreachableException e){
+            System.out.println("Le SGBD mysql est inateignable...Vérifiez qu'il est bien en marche.");
+            System.exit(0);
         } catch (Exception e) {
             System.out.println("Echec de communication avec la base de donnees");
             //e.printStackTrace();
@@ -273,12 +309,12 @@ public class DBFonctions {
 
 
 
-    public static void saveReminder(Reminder reminder, int idTask){
-        Connection conn = DBConnect.getInstance().getConn();
+    public static void saveReminder(Reminder reminder, int idTask) throws MysqlUnreachableException {
         PreparedStatement state;
         String ndt;
 
         try {
+            Connection conn = connect();
             state = conn.prepareStatement("insert into Reminder (id, taskName, nextDateTime, step, active) values (?,?,?,?,?)",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
@@ -294,6 +330,9 @@ public class DBFonctions {
             state.executeUpdate();
             state.close();
 
+        }catch (MysqlUnreachableException e){
+            System.out.println("Le SGBD mysql est inateignable...Vérifiez qu'il est bien en marche.");
+            System.exit(0);
         } catch (Exception e) {
             System.out.println("Echec de communication avec la base de donnees");
             //e.printStackTrace();
@@ -305,12 +344,11 @@ public class DBFonctions {
 
 
 
-    public static void modifyReminder(Reminder newReminder, String taskName){
+    public static void modifyReminder(Reminder newReminder, String taskName) throws MysqlUnreachableException {
         PreparedStatement state;
 
-        Connection conn = DBConnect.getInstance().getConn();
-
         try {
+            Connection conn = connect();
             state = conn.prepareStatement(
                     "update Reminder set taskName = ?, nextDateTime = ?, step = ?, active = ? where taskName = ?",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
@@ -325,6 +363,9 @@ public class DBFonctions {
             state.executeUpdate();
 
             state.close();
+        }catch (MysqlUnreachableException e){
+            System.out.println("Le SGBD mysql est inateignable...Vérifiez qu'il est bien en marche.");
+            System.exit(0);
         } catch (Exception e) {
             System.out.println("Echec de communication avec la base de donnees");
             //e.printStackTrace();
@@ -351,6 +392,9 @@ public class DBFonctions {
                     LocalTime.parse(tab[2].toString()),
                     (Boolean) tab[3]
             );
+        }catch (MysqlUnreachableException e){
+            System.out.println("Le SGBD mysql est inateignable...Vérifiez qu'il est bien en marche.");
+            System.exit(0);
         } catch (Exception e) {
             System.out.println("Echec de communication avec la base de donnees");
             //e.printStackTrace();
@@ -364,7 +408,7 @@ public class DBFonctions {
 
 
 
-    public static Reminder[] DBExtractReminders(){
+    public static Reminder[] DBExtractReminders() throws MysqlUnreachableException {
         PreparedStatement state;
         ResultSet result;
         int id;
@@ -373,9 +417,8 @@ public class DBFonctions {
         Object[] tab = new Object[paramList.length];
         int taille = 0;
 
-        Connection conn = DBConnect.getInstance().getConn();
-
         try {
+            Connection conn = connect();
             state = conn.prepareStatement("select id from Reminder where active = true",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
@@ -401,6 +444,9 @@ public class DBFonctions {
             }
             result.close();
             state.close();
+        }catch (MysqlUnreachableException e){
+            System.out.println("Le SGBD mysql est inateignable...Vérifiez qu'il est bien en marche.");
+            System.exit(0);
         } catch (Exception e) {
             System.out.println("Echec de communication avec la base de donnees");
             //e.printStackTrace();
@@ -414,13 +460,12 @@ public class DBFonctions {
 
 
 
-    public static void DBRemoveReminder(String taskName){
+    public static void DBRemoveReminder(String taskName) throws MysqlUnreachableException {
         if(isReminder(taskName)){
             PreparedStatement state;
 
-            Connection conn = DBConnect.getInstance().getConn();
-
             try {
+                Connection conn = connect();
                 state = conn.prepareStatement("delete from Reminder where taskName = ?",
                         ResultSet.TYPE_SCROLL_INSENSITIVE,
                         ResultSet.CONCUR_UPDATABLE);
@@ -429,6 +474,9 @@ public class DBFonctions {
                 state.executeUpdate();
 
                 state.close();
+            }catch (MysqlUnreachableException e){
+                System.out.println("Le SGBD mysql est inateignable...Vérifiez qu'il est bien en marche.");
+                System.exit(0);
             } catch (Exception e) {
                 System.out.println("Echec de communication avec la base de donnees");
                 //e.printStackTrace();
@@ -441,14 +489,13 @@ public class DBFonctions {
 
 
 
-    public static boolean isReminder(String taskName) {
+    public static boolean isReminder(String taskName) throws MysqlUnreachableException {
         boolean exists = false;
         PreparedStatement state;
         ResultSet result;
 
-        Connection conn = DBConnect.getInstance().getConn();
-
         try {
+            Connection conn = connect();
             state = conn.prepareStatement("select taskName from Reminder where taskName = ? and active = true",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
@@ -456,6 +503,9 @@ public class DBFonctions {
 
             result = state.executeQuery();
             exists = result.first();
+        }catch (MysqlUnreachableException e){
+            System.out.println("Le SGBD mysql est inateignable...Vérifiez qu'il est bien en marche.");
+            System.exit(0);
         } catch (Exception e) {
             System.out.println("Echec de communication avec la base de donnees");
         }
@@ -469,12 +519,11 @@ public class DBFonctions {
 
 
 
-    public static void refreshReminder(LocalDateTime next, String name){
+    public static void refreshReminder(LocalDateTime next, String name) throws MysqlUnreachableException {
         PreparedStatement state;
 
-        Connection conn = DBConnect.getInstance().getConn();
-
         try{
+            Connection conn = connect();
             state = conn.prepareStatement("Update Reminder set nextDateTime = ? where taskName = ?",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_UPDATABLE
@@ -484,6 +533,9 @@ public class DBFonctions {
 
             state.executeUpdate();
             state.close();
+        }catch (MysqlUnreachableException e){
+            System.out.println("Le SGBD mysql est inateignable...Vérifiez qu'il est bien en marche.");
+            System.exit(0);
         }catch (Exception e){
             System.out.println("Echec de communication avec la base de donnees");
             //e.printStackTrace();
