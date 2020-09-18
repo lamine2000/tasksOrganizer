@@ -71,31 +71,28 @@ public class MainHidden extends Application {
         step = reminder.getStep();
         LocalDate date;
         LocalTime time;
-        name = reminder.getTaskName();
+        name = "Tâche : "+reminder.getTaskName();
         LocalDateTime now = LocalDateTime.now();
         next = reminder.getNextDateTime();
 
         while(next.isBefore(now)) {
             date = LocalDate.parse(next.toString().split("T")[0]);
             time = LocalTime.parse(next.toString().split("T")[1]);
-            System.out.println("here");
             message = "Rappel__Manqué_:__Le__" + date.toString() + "__à__" + time.getHour() + "h" + time.getMinute() + "min";
             //process = Runtime.getRuntime().exec(String.format("notify-send %s %s", name, message));
 
             process = Runtime.getRuntime().exec(new String[]{"notify-send", name, message}, null);
             process.waitFor();
-            System.out.println("here");
 
             next = next.plusHours(step.getHour()).plusMinutes(step.getMinute());
             Reminder.refresh(next , name);
-            System.out.println("refresh");
         }
     }
 
     private void showNotif(Reminder reminder) throws IOException, InterruptedException, MysqlUnreachableException {
         next = reminder.getNextDateTime();
         step = reminder.getStep();
-        name = reminder.getTaskName();
+        name = "Tâche : "+reminder.getTaskName();
         Task task = Task.extract(name);
         long interval = ChronoUnit.DAYS.between(LocalDate.now(), task.getEcheance());
         message = "Rappel_:__Il__vous__reste__encore__"+ interval +"j";
