@@ -1,9 +1,9 @@
-# tasksOrganizer(compiled with Oracle JDK-11+)
+# tasksOrganizer(compiled with Oracle JDK14)
 
 <h2>Prerequisites</h2>
 
 <ul>
-	<li><a href="https://www.oracle.com/java/technologies/javase/jdk14-archive-downloads.html">Oracle jdk14+</a></li>
+	<li><a href="https://www.oracle.com/java/technologies/javase/jdk14-archive-downloads.html">Oracle jdk11+</a></li>
 	<li>mysql or mysql-server (<code>sudo apt install mysql</code>)</li>
 </ul>
 <br/>
