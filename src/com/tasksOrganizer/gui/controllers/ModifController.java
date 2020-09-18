@@ -549,8 +549,7 @@ public class ModifController extends MotherController implements Initializable {
             infoButtons[i] = new Button();
             modifyButtons[i] = new Button();
             deleteButtons[i] = new Button();
-            oks[i] = new Button();
-            oks[i].setText("Done ?");
+            oks[i] = new Button("Done ?");
 
             infoButtons[i].setTooltip(tooltipInfo);
             modifyButtons[i].setTooltip(tooltipModif);
@@ -657,7 +656,6 @@ public class ModifController extends MotherController implements Initializable {
             deleteButtons[i].setGraphic(new ImageView(getClass().getResource("/images/deleteTask.png").toExternalForm()));
         }
 
-        table.getItems().remove(list);
         table.setItems(list);
 
     }

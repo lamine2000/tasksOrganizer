@@ -1,7 +1,7 @@
 package com.tasksOrganizer.gui.controllers;
 
-import com.tasksOrganizer.gui.models.HomeTableViewModel;
 import com.tasksOrganizer.exceptions.MysqlUnreachableException;
+import com.tasksOrganizer.gui.models.HomeTableViewModel;
 import com.tasksOrganizer.optimizer.Optimizer;
 import com.tasksOrganizer.sample.Task;
 import com.tasksOrganizer.tray.animations.AnimationType;
@@ -70,7 +70,7 @@ public class HomeController implements Initializable {
     private AnchorPane container;
 
     @FXML
-    Button addTaskButton, aProposButton;
+    Button addTaskButton, aProposButton, refreshButton;
 
     @FXML
     Text title;
@@ -90,6 +90,10 @@ public class HomeController implements Initializable {
         ImageView aboutImage = new ImageView(getClass().getResource("/images/about.png").toExternalForm());
         aProposButton.setGraphic(aboutImage);
         aProposButton.setTooltip(new Tooltip("À propos..."));
+
+        ImageView refreshImage = new ImageView(getClass().getResource("/images/refresh.png").toExternalForm());
+        refreshButton.setGraphic(refreshImage);
+        refreshButton.setTooltip(new Tooltip("Rafraîchir le tableau..."));
 
         list = FXCollections.observableArrayList();
 
@@ -147,6 +151,11 @@ public class HomeController implements Initializable {
         stage.show();
     }
 
+    @FXML
+    protected void handleRefreshButtonAction() throws MysqlUnreachableException, CloneNotSupportedException {
+        updateTable();
+    }
+
     private void loadInfo(String taskName) throws IOException {
         //opens the createTask ui already filled
 
@@ -199,6 +208,7 @@ public class HomeController implements Initializable {
     }
     
     public void updateTable() throws CloneNotSupportedException, MysqlUnreachableException {
+        list.clear();
         tasks = Task.extractTasks();
         Optimizer op = new Optimizer();
         op.optimize(tasks);
@@ -222,8 +232,7 @@ public class HomeController implements Initializable {
             infoButtons[i] = new Button();
             modifyButtons[i] = new Button();
             deleteButtons[i] = new Button();
-            oks[i] = new Button();
-            oks[i].setText("Done ?");
+            oks[i] = new Button("Done ?");
 
             infoButtons[i].setTooltip(tooltipInfo);
             modifyButtons[i].setTooltip(tooltipModif);
@@ -303,6 +312,7 @@ public class HomeController implements Initializable {
             oks[i].setId((i + "").length() + row.getName() + i);
             oks[i].getStyleClass().add("doneButton");
             referenceDone[i] = i;
+
             row.getOk().setOnAction(event -> {
 
                 String data = ((Button) (event.getSource())).getId();

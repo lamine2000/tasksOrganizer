@@ -20,6 +20,7 @@
                     <Insets />
                 </opaqueInsets>
             </Button>
+         <Button fx:id="refreshButton" mnemonicParsing="false" onAction="#handleRefreshButtonAction" />
             <Button fx:id="aProposButton" mnemonicParsing="false" onAction="#handleAProposButtonAction" />
         </HBox>
         <TableView fx:id="table" cache="true" layoutY="86.0" snapToPixel="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="19.0" AnchorPane.topAnchor="86.0">
