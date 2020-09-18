@@ -89,15 +89,11 @@ public class InfoController extends MotherController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         Task task = Task.extract(taskName);
-        String textTime, textHour, textMinute;
         LocalDateTime nextDateTime;
         try {
             if(Reminder.exists(taskName)){
                 nextDateTime = Reminder.extract(taskName).getNextDateTime();
-                textTime = nextDateTime.toString().split("T")[1];
-                textHour = textTime.split(":")[0];
-                textMinute = textTime.split(":")[1];
-                textRmdr.setText("Prochaine notification prévue pour le "+nextDateTime.getDayOfMonth()+"-"+nextDateTime.getMonthValue()+"-"+nextDateTime.getYear()+" à "+textHour+"h "+textMinute+"min");
+                textRmdr.setText("Prochaine notification prévue pour le "+localDateTimeTranslator(nextDateTime));
             }
             else
                 textRmdr.setText("Notifications désactivées pour cette tâche");
@@ -106,18 +102,18 @@ public class InfoController extends MotherController implements Initializable {
         }
 
 
-        Text descText = !task.getDescription().trim().equals("") ? new Text("Description :\n"+ task.getDescription()) : new Text();
+        Text descText = !task.getDescription().isBlank() ? new Text("Description :\n"+ task.getDescription()) : new Text();
         descText.setStyle("-fx-fill: orange");
 
         title.setText(taskName);
 
         description.getChildren().add(descText);
 
-        LocalDate date = task.getDateCreation();
-        createdAt.setText("Creation : "+date.getDayOfWeek()+" "+date.getDayOfMonth()+" "+date.getMonth()+" "+date.getYear());
+        LocalDate dateCreation = task.getDateCreation();
+        createdAt.setText("Création : "+localDateTranslator(dateCreation));
 
-        long interval1 = ChronoUnit.DAYS.between(date, task.getEcheance());
-        long interval2 = ChronoUnit.DAYS.between(date, LocalDate.now());
+        long interval1 = ChronoUnit.DAYS.between(dateCreation, task.getEcheance());
+        long interval2 = ChronoUnit.DAYS.between(dateCreation, LocalDate.now());
         double p = (double)(interval2)/(double)(interval1);
 
         progress1.setProgress(p);
@@ -138,7 +134,7 @@ public class InfoController extends MotherController implements Initializable {
             );timeline1.play();
         }
 
-        interval1 = ChronoUnit.DAYS.between(date, task.getTsupp());
+        interval1 = ChronoUnit.DAYS.between(dateCreation, task.getTsupp());
         p = (double)(interval2)/(double)(interval1);
 
         progress2.setProgress(p);
@@ -256,5 +252,86 @@ public class InfoController extends MotherController implements Initializable {
         i5Image1 = new ImageView(getClass().getResource("/images/star1.png").toExternalForm());
 
         setGraphics('i', task.getImportance());
+    }
+
+    private String localDateTimeTranslator(LocalDateTime local){
+        int month, day, year, hour, minute, dweek;
+        String strMonth, strDweek;
+
+        month = local.getMonthValue();
+        day = local.getDayOfMonth();
+        year = local.getYear();
+        hour = local.getHour();
+        minute = local.getMinute();
+        dweek = local.getDayOfWeek().getValue();
+
+
+        switch (month) {
+            case 1 -> strMonth = "Janvier";
+            case 2 -> strMonth = "Février";
+            case 3 -> strMonth = "Mars";
+            case 4 -> strMonth = "Avril";
+            case 5 -> strMonth = "Mai";
+            case 6 -> strMonth = "Juin";
+            case 7 -> strMonth = "Juillet";
+            case 8 -> strMonth = "Août";
+            case 9 -> strMonth = "Septembre";
+            case 10 -> strMonth = "Octobre";
+            case 11 -> strMonth = "Novembre";
+            case 12 -> strMonth = "Décembre";
+            default -> throw new IllegalStateException("Valeur inattendue de mois: " + month);
+        }
+
+        switch (dweek){
+            case 1 -> strDweek = "Lundi";
+            case 2 -> strDweek = "Mardi";
+            case 3 -> strDweek = "Mercredi";
+            case 4 -> strDweek = "Jeudi";
+            case 5 -> strDweek = "Vendredi";
+            case 6 -> strDweek = "Samedi";
+            case 7 -> strDweek = "Dimanche";
+            default -> throw new IllegalStateException("Valeur inattendue de jour de la semaine: " + dweek);
+        }
+
+        return strDweek+", "+day+" "+ strMonth+" "+year+" à "+hour+"h"+minute+"min";
+    }
+
+    private String localDateTranslator(LocalDate local){
+        int month, day, year, dweek;
+        String strMonth, strDweek;
+
+        month = local.getMonthValue();
+        day = local.getDayOfMonth();
+        year = local.getYear();
+        dweek = local.getDayOfWeek().getValue();
+
+        switch (month) {
+            case 1 -> strMonth = "Janvier";
+            case 2 -> strMonth = "Février";
+            case 3 -> strMonth = "Mars";
+            case 4 -> strMonth = "Avril";
+            case 5 -> strMonth = "Mai";
+            case 6 -> strMonth = "Juin";
+            case 7 -> strMonth = "Juillet";
+            case 8 -> strMonth = "Août";
+            case 9 -> strMonth = "Septembre";
+            case 10 -> strMonth = "Octobre";
+            case 11 -> strMonth = "Novembre";
+            case 12 -> strMonth = "Décembre";
+            default -> throw new IllegalStateException("Valeur inattendue de mois: " + month);
+        }
+
+        switch (dweek){
+            case 1 -> strDweek = "Lundi";
+            case 2 -> strDweek = "Mardi";
+            case 3 -> strDweek = "Mercredi";
+            case 4 -> strDweek = "Jeudi";
+            case 5 -> strDweek = "Vendredi";
+            case 6 -> strDweek = "Samedi";
+            case 7 -> strDweek = "Dimanche";
+            default -> throw new IllegalStateException("Valeur inattendue de jour de la semaine: " + dweek);
+        }
+
+        return strDweek+", "+day+" "+ strMonth+" "+year;
     }
 }
