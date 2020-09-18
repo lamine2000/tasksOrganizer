@@ -1,4 +1,4 @@
-# tasksOrganizer(compiled with Oracle JDK-14)
+# tasksOrganizer(compiled with Oracle JDK-11+)
 
 <h2>Prerequisites</h2>
 
