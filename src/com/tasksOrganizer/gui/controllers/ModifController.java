@@ -12,6 +12,10 @@ import com.tasksOrganizer.sample.Task;
 import com.tasksOrganizer.tray.animations.AnimationType;
 import com.tasksOrganizer.tray.notification.NotificationType;
 import com.tasksOrganizer.tray.notification.TrayNotification;
+import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -151,7 +155,13 @@ public class ModifController extends MotherController implements Initializable {
         vboxStep.getChildren().add(tsStep);
 
         reminderOn.setSelected(rmdrAssociated);
-        setReminderStuffVisility(rmdrAssociated);
+
+        text1.setVisible(rmdrAssociated);
+        text2.setVisible(rmdrAssociated);
+        text3.setVisible(rmdrAssociated);
+        reminderNextDate.setVisible(rmdrAssociated);
+        vboxStep.setVisible(rmdrAssociated);
+        vbox.setVisible(rmdrAssociated);
 
         ImageView okImage = new ImageView(getClass().getResource("/images/ok1.png").toExternalForm());
         okButton.setGraphic(okImage);
@@ -717,6 +727,15 @@ public class ModifController extends MotherController implements Initializable {
 
     @FXML
     void handleRestaurerButtonAction() {
+
+        Timeline timeLine = new Timeline();
+        KeyValue kv = new KeyValue(restaurerButton.getGraphic().rotateProperty(), -720, Interpolator.EASE_IN);
+        KeyFrame kf = new KeyFrame(Duration.seconds(1.2), kv);
+        timeLine.getKeyFrames().add(kf);
+
+        timeLine.play();
+        timeLine.setOnFinished((ActionEvent event) -> restaurerButton.getGraphic().setRotate(0));
+
         nameField.setText(task.getNom());
 
         descriptionArea.setText(task.getDescription());
@@ -753,11 +772,48 @@ public class ModifController extends MotherController implements Initializable {
     }
 
     void setReminderStuffVisility(boolean visible){
-        text1.setVisible(visible);
-        text2.setVisible(visible);
-        text3.setVisible(visible);
-        reminderNextDate.setVisible(visible);
-        vboxStep.setVisible(visible);
-        vbox.setVisible(visible);
+        double duration = 0.3;
+        if(visible){
+            text1.setVisible(visible);
+            text2.setVisible(visible);
+            text3.setVisible(visible);
+            reminderNextDate.setVisible(visible);
+            vboxStep.setVisible(visible);
+            vbox.setVisible(visible);
+        }
+
+        text1.setOpacity(visible ? 0 : 1);
+        text2.setOpacity(visible ? 0 : 1);
+        text3.setOpacity(visible ? 0 : 1);
+        reminderNextDate.setOpacity(visible ? 0 : 1);
+        vboxStep.setOpacity(visible ? 0 : 1);
+        vbox.setOpacity(visible ? 0 : 1);
+
+        Timeline timeline = new Timeline();
+
+        KeyValue kv1 = new KeyValue(text1.opacityProperty(), visible ? 1 : 0, Interpolator.EASE_IN);
+        KeyValue kv2 = new KeyValue(text2.opacityProperty(), visible ? 1 : 0, Interpolator.EASE_IN);
+        KeyValue kv3 = new KeyValue(text3.opacityProperty(), visible ? 1 : 0, Interpolator.EASE_IN);
+        KeyValue kv4 = new KeyValue(reminderNextDate.opacityProperty(), visible ? 1 : 0, Interpolator.EASE_IN);
+        KeyValue kv5 = new KeyValue(vboxStep.opacityProperty(), visible ? 1 : 0, Interpolator.EASE_IN);
+        KeyValue kv6 = new KeyValue(vbox.opacityProperty(), visible ? 1 : 0, Interpolator.EASE_IN);
+
+        KeyFrame kf1 = new KeyFrame(Duration.seconds(duration), kv1);
+        KeyFrame kf2 = new KeyFrame(Duration.seconds(duration), kv2);
+        KeyFrame kf3 = new KeyFrame(Duration.seconds(duration), kv3);
+        KeyFrame kf4 = new KeyFrame(Duration.seconds(duration), kv4);
+        KeyFrame kf5 = new KeyFrame(Duration.seconds(duration), kv5);
+        KeyFrame kf6= new KeyFrame(Duration.seconds(duration), kv6);
+
+        timeline.getKeyFrames().addAll(kf1, kf2, kf3, kf4, kf5, kf6);
+        timeline.play();
+        timeline.setOnFinished(event -> {
+            text1.setVisible(visible);
+            text2.setVisible(visible);
+            text3.setVisible(visible);
+            reminderNextDate.setVisible(visible);
+            vboxStep.setVisible(visible);
+            vbox.setVisible(visible);
+        });
     }
 }

@@ -1,9 +1,9 @@
 package com.tasksOrganizer.gui.controllers;
 
 import com.gluonhq.charm.glisten.control.TextField;
+import com.tasksOrganizer.exceptions.MysqlUnreachableException;
 import com.tasksOrganizer.gui.AlertHelper;
 import com.tasksOrganizer.gui.TimeSpinner;
-import com.tasksOrganizer.exceptions.MysqlUnreachableException;
 import com.tasksOrganizer.sample.Reminder;
 import com.tasksOrganizer.sample.Task;
 import com.tasksOrganizer.tray.animations.AnimationType;
@@ -35,7 +35,6 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
 import java.util.ResourceBundle;
 
 public class CreateTaskController implements Initializable {
@@ -520,11 +519,48 @@ public class CreateTaskController implements Initializable {
     }
 
     void setReminderStuffVisility(boolean visible){
-        text1.setVisible(visible);
-        text2.setVisible(visible);
-        text3.setVisible(visible);
-        reminderFirstDate.setVisible(visible);
-        vboxStep.setVisible(visible);
-        vbox.setVisible(visible);
+        double duration = 0.3;
+        if(visible){
+            text1.setVisible(visible);
+            text2.setVisible(visible);
+            text3.setVisible(visible);
+            reminderFirstDate.setVisible(visible);
+            vboxStep.setVisible(visible);
+            vbox.setVisible(visible);
+        }
+
+        text1.setOpacity(visible ? 0 : 1);
+        text2.setOpacity(visible ? 0 : 1);
+        text3.setOpacity(visible ? 0 : 1);
+        reminderFirstDate.setOpacity(visible ? 0 : 1);
+        vboxStep.setOpacity(visible ? 0 : 1);
+        vbox.setOpacity(visible ? 0 : 1);
+
+        Timeline timeline = new Timeline();
+
+        KeyValue kv1 = new KeyValue(text1.opacityProperty(), visible ? 1 : 0, Interpolator.EASE_IN);
+        KeyValue kv2 = new KeyValue(text2.opacityProperty(), visible ? 1 : 0, Interpolator.EASE_IN);
+        KeyValue kv3 = new KeyValue(text3.opacityProperty(), visible ? 1 : 0, Interpolator.EASE_IN);
+        KeyValue kv4 = new KeyValue(reminderFirstDate.opacityProperty(), visible ? 1 : 0, Interpolator.EASE_IN);
+        KeyValue kv5 = new KeyValue(vboxStep.opacityProperty(), visible ? 1 : 0, Interpolator.EASE_IN);
+        KeyValue kv6 = new KeyValue(vbox.opacityProperty(), visible ? 1 : 0, Interpolator.EASE_IN);
+
+        KeyFrame kf1 = new KeyFrame(Duration.seconds(duration), kv1);
+        KeyFrame kf2 = new KeyFrame(Duration.seconds(duration), kv2);
+        KeyFrame kf3 = new KeyFrame(Duration.seconds(duration), kv3);
+        KeyFrame kf4 = new KeyFrame(Duration.seconds(duration), kv4);
+        KeyFrame kf5 = new KeyFrame(Duration.seconds(duration), kv5);
+        KeyFrame kf6= new KeyFrame(Duration.seconds(duration), kv6);
+
+        timeline.getKeyFrames().addAll(kf1, kf2, kf3, kf4, kf5, kf6);
+        timeline.play();
+        timeline.setOnFinished(event -> {
+            text1.setVisible(visible);
+            text2.setVisible(visible);
+            text3.setVisible(visible);
+            reminderFirstDate.setVisible(visible);
+            vboxStep.setVisible(visible);
+            vbox.setVisible(visible);
+        });
     }
 }

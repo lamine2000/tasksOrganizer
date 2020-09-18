@@ -154,6 +154,14 @@ public class HomeController implements Initializable {
     @FXML
     protected void handleRefreshButtonAction() throws MysqlUnreachableException, CloneNotSupportedException {
         updateTable();
+
+        Timeline timeLine = new Timeline();
+        KeyValue kv = new KeyValue(refreshButton.getGraphic().rotateProperty(), 720, Interpolator.EASE_IN);
+        KeyFrame kf = new KeyFrame(Duration.seconds(1.2), kv);
+        timeLine.getKeyFrames().add(kf);
+
+        timeLine.play();
+        timeLine.setOnFinished((ActionEvent event) -> refreshButton.getGraphic().setRotate(0));
     }
 
     private void loadInfo(String taskName) throws IOException {
