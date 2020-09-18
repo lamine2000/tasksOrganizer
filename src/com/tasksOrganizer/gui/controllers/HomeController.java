@@ -38,7 +38,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ResourceBundle;
 
-public class HomeController implements Initializable {
+public class HomeController extends MotherController implements Initializable {
 
     @FXML
     private TableView<HomeTableViewModel> table = new TableView<>();
@@ -142,6 +142,7 @@ public class HomeController implements Initializable {
     @FXML
     protected void handleAProposButtonAction() throws IOException {
         //load the 'à propos' ui
+        if(!aboutOpened){
         Parent root = FXMLLoader.load(getClass().getResource("/views/aPropos.fxml"));
         root.getStylesheets().add(getClass().getResource("/stylesheets/about.css").toExternalForm());
         Stage stage = new Stage();
@@ -149,6 +150,7 @@ public class HomeController implements Initializable {
         stage.setScene(new Scene(root));
         stage.setAlwaysOnTop(true);
         stage.show();
+        }
     }
 
     @FXML

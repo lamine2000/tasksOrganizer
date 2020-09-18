@@ -9,6 +9,7 @@ public class MotherController {
     protected static String taskName;
     protected static boolean infoOpened = false;
     protected static boolean modifOpened = false;
+    protected static boolean aboutOpened = false;
     protected static ObservableList<HomeTableViewModel> list;
     protected static TableView<HomeTableViewModel> table;
     protected static Text homeTitle;

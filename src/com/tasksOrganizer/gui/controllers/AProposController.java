@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AProposController implements Initializable {
+public class AProposController extends MotherController implements Initializable {
 
     @FXML
     Label clipboardMsg;
@@ -22,6 +22,7 @@ public class AProposController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        aboutOpened = true;
         clipboardMsg.setVisible(false);
         hp.setTooltip(new Tooltip("Copier le lien dans le presse papier..."));
     }
@@ -49,5 +50,6 @@ public class AProposController implements Initializable {
         //fermer la fenetre
         Stage stage = (Stage) (clipboardMsg.getScene().getWindow());
         stage.close();
+        aboutOpened = false;
     }
 }
