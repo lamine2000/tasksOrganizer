@@ -354,7 +354,9 @@ public class ModifController extends MotherController implements Initializable {
     @FXML
     protected void handleValiderButtonAction() throws CloneNotSupportedException, MysqlUnreachableException {
         Window owner = nameField.getScene().getWindow();
-        LocalTime time;
+        LocalDateTime fdt;
+        LocalTime hm;
+        StringBuilder now = new StringBuilder();
 
         if (nameField.getText().isEmpty()) {
             AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Erreur!", "Veuillez entrer le nom de la nouvelle tâche !");
@@ -396,7 +398,6 @@ public class ModifController extends MotherController implements Initializable {
             return;
         }
 
-        LocalDateTime fdt;
         if(rmdrAssociated){
 
             if(reminderNextDate.getValue() == null){
@@ -409,13 +410,16 @@ public class ModifController extends MotherController implements Initializable {
                 return;
             }
 
-            time = LocalTime.of(
+            hm = LocalTime.of(
                     Integer.parseInt(tsFirst.getEditor().getText().split(":")[0]),
-                    Integer.parseInt(tsFirst.getEditor().getText().split(":")[1])
+                    Integer.parseInt(tsFirst.getEditor().getText().split(":")[1].split("\\.")[0])
             );
-            fdt = LocalDateTime.of(reminderNextDate.getValue(), time);
+            fdt = LocalDateTime.of(reminderNextDate.getValue(), hm);
             if(!fdt.isAfter(LocalDateTime.now())){
-                AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Erreur!", "La date du premier rappel doit être ultérieure à : "+LocalDateTime.now().toString().split("\\.")[0].replace("T", "   ")+" (càd maintenant)");
+                now.append(LocalDateTime.now().toString().split("\\.")[0].replace("T", "   "));
+                now.delete(now.length()-3, now.length());
+
+                AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Erreur!", "La date du premier rappel doit être ultérieure à : "+now.toString()+" (càd maintenant)");
                 return;
             }
         }

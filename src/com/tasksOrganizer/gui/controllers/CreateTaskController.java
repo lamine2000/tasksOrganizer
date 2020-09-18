@@ -35,6 +35,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ResourceBundle;
 
 public class CreateTaskController implements Initializable {
@@ -333,6 +334,7 @@ public class CreateTaskController implements Initializable {
         boolean allOk = false;
         int idTask;
         Reminder reminder = null;
+        LocalTime hmFirst;
 
         if(reminderOn.isSelected()){
 
@@ -346,7 +348,8 @@ public class CreateTaskController implements Initializable {
                 return;
             }
 
-            fdt = LocalDateTime.of(reminderFirstDate.getValue(), tsFirst.getValue());
+            hmFirst = LocalTime.of(tsFirst.getValue().getHour(), tsFirst.getValue().getMinute());
+            fdt = LocalDateTime.of(reminderFirstDate.getValue(), hmFirst);
             if(!fdt.isAfter(LocalDateTime.now())){
                 AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Erreur!", "La date du rappel doit être ultérieure à : "+LocalDateTime.now().toString().split("\\.")[0].replace("T", "   ")+" (càd maintenant)");
                 return;
@@ -355,17 +358,17 @@ public class CreateTaskController implements Initializable {
             allOk = true;
 
             LocalDateTime firstDateTime = fdt;
-            LocalTime step = tsStep.getValue();
+            LocalTime step = LocalTime.of(tsStep.getValue().getHour(), tsStep.getValue().getMinute());
 
             reminder = new Reminder(nom, firstDateTime, step, true);
             //a la creation d une tache, la prochaine notificationn de cette tache est aussi la premiere
         }
 
-        if(allOk){ //task with reminder
+        if(allOk){ //save task with his reminder
             idTask = Task.save(task);
             Reminder.save(reminder, idTask);
         }
-        else //task without reminder
+        else //save task without reminder
             Task.save(task);
 
 
@@ -437,6 +440,8 @@ public class CreateTaskController implements Initializable {
     void handleBackButtonAction() throws IOException {
 
         if(finAnimation){
+            emptyAll();
+
             finAnimation = false;
             Parent root = FXMLLoader.load(getClass().getResource("/views/home.fxml"));
             Scene scene = backButton.getScene();
