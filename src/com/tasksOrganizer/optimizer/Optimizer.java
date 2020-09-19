@@ -140,7 +140,7 @@ public class Optimizer {
         if(tasks.length > 1) {
             naiveOptimizeList(tasks);
             ArrayList<Task> subTable = new ArrayList<>(), set, bestSet = new ArrayList<>();
-            double sigma, minSigma = 1000000d;
+            double sigma, minSigma = Double.POSITIVE_INFINITY;
 
             subTable.add(tasks[0]);
 
@@ -162,7 +162,7 @@ public class Optimizer {
                     }
                 }
                 subTable = bestSet;
-                minSigma = 1000000d;
+                minSigma = Double.POSITIVE_INFINITY;
             }
 
             for (int i = 0; i < tasks.length; i++)
