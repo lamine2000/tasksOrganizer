@@ -220,7 +220,8 @@ public class DBFonctions {
             for (int j = 0; j < paramList.length; j++)
                 tab[j] = DBgetParam2(paramList[j], "Task","nom", taskName);
 
-            task = new Task(tab[0].toString(),
+            task = new Task(
+                    tab[0].toString(),
                     tab[1].toString(),
                     Integer.parseInt(tab[2].toString()),
                     Integer.parseInt(tab[3].toString()),
@@ -250,7 +251,6 @@ public class DBFonctions {
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
             state.setString(1, valeurIdentifiant);
-
             result = state.executeQuery();
 
             if (result.next() && result.getObject(1) != null)

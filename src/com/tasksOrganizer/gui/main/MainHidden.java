@@ -19,7 +19,7 @@ import java.time.temporal.ChronoUnit;
 public class MainHidden extends Application {
     private LocalDateTime next;
     private LocalTime step;
-    private String name, message;
+    private String name, message, title;
     private Process process;
 
     @Override
@@ -71,7 +71,8 @@ public class MainHidden extends Application {
         step = reminder.getStep();
         LocalDate date;
         LocalTime time;
-        name = "Tâche : "+reminder.getTaskName();
+        name = reminder.getTaskName();
+        title = "Tâche : "+name;
         LocalDateTime now = LocalDateTime.now();
         next = reminder.getNextDateTime();
 
@@ -81,7 +82,7 @@ public class MainHidden extends Application {
             message = "Rappel__Manqué_:__Le__" + date.toString() + "__à__" + time.getHour() + "h" + time.getMinute() + "min";
             //process = Runtime.getRuntime().exec(String.format("notify-send %s %s", name, message));
 
-            process = Runtime.getRuntime().exec(new String[]{"notify-send", name, message}, null);
+            process = Runtime.getRuntime().exec(new String[]{"notify-send", title, message}, null);
             process.waitFor();
 
             next = next.plusHours(step.getHour()).plusMinutes(step.getMinute());
@@ -92,12 +93,13 @@ public class MainHidden extends Application {
     private void showNotif(Reminder reminder) throws IOException, InterruptedException, MysqlUnreachableException {
         next = reminder.getNextDateTime();
         step = reminder.getStep();
-        name = "Tâche : "+reminder.getTaskName();
+        name = reminder.getTaskName();
+        title = "Tâche : "+name;
         Task task = Task.extract(name);
         long interval = ChronoUnit.DAYS.between(LocalDate.now(), task.getEcheance());
         message = "Rappel_:__Il__vous__reste__encore__"+ interval +"j";
 
-        process = Runtime.getRuntime().exec(new String[]{"notify-send", name, message}, null);
+        process = Runtime.getRuntime().exec(new String[]{"notify-send", title, message}, null);
         process.waitFor();
 
         next = next.plusHours(step.getHour()).plusMinutes(step.getMinute());
