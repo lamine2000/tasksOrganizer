@@ -12,6 +12,7 @@ public class Optimizer {
 
 
     private Double temporalDifficultyValue(Task task){
+        //calcule et retourne niveau d'urgence reltatif à la difficulté et à la marge
         long tsupp = ChronoUnit.DAYS.between(now(), task.getTsupp());
         short difficulte = (short)(task.getDifficulte());
         long echeance = ChronoUnit.DAYS.between(now(), task.getEcheance());
@@ -24,6 +25,7 @@ public class Optimizer {
 
 
     private Double temporalImportanceValue(Task task){
+        //calcule et retourne niveau d'urgence relative relatif à l'importance et à la marge
         long tsupp = ChronoUnit.DAYS.between(now(), task.getTsupp());
         short importance = (short)(task.getImportance());
         long echeance = ChronoUnit.DAYS.between(now(), task.getEcheance());
@@ -36,14 +38,20 @@ public class Optimizer {
 
 
     private Double temporalImportanceDifficultyCompromiseValue(Task task){
+        //calcule et retourne le niveau d'urgence relatif au compromis(somme) entre celui reltif à l'importace et celui reltaif à la difficulté
         return temporalDifficultyValue(task)+temporalImportanceValue(task);
     }
 
 
-    private LocalDate now(){ return LocalDate.now(); }
+    private LocalDate now(){
+        //retourne la date du jour (2020-09-23)
+        return LocalDate.now();
+    }
 
 
     private ArrayList<Task> insert(ArrayList<Task> subTable, Task newOne, int index) throws CloneNotSupportedException {
+        //crée une copie du 'ArrayList<>' passé en paramètre et insère dans cette copie l'Objet Task passé à la position index
+        //retourne cette copie
 
         ArrayList<Task> copy = new ArrayList<>(subTable);
 
@@ -59,7 +67,10 @@ public class Optimizer {
 
 
     private Double sigmaUnrealisableTasksValue(ArrayList<Task> set){
-        //renvoie la somme de Ci des taches qui ne pourront pas etre
+        //recherche dans la liste des tâches celles qui ne pourront pas être faites
+        //Nous considérons comme tâche qui ne peut pas être faite une dont la somme des temps d'exécution des tâches qui la précèdent
+        //est plus grande que l'échéance de la tâche elle même
+        //retourne la somme des degrés d'urgence des tâches qui ne pourront pas être faites dans la liste passée en paramètres
 
         long daysBefore = 0;
         int size;
@@ -72,7 +83,7 @@ public class Optimizer {
         for (int i = 1; i < set.size(); i++) {
             /*
             parcourir la liste de tâches et identifier celles non faisables
-            (en faisant la somme des temps supposés des tâches qui la précedent)
+            (en faisant la somme des temps supposés des tâches qui la précèdent)
             */
             for (int j = 0; j < i; j++)
                 if (now().isBefore(set.get(i).getTsupp()))
@@ -84,11 +95,11 @@ public class Optimizer {
                     -
                     ChronoUnit.DAYS.between(now(), set.get(i).getTsupp());
 
-            //extraire les indices des taches non-faisables
+            //extraire les indices des taches non faisables
             if (unDoable)
                 strIndexes.append(i).append("/");
         }
-        //calcul du nombre de taches non faisables
+        //calcul du nombre de tâches non faisables
         size = strIndexes.toString().length() / 2;
 
         unrealisableTasks = new Task[size];
@@ -97,6 +108,7 @@ public class Optimizer {
         for (int i = 0; i < unrealisableTasks.length; i++)
             unrealisableTasks[i] = set.get(Integer.parseInt(indexes[i]));
 
+        //faire la somme des degrés d'urgence des tâches non faisables
         for(Task elt : unrealisableTasks)
             sum += temporalImportanceDifficultyCompromiseValue(elt);
 
@@ -105,6 +117,7 @@ public class Optimizer {
 
 
     private void naiveOptimizeList(Task[] tasks){
+        //modifie le tableau tasks de tâches en ordonnant les tâches selon leur degré d'urgence respectif (dans l'ordre décroissant)
         Double[] s = new Double[tasks.length];
 
         for (int i = 0; i < tasks.length; i++)
@@ -116,7 +129,7 @@ public class Optimizer {
 
     private void rMapBubbleSort(Double[] arr, Task[] tasks)
     {
-        //reverse bubble sort -> and mapping changes to the 'tasks' array
+        //fait un bubble sort pour classer les tâches selon l'ordre décroissant de leur degré d'urgence respectif
         Double temp;
         Task ech;
         int n = arr.length;
@@ -137,6 +150,7 @@ public class Optimizer {
 
 
     public void optimize(Task[] tasks) throws CloneNotSupportedException {
+        //modifie le tableau renvoyé par naiveOptimizeList et fait en sorte qu'un maximum de tâches puissent etre faites , tout en s'écartant un minimum du table de base
         if(tasks.length > 1) {
             naiveOptimizeList(tasks);
             ArrayList<Task> subTable = new ArrayList<>(), set, bestSet = new ArrayList<>();
