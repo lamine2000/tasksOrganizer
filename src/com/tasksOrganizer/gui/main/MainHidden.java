@@ -29,7 +29,7 @@ public class MainHidden extends Application {
 
         scheduler.schedule(
                 () -> {
-                    //code à exécuter à chaque 2 secondes
+                    //code à exécuter chaque 2 secondes
                     System.out.println("tic");
 
                     Reminder[] reminders = new Reminder[0];
@@ -80,7 +80,6 @@ public class MainHidden extends Application {
             date = LocalDate.parse(next.toString().split("T")[0]);
             time = LocalTime.parse(next.toString().split("T")[1]);
             message = "Rappel__Manqué_:__Le__" + date.toString() + "__à__" + time.getHour() + "h" + time.getMinute() + "min";
-            //process = Runtime.getRuntime().exec(String.format("notify-send %s %s", name, message));
 
             process = Runtime.getRuntime().exec(new String[]{"notify-send", title, message}, null);
             process.waitFor();
@@ -97,7 +96,8 @@ public class MainHidden extends Application {
         title = "Tâche : "+name;
         Task task = Task.extract(name);
         long interval = ChronoUnit.DAYS.between(LocalDate.now(), task.getEcheance());
-        message = "Rappel_:__Il__vous__reste__encore__"+ interval +"j";
+        message = interval > 0 ? "Rappel_:__Il__vous__reste__encore__"+ interval +"j" : "Rappel_:__Aujourd'hui__est__le__dernier__délai__pour__finir__la__tâche " + name;
+        message = interval < 0 ? "Rappel_:__Vous__êtes__en__retard__de__"+Math.abs(interval)+" j" : message;
 
         process = Runtime.getRuntime().exec(new String[]{"notify-send", title, message}, null);
         process.waitFor();
