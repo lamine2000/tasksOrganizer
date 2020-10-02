@@ -26,6 +26,6 @@ public class AnimationProvider {
     }
 
     public List<TrayAnimation> where(Predicate<? super TrayAnimation> predicate) {
-        return (List)this.animationsList.stream().filter(predicate).collect(Collectors.toList());
+        return (List<TrayAnimation>)this.animationsList.stream().filter(predicate).collect(Collectors.toList());
     }
 }

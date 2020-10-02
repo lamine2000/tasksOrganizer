@@ -47,7 +47,7 @@ public class FadeAnimation implements TrayAnimation {
         return tl;
     }
 
-    public com.tasksOrganizer.tray.animations.AnimationType getAnimationType() {
+    public AnimationType getAnimationType() {
         return AnimationType.FADE;
     }
 
