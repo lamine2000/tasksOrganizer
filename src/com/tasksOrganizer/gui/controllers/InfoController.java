@@ -125,7 +125,10 @@ public class InfoController extends MotherController implements Initializable {
             pDisplay = Double.parseDouble((p*100+"").substring(0, 4));
 
         setProgressBarColor(progress1);
-        legendpg1.setText(pDisplay+"% du temps disponible ont été consumé(s) ! \n Nombre restant de jours : "+(interval1-interval2));
+        if(!LocalDate.now().isAfter(task.getEcheance()))
+            legendpg1.setText(pDisplay+"% du temps disponible ont été consumé(s) ! \n Nombre restant de jours : "+(interval1-interval2));
+        else
+            legendpg1.setText(pDisplay+"% du temps disponible ont été consumé(s) ! \n Retard de "+(interval2-interval1)+"j accusé sur l'échéance");
 
         if(p != 0){
             final Timeline timeline1 = new Timeline(

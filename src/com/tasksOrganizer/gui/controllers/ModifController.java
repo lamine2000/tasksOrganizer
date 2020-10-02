@@ -772,7 +772,7 @@ public class ModifController extends MotherController implements Initializable {
     }
 
     void setReminderStuffVisility(boolean visible){
-        double duration = 0.3;
+        double duration = 0.3;//seconds
         if(visible){
             text1.setVisible(visible);
             text2.setVisible(visible);
