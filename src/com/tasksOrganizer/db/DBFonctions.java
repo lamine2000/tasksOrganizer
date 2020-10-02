@@ -187,19 +187,27 @@ public class DBFonctions {
 
 
     public static void taskDone(String taskName) {
-        PreparedStatement state;
+        PreparedStatement state1, state2;
 
         try {
             Connection conn = connect();
-            state = conn.prepareStatement("update Task set ok = ? where nom = ?",
+            state1 = conn.prepareStatement("update Task set ok = ? where nom = ?",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
-            state.setBoolean(1, true);
-            state.setString(2, taskName);
+            state1.setBoolean(1, true);
+            state1.setString(2, taskName);
 
-            state.executeUpdate();
+            state2 = conn.prepareStatement("update Reminder set active = ? where taskName = ?",
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+            state2.setBoolean(1, false);
+            state2.setString(2, taskName);
 
-            state.close();
+            state1.executeUpdate();
+            state2.executeUpdate();
+
+            state1.close();
+            state2.close();
         }catch (MysqlUnreachableException e){
             System.out.println("Le SGBD mysql est inateignable...Vérifiez qu'il est bien en marche.");
             System.exit(0);
