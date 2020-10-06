@@ -252,10 +252,16 @@ public class DBFonctions {
         Object param = null;
         PreparedStatement state;
         ResultSet result;
+        String sql;
 
         try {
             Connection conn = connect();
-            state = conn.prepareStatement("select " + nomParam + " from " + nomTable + " where " + nomIdentifiant + " = ?",
+            if(nomTable.equals("Task"))
+                sql = "select " + nomParam + " from Task where " + nomIdentifiant + " = ? and ok = false";
+            else
+                sql = "select " + nomParam + " from Reminder where " + nomIdentifiant + " = ? and active = true";
+
+            state = conn.prepareStatement(sql,
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
             state.setString(1, valeurIdentifiant);
