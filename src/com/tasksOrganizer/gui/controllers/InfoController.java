@@ -117,12 +117,7 @@ public class InfoController extends MotherController implements Initializable {
         double p = (double)(interval2)/(double)(interval1);
 
         progress1.setProgress(p);
-        double pDisplay;
-        if((p*100+"").length() < 4){
-            pDisplay = p*100;
-        }
-        else
-            pDisplay = Double.parseDouble((p*100+"").substring(0, 4));
+        double pDisplay = (p*100+"").length() < 4 ? p*100 : Double.parseDouble((p*100+"").substring(0, 4));
 
         setProgressBarColor(progress1);
         if(!LocalDate.now().isAfter(task.getEcheance()))
