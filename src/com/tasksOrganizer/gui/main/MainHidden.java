@@ -96,7 +96,7 @@ public class MainHidden extends Application {
         title = "Tâche : "+name;
         Task task = Task.extract(name);
         long interval = ChronoUnit.DAYS.between(LocalDate.now(), task.getEcheance());
-        message = interval > 0 ? "Rappel_:__Il__vous__reste__encore__"+ interval +"j" : "Rappel_:__Aujourd'hui__est__le__dernier__délai__pour__finir__la__tâche " + name;
+        message = interval > 0 ? "Rappel_:__Il__vous__reste__encore__"+ interval +"j" : "Rappel_:__Aujourd'hui__est__le__dernier__délai__pour__finir__la__tâche__" + name;
         message = interval < 0 ? "Rappel_:__Vous__êtes__en__retard__de__"+Math.abs(interval)+" j" : message;
 
         process = Runtime.getRuntime().exec(new String[]{"notify-send", title, message}, null);

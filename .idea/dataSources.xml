@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="tasksOrganizer@localhost" uuid="75c2b0de-5f1b-4a44-8bda-c244bd0e390d">
+    <data-source source="LOCAL" name="tasksOrganizer@localhost" uuid="608d9f70-59c7-4aac-b3ad-e189fc18d4f9">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://localhost:3306/tasksOrganizer</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
 </project>

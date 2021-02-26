@@ -17,7 +17,7 @@ public class DBFonctions {
 
        if(conn == null)
             throw new MysqlUnreachableException();
-        return conn;
+       return conn;
     }
 
 
@@ -59,8 +59,6 @@ public class DBFonctions {
         PreparedStatement state;
         ResultSet result;
 
-
-
         try {
             Connection conn = connect();
             state = conn.prepareStatement("select nom from Task where nom = ? and ok = ?",
@@ -90,8 +88,6 @@ public class DBFonctions {
         String[] paramList = {"nom", "description", "importance", "difficulte", "echeance", "tsupp", "ok", "dateCreation"};
         Object[] tab = new Object[paramList.length];
         int taille = 0;
-
-
 
         try {
             Connection conn = connect();
@@ -133,7 +129,6 @@ public class DBFonctions {
         PreparedStatement state;
         ResultSet result;
 
-
         try {
             Connection conn = connect();
             state = conn.prepareStatement("select " + nomParam + " from " + nomTable + " where " + nomIdentifiant + " = ?",
@@ -161,7 +156,6 @@ public class DBFonctions {
 
     public static void DBRemoveTask(String nom) {
         PreparedStatement state;
-
 
         try {
             Connection conn = connect();

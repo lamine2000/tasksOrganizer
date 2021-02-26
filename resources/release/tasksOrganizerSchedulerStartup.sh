@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 desktopFile="$HOME"/.config/autostart/tasksOrganizerScheduler.desktop
 
 jarPath="$HOME"/IdeaProjects/tasksOrganizer/out/artifacts/tasksOrganizer.jar

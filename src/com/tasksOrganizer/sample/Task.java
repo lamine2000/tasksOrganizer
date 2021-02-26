@@ -19,7 +19,6 @@ public class Task implements Cloneable {
     public Task clone() throws CloneNotSupportedException {
         Task clone = null;
         try {
-
             clone = (Task) super.clone();
             clone.nom = nom;
             clone.echeance = echeance;
@@ -31,7 +30,7 @@ public class Task implements Cloneable {
             clone.dateCreation = dateCreation;
 
         } catch (CloneNotSupportedException e) {
-            System.out.println("Erreur de clonage");
+            System.out.println("Erreur de clonage de la tâche " + nom);
         }
 
         return clone;
