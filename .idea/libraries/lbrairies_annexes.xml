@@ -1,5 +1,5 @@
 <component name="libraryTable">
-  <library name="charm-glisten-6.0.6">
+  <library name="lbrairies_annexes">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/lib/charm-glisten-6.0.6.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/slf4j-api-1.7.25.jar!/" />
