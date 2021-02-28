@@ -5,6 +5,7 @@
       <root url="jar://$PROJECT_DIR$/lib/slf4j-api-1.7.25.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/util-4.0.10.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/wisp-2.2.0.jar!/" />
+      <root url="jar:///usr/share/java/mysql-connector-java-8.0.23.jar!/" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$PROJECT_DIR$/lib/slf4j-api-1.7.25-javadoc.jar!/" />
