@@ -3,7 +3,11 @@
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$" />
+    <content url="file://$MODULE_DIR$/out" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="javafx" level="project" />
+    <orderEntry type="library" name="wisp-2.2.0" level="project" />
+    <orderEntry type="library" name="charm-glisten-6.0.6" level="project" />
   </component>
 </module>
