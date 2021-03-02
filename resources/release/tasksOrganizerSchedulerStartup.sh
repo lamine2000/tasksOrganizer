@@ -2,7 +2,7 @@
 
 desktopFile="$HOME"/.config/autostart/tasksOrganizerScheduler.desktop
 
-jarPath="$HOME"/IdeaProjects/tasksOrganizer/out/artifacts/tasksOrganizer.jar
+jarPath="$HOME"/IdeaProjects/tasksOrganizer/resources/release/tasksOrganizer.jar
 
 touch "$desktopFile"
 
