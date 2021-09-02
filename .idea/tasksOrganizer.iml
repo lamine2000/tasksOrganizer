@@ -6,10 +6,11 @@
       <sourceFolder url="file://$MODULE_DIR$/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="14" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="librairies_annexes" level="application" />
-    <orderEntry type="library" name="javafx" level="application" />
-    <orderEntry type="library" name="mysql-connector-java-8.0.23" level="application" />
+    <orderEntry type="library" exported="" name="librairies_annexes" level="application" />
+    <orderEntry type="library" exported="" name="javafx" level="application" />
+    <orderEntry type="library" exported="" name="mysql-connector-java-8.0.23" level="application" />
+    <orderEntry type="library" name="charm-glisten-6.0.6" level="project" />
   </component>
 </module>
