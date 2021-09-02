@@ -16,11 +16,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="tasksOrganizer" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="tasksOrganizer" target="1.5" />
+      <module name="tasksOrganizer" target="14" />
     </bytecodeTargetLevel>
   </component>
 </project>

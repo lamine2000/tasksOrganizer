@@ -35,6 +35,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class CreateTaskController implements Initializable {
@@ -140,15 +141,15 @@ public class CreateTaskController implements Initializable {
         reminderOn.setSelected(false);
         setReminderStuffVisility(false);
 
-        ImageView backImage = new ImageView(getClass().getResource("/images/back.png").toExternalForm());
+        ImageView backImage = new ImageView(Objects.requireNonNull(getClass().getResource("/images/back.png")).toExternalForm());
         backButton.setGraphic(backImage);
         backButton.setTooltip(new Tooltip("Revenir à la page d'accueil sans enregistrer"));
 
-        ImageView okImage = new ImageView(getClass().getResource("/images/ok1.png").toExternalForm());
+        ImageView okImage = new ImageView(Objects.requireNonNull(getClass().getResource("/images/ok1.png")).toExternalForm());
         okButton.setGraphic(okImage);
         okButton.setTooltip(new Tooltip("Enregistrer la nouvelle tâche"));
 
-        ImageView clearImage = new ImageView(getClass().getResource("/images/clear.png").toExternalForm());
+        ImageView clearImage = new ImageView(Objects.requireNonNull(getClass().getResource("/images/clear.png")).toExternalForm());
         clearButton.setGraphic(clearImage);
         clearButton.setTooltip(new Tooltip("Vider les champs"));
 
@@ -442,9 +443,9 @@ public class CreateTaskController implements Initializable {
             emptyAll();
 
             finAnimation = false;
-            Parent root = FXMLLoader.load(getClass().getResource("/views/home.fxml"));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/views/home.fxml")));
             Scene scene = backButton.getScene();
-            root.getStylesheets().add(getClass().getResource("/stylesheets/home.css").toString());
+            root.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/stylesheets/home.css")).toString());
 
             root.translateXProperty().set(scene.getWidth());
             StackPane parentContainer = (StackPane)scene.getRoot();
@@ -483,31 +484,31 @@ public class CreateTaskController implements Initializable {
     }
 
     private void setStars(){
-        d1Image0 = new ImageView(getClass().getResource("/images/star0.png").toExternalForm());
-        d2Image0 = new ImageView(getClass().getResource("/images/star0.png").toExternalForm());
-        d3Image0 = new ImageView(getClass().getResource("/images/star0.png").toExternalForm());
-        d4Image0 = new ImageView(getClass().getResource("/images/star0.png").toExternalForm());
-        d5Image0 = new ImageView(getClass().getResource("/images/star0.png").toExternalForm());
+        d1Image0 = new ImageView(Objects.requireNonNull(getClass().getResource("/images/star0.png")).toExternalForm());
+        d2Image0 = new ImageView(Objects.requireNonNull(getClass().getResource("/images/star0.png")).toExternalForm());
+        d3Image0 = new ImageView(Objects.requireNonNull(getClass().getResource("/images/star0.png")).toExternalForm());
+        d4Image0 = new ImageView(Objects.requireNonNull(getClass().getResource("/images/star0.png")).toExternalForm());
+        d5Image0 = new ImageView(Objects.requireNonNull(getClass().getResource("/images/star0.png")).toExternalForm());
 
-        d1Image1 = new ImageView(getClass().getResource("/images/star1.png").toExternalForm());
-        d2Image1 = new ImageView(getClass().getResource("/images/star1.png").toExternalForm());
-        d3Image1 = new ImageView(getClass().getResource("/images/star1.png").toExternalForm());
-        d4Image1 = new ImageView(getClass().getResource("/images/star1.png").toExternalForm());
-        d5Image1 = new ImageView(getClass().getResource("/images/star1.png").toExternalForm());
+        d1Image1 = new ImageView(Objects.requireNonNull(getClass().getResource("/images/star1.png")).toExternalForm());
+        d2Image1 = new ImageView(Objects.requireNonNull(getClass().getResource("/images/star1.png")).toExternalForm());
+        d3Image1 = new ImageView(Objects.requireNonNull(getClass().getResource("/images/star1.png")).toExternalForm());
+        d4Image1 = new ImageView(Objects.requireNonNull(getClass().getResource("/images/star1.png")).toExternalForm());
+        d5Image1 = new ImageView(Objects.requireNonNull(getClass().getResource("/images/star1.png")).toExternalForm());
 
         setGraphics('d', 0);
 
-        i1Image0 = new ImageView(getClass().getResource("/images/star0.png").toExternalForm());
-        i2Image0 = new ImageView(getClass().getResource("/images/star0.png").toExternalForm());
-        i3Image0 = new ImageView(getClass().getResource("/images/star0.png").toExternalForm());
-        i4Image0 = new ImageView(getClass().getResource("/images/star0.png").toExternalForm());
-        i5Image0 = new ImageView(getClass().getResource("/images/star0.png").toExternalForm());
+        i1Image0 = new ImageView(Objects.requireNonNull(getClass().getResource("/images/star0.png")).toExternalForm());
+        i2Image0 = new ImageView(Objects.requireNonNull(getClass().getResource("/images/star0.png")).toExternalForm());
+        i3Image0 = new ImageView(Objects.requireNonNull(getClass().getResource("/images/star0.png")).toExternalForm());
+        i4Image0 = new ImageView(Objects.requireNonNull(getClass().getResource("/images/star0.png")).toExternalForm());
+        i5Image0 = new ImageView(Objects.requireNonNull(getClass().getResource("/images/star0.png")).toExternalForm());
 
-        i1Image1 = new ImageView(getClass().getResource("/images/star1.png").toExternalForm());
-        i2Image1 = new ImageView(getClass().getResource("/images/star1.png").toExternalForm());
-        i3Image1 = new ImageView(getClass().getResource("/images/star1.png").toExternalForm());
-        i4Image1 = new ImageView(getClass().getResource("/images/star1.png").toExternalForm());
-        i5Image1 = new ImageView(getClass().getResource("/images/star1.png").toExternalForm());
+        i1Image1 = new ImageView(Objects.requireNonNull(getClass().getResource("/images/star1.png")).toExternalForm());
+        i2Image1 = new ImageView(Objects.requireNonNull(getClass().getResource("/images/star1.png")).toExternalForm());
+        i3Image1 = new ImageView(Objects.requireNonNull(getClass().getResource("/images/star1.png")).toExternalForm());
+        i4Image1 = new ImageView(Objects.requireNonNull(getClass().getResource("/images/star1.png")).toExternalForm());
+        i5Image1 = new ImageView(Objects.requireNonNull(getClass().getResource("/images/star1.png")).toExternalForm());
 
         setGraphics('i', 0);
     }
@@ -520,13 +521,14 @@ public class CreateTaskController implements Initializable {
 
     void setReminderStuffVisility(boolean visible){
         double duration = 0.3;
+
         if(visible){
-            text1.setVisible(visible);
-            text2.setVisible(visible);
-            text3.setVisible(visible);
-            reminderFirstDate.setVisible(visible);
-            vboxStep.setVisible(visible);
-            vbox.setVisible(visible);
+            text1.setVisible(true);
+            text2.setVisible(true);
+            text3.setVisible(true);
+            reminderFirstDate.setVisible(true);
+            vboxStep.setVisible(true);
+            vbox.setVisible(true);
         }
 
         text1.setOpacity(visible ? 0 : 1);

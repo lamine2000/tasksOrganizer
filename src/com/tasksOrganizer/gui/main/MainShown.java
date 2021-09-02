@@ -7,16 +7,18 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import java.util.Objects;
+
 public class MainShown extends Application {
 
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/views/home.fxml"));
-        root.getStylesheets().add(getClass().getResource("/stylesheets/home.css").toString());
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/views/home.fxml")));
+        root.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/stylesheets/home.css")).toString());
         primaryStage.setTitle("tasksOrganizer");
-        primaryStage.getIcons().add(new Image(getClass().getResource("/images/appIcone.png").toExternalForm(), false));
-        primaryStage.setScene(new Scene(root));
+        primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResource("/images/appIcone.png")).toExternalForm(), false));
+        primaryStage.setScene(new Scene(root, 800, 600));
         primaryStage.setResizable(false);
         primaryStage.show();
     }

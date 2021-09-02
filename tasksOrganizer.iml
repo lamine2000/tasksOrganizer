@@ -10,10 +10,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="mysql-connector-java-8.0.23" level="project" />
-    <orderEntry type="library" name="javafx15.0.1" level="project" />
-    <orderEntry type="library" name="charm-glisten-6.0.6" level="project" />
-    <orderEntry type="library" name="com.coreoz:wisp:2.2.0" level="project" />
-    <orderEntry type="library" name="com.gluonhq.attach:util:4.0.10" level="project" />
+    <orderEntry type="library" exported="" name="mysql-connector-java-8.0.23" level="project" />
+    <orderEntry type="library" exported="" name="librairies_annexes" level="project" />
+    <orderEntry type="library" exported="" name="javafx" level="project" />
   </component>
 </module>

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/tasksOrganizer/tasksOrganizer.iml" filepath="$PROJECT_DIR$/tasksOrganizer/tasksOrganizer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tasksOrganizer.iml" filepath="$PROJECT_DIR$/tasksOrganizer.iml" />
     </modules>
   </component>
 </project>
