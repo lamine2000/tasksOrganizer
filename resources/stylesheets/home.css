@@ -11,7 +11,7 @@
 }
 
 #home{
-    //-fx-background-image: url("../images/800x600/4.jpg");
+    //-fx-background-image: url("/images/800x600/4.jpg");
     -fx-background-color: #2B2B2B;
     -fx-background-position: center;
     -fx-background-size: cover;

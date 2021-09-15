@@ -2,10 +2,10 @@ package com.tasksOrganizer.gui.controllers;
 
 
 import com.gluonhq.charm.glisten.control.TextField;
-import com.tasksOrganizer.gui.AlertHelper;
-import com.tasksOrganizer.gui.models.HomeTableViewModel;
-import com.tasksOrganizer.gui.TimeSpinner;
 import com.tasksOrganizer.exceptions.MysqlUnreachableException;
+import com.tasksOrganizer.gui.AlertHelper;
+import com.tasksOrganizer.gui.TimeSpinner;
+import com.tasksOrganizer.gui.models.HomeTableViewModel;
 import com.tasksOrganizer.optimizer.Optimizer;
 import com.tasksOrganizer.sample.Reminder;
 import com.tasksOrganizer.sample.Task;

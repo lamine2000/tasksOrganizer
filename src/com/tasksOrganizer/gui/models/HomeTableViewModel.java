@@ -13,10 +13,10 @@ public class HomeTableViewModel {
 
         this.name = new SimpleStringProperty(nom);
         this.days = new SimpleStringProperty(days);
-        this.info = new SimpleObjectProperty<Button>(info);
-        this.modif = new SimpleObjectProperty<Button>(modif);
-        this.delete = new SimpleObjectProperty<Button>(delete);
-        this.ok = new SimpleObjectProperty<Button>(ok);
+        this.info = new SimpleObjectProperty<>(info);
+        this.modif = new SimpleObjectProperty<>(modif);
+        this.delete = new SimpleObjectProperty<>(delete);
+        this.ok = new SimpleObjectProperty<>(ok);
     }
 
     public String getName() {

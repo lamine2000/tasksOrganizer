@@ -18,7 +18,7 @@ public class MainShown extends Application {
         root.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/stylesheets/home.css")).toString());
         primaryStage.setTitle("tasksOrganizer");
         primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResource("/images/appIcone.png")).toExternalForm(), false));
-        primaryStage.setScene(new Scene(root, 800, 600));
+        primaryStage.setScene(new Scene(root));
         primaryStage.setResizable(false);
         primaryStage.show();
     }

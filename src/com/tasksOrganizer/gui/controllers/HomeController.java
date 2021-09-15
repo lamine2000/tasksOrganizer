@@ -24,6 +24,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
@@ -36,6 +37,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class HomeController extends MotherController implements Initializable {
@@ -83,15 +85,15 @@ public class HomeController extends MotherController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ImageView addTaskImage = new ImageView(getClass().getResource("/images/addTask.png").toExternalForm());
+        ImageView addTaskImage = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/addTask.png"))));
         addTaskButton.setGraphic(addTaskImage);
         addTaskButton.setTooltip(new Tooltip("Créer une nouvelle tâche"));
 
-        ImageView aboutImage = new ImageView(getClass().getResource("/images/about.png").toExternalForm());
+        ImageView aboutImage = new ImageView(Objects.requireNonNull(getClass().getResource("/images/about.png")).toExternalForm());
         aProposButton.setGraphic(aboutImage);
         aProposButton.setTooltip(new Tooltip("À propos..."));
 
-        ImageView refreshImage = new ImageView(getClass().getResource("/images/refresh.png").toExternalForm());
+        ImageView refreshImage = new ImageView(Objects.requireNonNull(getClass().getResource("/images/refresh.png")).toExternalForm());
         refreshButton.setGraphic(refreshImage);
         refreshButton.setTooltip(new Tooltip("Rafraîchir le tableau..."));
 
@@ -118,8 +120,8 @@ public class HomeController extends MotherController implements Initializable {
     protected void handleAddTaskButtonAction() throws IOException {
         if (finAnimation) {
             finAnimation = false;
-            Parent root = FXMLLoader.load(getClass().getResource("/views/createTask.fxml"));
-            root.getStylesheets().add(getClass().getResource("/stylesheets/createTask.css").toString());
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/views/createTask.fxml")));
+            root.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/stylesheets/createTask.css")).toString());
 
             root.translateYProperty().set(650);
             parentContainer.getChildren().add(root);
@@ -143,8 +145,8 @@ public class HomeController extends MotherController implements Initializable {
     protected void handleAProposButtonAction() throws IOException {
         //load the 'à propos' ui
         if(!aboutOpened){
-        Parent root = FXMLLoader.load(getClass().getResource("/views/aPropos.fxml"));
-        root.getStylesheets().add(getClass().getResource("/stylesheets/about.css").toExternalForm());
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/views/aPropos.fxml")));
+        root.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/stylesheets/about.css")).toExternalForm());
         Stage stage = new Stage();
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(new Scene(root));
@@ -173,8 +175,8 @@ public class HomeController extends MotherController implements Initializable {
             MotherController.infoOpened = true;
             MotherController.taskName = taskName;
 
-            Parent root = FXMLLoader.load(getClass().getResource("/views/infoTask.fxml"));
-            root.getStylesheets().add(getClass().getResource("/stylesheets/info.css").toExternalForm());
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/views/infoTask.fxml")));
+            root.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/stylesheets/info.css")).toExternalForm());
             Stage stage = new Stage();
             stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(new Scene(root));
@@ -191,8 +193,8 @@ public class HomeController extends MotherController implements Initializable {
             MotherController.modifOpened = true;
             MotherController.taskName = taskName;
 
-            Parent root = FXMLLoader.load(getClass().getResource("/views/modifTask.fxml"));
-            root.getStylesheets().add(getClass().getResource("/stylesheets/modif.css").toExternalForm());
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/views/modifTask.fxml")));
+            root.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/stylesheets/modif.css")).toExternalForm());
             Stage stage = new Stage();
             stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(new Scene(root));
@@ -352,9 +354,9 @@ public class HomeController extends MotherController implements Initializable {
         }
 
             for (int i = 0; i < tasks.length; i++) {
-                infoButtons[i].setGraphic(new ImageView(getClass().getResource("/images/infoTask.png").toExternalForm()));
-                modifyButtons[i].setGraphic(new ImageView(getClass().getResource("/images/modifyTask.png").toExternalForm()));
-                deleteButtons[i].setGraphic(new ImageView(getClass().getResource("/images/deleteTask.png").toExternalForm()));
+                infoButtons[i].setGraphic(new ImageView(Objects.requireNonNull(getClass().getResource("/images/infoTask.png")).toExternalForm()));
+                modifyButtons[i].setGraphic(new ImageView(Objects.requireNonNull(getClass().getResource("/images/modifyTask.png")).toExternalForm()));
+                deleteButtons[i].setGraphic(new ImageView(Objects.requireNonNull(getClass().getResource("/images/deleteTask.png")).toExternalForm()));
             }
 
             table.setItems(list);
