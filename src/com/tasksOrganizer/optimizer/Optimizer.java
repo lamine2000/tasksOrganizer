@@ -90,17 +90,20 @@ public class Optimizer {
                     daysBefore += ChronoUnit.DAYS.between(now(), set.get(j).getTsupp());
 
 
-            unDoable = daysBefore >
-                    ChronoUnit.DAYS.between(now(), set.get(i).getEcheance())
-                    -
-                    ChronoUnit.DAYS.between(now(), set.get(i).getTsupp());
+            unDoable = now()
+                    .plusDays(daysBefore)
+                    .plusDays(ChronoUnit.DAYS.between(set.get(i).getDateCreation(), set.get(i).getTsupp()))
+                    .isBefore(set.get(i).getEcheance());
 
             //extraire les indices des taches non faisables
             if (unDoable)
                 strIndexes.append(i).append("/");
         }
-        //calcul du nombre de tâches non faisables
-        size = strIndexes.toString().length() / 2;
+        //decompte du nombre de tâches non faisables
+        size = 0;
+        for(int i=0; i<strIndexes.toString().length(); i++)
+            if(strIndexes.toString().charAt(i) == '/')
+                size++;
 
         unrealisableTasks = new Task[size];
         indexes = strIndexes.toString().split("/");
